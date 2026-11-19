@@ -1,0 +1,6 @@
+name = "nostr-rs-relay"
+repo = "https://git.sr.ht/~gheartsfield/nostr-rs-relay"
+track = "tag"
+tag_pattern = '^\d+\.\d+\.\d+$'
+port = 8080
+notes = "Built with upstream's Dockerfile from the GitHub mirror (scsibug/nostr-rs-relay, same tags as sr.ht), because docker build can't take sr.ht as a git context. Default profile runs the image with no config.toml, i.e. the compiled-in defaults. 32 subscriptions per connection is hard-coded. The image's RUST_LOG=info logs every persisted event and connection; left as shipped. The upstream Dockerfile builds on rust:1-bookworm, where sqlx-core 0.6.3 no longer compiles, so the builder base is pinned to rust:1.95-bookworm (compose.yaml)."

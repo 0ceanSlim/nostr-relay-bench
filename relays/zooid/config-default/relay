@@ -1,0 +1,12 @@
+# zooid virtual relay, default profile: only the required fields (host, schema, secret,
+# info.pubkey), with a throwaway relay secret and owner pubkey. Every [policy] option is left at
+# its default (false), so reads need AUTH by a member and writes need AUTH by a member; the
+# owner is the only member.
+host = "relay:3334"
+schema = "bench"
+secret = "72752b767ff8b538de9254bcdec9505ef4b5aed66e05a85fd8da9d84fc8e33bb"
+
+[info]
+name = "zooid"
+pubkey = "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4"
+description = "nostr-relay-bench instance"

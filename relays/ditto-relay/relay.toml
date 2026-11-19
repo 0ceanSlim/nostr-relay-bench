@@ -1,0 +1,7 @@
+name = "ditto-relay"
+repo = "https://gitworkshop.dev/soapbox.pub/ditto-relay"
+git = "https://relay.ngit.dev/npub10qdp2fc9ta6vraczxrcs8prqnv69fru2k6s2dj48gqjcylulmtjsg9arpj/ditto-relay.git"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 13131
+notes = "No upstream Dockerfile and release binaries are only published as NIP-82 events, so it's built from source here (cargo build --release on the pinned toolchain). url is required to start: set to the fixed test value ws://relay:13131/. Gift wraps are public by default (auth_kinds = []). history = true (default) keeps the versions a replaceable/addressable event replaces, and relay-tester sees them returned. No AUTH challenge on connect."

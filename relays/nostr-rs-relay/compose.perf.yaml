@@ -1,0 +1,3 @@
+services:
+  relay:
+    volumes: [./perf.toml:/usr/src/app/config.toml:ro]

@@ -1,0 +1,19 @@
+# Built with upstream's own Dockerfile at the resolved tag, from the GitHub mirror (docker build
+# can't use sr.ht as a git context; the mirror carries the same tags). One change: that Dockerfile
+# builds on rust:1-bookworm (latest stable), and sqlx-core 0.6.3 in its Cargo.lock no longer
+# compiles on current Rust (never-type fallback, E0277), so the base is pinned to the stable Rust
+# of the 0.10.0 release date via a named build context.
+# The default profile runs the image as it ships: no config.toml, so the compiled-in defaults
+# apply (0.0.0.0:8080, SQLite in /usr/src/app/db via the image's --db flag).
+services:
+  relay:
+    build:
+      context: "https://github.com/scsibug/nostr-rs-relay.git#${REF}"
+      additional_contexts: { "rust:1-bookworm": "docker-image://rust:1.95-bookworm" }
+    image: rb-nostr-rs-relay:${REF}
+    volumes: [data:/usr/src/app/db]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

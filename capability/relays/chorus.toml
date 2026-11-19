@@ -1,0 +1,25 @@
+name = "chorus"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 3
+write_policy = 1
+admission = 1
+rate_limits = 2
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 1
+multi_role = 0
+count = 0
+search = 0
+protected_vanish = 0
+groups = 0
+admin_ui = 0
+moderation = 2
+observability = 0
+maturity = 1
+blossom = 2
+
+[evidence]

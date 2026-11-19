@@ -1,0 +1,10 @@
+[Unit]
+Description=Run nostr-relay-bench every Sunday at 02:00
+
+[Timer]
+OnCalendar=Sun *-*-* 02:00:00
+Persistent=true
+RandomizedDelaySec=0
+
+[Install]
+WantedBy=timers.target

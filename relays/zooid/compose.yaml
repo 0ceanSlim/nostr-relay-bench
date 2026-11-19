@@ -1,0 +1,25 @@
+# zooid 0.3 needs PostgreSQL 16+ (as in its README quick start). One virtual relay, served on
+# Host "relay:3334". Default profile: config-default/relay (required fields only).
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-zooid:${REF}
+    environment:
+      DATABASE_URL: postgres://zooid:secret@postgres:5432/zooid?sslmode=disable
+    volumes:
+      - ./config-default:/app/config:ro
+      - media:/app/media
+      - data:/app/data
+    depends_on: { postgres: { condition: service_healthy } }
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+  postgres:
+    image: postgres:16
+    environment: { POSTGRES_USER: zooid, POSTGRES_PASSWORD: secret, POSTGRES_DB: zooid }
+    volumes: [pg:/var/lib/postgresql/data]
+    healthcheck: { test: ["CMD", "pg_isready", "-U", "zooid"], interval: 2s, retries: 30 }
+    cpuset: "${RELAY_CPUS}"
+    networks: [relaybench]
+volumes: { pg: {}, media: {}, data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

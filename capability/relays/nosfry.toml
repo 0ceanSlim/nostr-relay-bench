@@ -1,0 +1,43 @@
+name = "nosfry"
+scored = "2026-11-19"
+summary = "Rust LMDB relay by QuantX modelled on strfry (config, plugin, CLI parity), also builds for Cloudflare Workers. Kinds 4/1059 recipient-only once AUTH is configured."
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 1
+rate_limits = 2
+negentropy = 2
+retention = 1
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 0
+protected_vanish = 2
+groups = 0
+admin_ui = 1
+moderation = 2
+observability = 2
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "NIP-42 when relay.service_url is set; relay.auth.restricted_read_kinds [4, 1059] served only to involved authed pubkeys (nosfry.example.toml). Empty service_url, the default, disables AUTH and never serves those kinds."
+write_policy = "strfry-compatible write policy plugin with timeout, filter_validation rules, NIP-86 allowkind/disallowkind (nosfry.example.toml, crates/nosfry-core/src/management.rs)."
+admission = "NIP-86 allowpubkey list sets restricted_writes (crates/nosfry-core/src/info.rs); no WoT, invites or payments."
+rate_limits = "Per-connection and per-IP token buckets for EVENT and REQ, max_connections_per_ip, max_connections, subscription byte budget (nosfry.example.toml [relay.rate_limits])."
+negentropy = "NIP-77 with max_sync_events and max_sync_memory_bytes caps (crates/nosfry-core/src/sync.rs, nosfry.example.toml)."
+retention = "nosfry delete by filter and --age (CHANGELOG 0.2.0), NIP-40, NIP-62; no scheduled purge."
+deployment = "Release tarballs for linux/macOS, upstream distroless Dockerfile, cargo install, Cloudflare Workers edition (crates/nosfry-worker)."
+backup = "export/import JSONL, scan, compact to a new file (crates/nosfry/src/main.rs, admin.rs)."
+multi_role = "One relay per process."
+count = "NIP-45 COUNT with HLL registers, approximate past max_filter_limit_count (crates/nosfry-lmdb/src/count.rs)."
+search = "NIP-50 search filters refused as unsupported (crates/nosfry-core/src/filter.rs)."
+protected_vanish = "NIP-70 and NIP-62 always advertised (crates/nosfry-core/src/info.rs); protected events rejected while AUTH is off (crates/nosfry/src/config.rs)."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "SIGHUP reloads the config (crates/nosfry/src/main.rs); no admin UI."
+moderation = "NIP-86 ban/allow pubkey, banevent, blockip, allow/disallow kind with NIP-98 admins (crates/nosfry-core/src/management.rs); no NIP-56 intake."
+observability = "Prometheus GET /metrics (crates/nosfry/src/metrics.rs), tracing targets for ingest/inbound/scan."
+maturity = "Repo created October 2026, v0.3.0, 2 GitHub stars; conformance and fuzz suites."
+blossom = "No bundled Blossom server."

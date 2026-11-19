@@ -1,0 +1,14 @@
+# swarm perf profile. Changed from the default profile:
+#   - PUBLIC_ALLOWED_KINDS lists every kind the bench writes (plus a few common ones), so any
+#     pubkey may post them; otherwise only roster members can write. swarm takes no wildcard
+#     here, only an explicit list.
+#   - PUBKEY/IP/CONN/QUERY rate limits blank, which swarm treats as disabled.
+# swarm has no per-filter limit cap or connection cap of its own to raise.
+services:
+  relay:
+    environment:
+      PUBLIC_ALLOWED_KINDS: "0,1,3,4,6,7,1059,10002,10050,20001,21059,30023,30078"
+      PUBKEY_RATE_LIMIT: ""
+      IP_RATE_LIMIT: ""
+      CONN_RATE_LIMIT: ""
+      QUERY_RATE_LIMIT: ""

@@ -1,0 +1,5 @@
+name = "strfry"
+repo = "https://github.com/hoytech/strfry"
+track = "tag"
+tag_pattern = '^\d+\.\d+\.\d+$'
+port = 7777

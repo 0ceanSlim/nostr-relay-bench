@@ -1,0 +1,6 @@
+name = "grain"
+repo = "https://github.com/0ceanSlim/grain"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 8181
+private_giftwraps = true   # kind 1059 only to its recipient, always on

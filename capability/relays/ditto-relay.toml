@@ -1,0 +1,43 @@
+name = "ditto-relay"
+scored = "2026-11-19"
+summary = "Rust on LMDB + Tantivy, AGPL, Soapbox (Alex Gleason). Runs relay.ditto.pub v2.5. Claims 5x strfry. auth_kinds empty by default -> gift wraps public."
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 1
+rate_limits = 1
+negentropy = 2
+retention = 2
+deployment = 3
+backup = 3
+multi_role = 0
+count = 3
+search = 3
+protected_vanish = 3
+groups = 0
+admin_ui = 0
+moderation = 1
+observability = 2
+maturity = 2
+blossom = 0
+
+[evidence]
+auth = "NIP-42; auth_kinds lists kinds readable only by author or tagged pubkeys, ids checked one by one (ditto-relay.example.toml, src/auth.rs). Empty by default, so gift wraps are public."
+write_policy = "strfry-compatible write policy plugin with timeout (src/plugin.rs); max_future_seconds; no built-in kind or pubkey rules."
+admission = "No allowlist, WoT gate or payments built in; only through the write policy plugin. WoT is used for ranking, not admission."
+rate_limits = "No rate limiter or connection cap in src/; per-connection max_subscriptions/max_filters/max_message_size; plugin gets the source IP."
+negentropy = "NIP-77 with negentropy_max_events cap (src/negentropy.rs)."
+retention = "delete by filter with --age, queued background deletion (src/delete.rs, src/purge.rs), history_max_versions, NIP-40, compact/repack."
+deployment = "Static musl binaries plus .deb/.rpm with systemd unit and apt/dnf repos (README Installing); only url required; built-in TLS; no Docker image."
+backup = "export/import JSONL, compact (stopped) and repack (live), crash checkpoints (README Commands, src/checkpoint.rs)."
+multi_role = "One relay per process."
+count = "NIP-45 COUNT with HyperLogLog sketches for large tags (src/hll.rs)."
+search = "NIP-50 on Tantivy with sort:hot/sort:top and WoT ranking (src/search.rs, src/rank.rs)."
+protected_vanish = "NIP-70 author-only publish (src/delete.rs is_protected) and NIP-62 vanish requests queued as deletions (src/pending.rs, src/purge.rs)."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "No admin UI or live config reload; config read at startup."
+moderation = "delete/cancel/deletions CLI over a control socket (src/control.rs); no NIP-86 or NIP-56 intake."
+observability = "Prometheus metrics on metrics_bind (src/metrics.rs), tracing EnvFilter logs."
+maturity = "v2.5.1, runs relay.ditto.pub; Soapbox project."
+blossom = "No bundled Blossom server."

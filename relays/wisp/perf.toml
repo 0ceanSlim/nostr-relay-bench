@@ -1,0 +1,18 @@
+# wisp perf profile: built-in defaults (sync = "meta", workers = auto) with only the per-IP and
+# per-connection limits raised, because all load comes from one container IP. Keys not listed
+# keep wisp's defaults. Gift wraps stay recipient-only (not configurable). query_limit_max is
+# already 5000 and every kind is already accepted.
+[limits]
+# global connection cap, default 1000: the idle step opens 10000 from one IP
+max_connections = 20000
+# per-connection subscriptions, default 20
+max_subscriptions = 200
+
+[rate_limits]
+# per-IP, default 120 events/min and 300 queries/min; 0 disables
+events_per_minute = 0
+queries_per_minute = 0
+
+[security]
+# per-IP connections, default 10 (0 would allow none)
+max_connections_per_ip = 100000

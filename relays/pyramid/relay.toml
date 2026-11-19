@@ -1,0 +1,6 @@
+name = "pyramid"
+repo = "https://github.com/fiatjaf/pyramid"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3334
+notes = "Main relay at / is what's measured. Writes are members-only with no setting to open them, so the perf profile runs the tag with the closing membership check in basicRejectionLogic replaced by true (every other check kept); the default profile is the tag as is, so relay-tester sees the gate. pyramid serves only its setup pages until it has a domain and a root member, so both profiles start with domain relay:3334, a fixed throwaway relay key and a throwaway root member. With a non-local domain pyramid advertises wss://, so NIP-42 AUTH from ws:// clients fails the relay-tag check here."

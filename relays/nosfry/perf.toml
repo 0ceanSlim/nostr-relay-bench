@@ -1,0 +1,25 @@
+# nosfry perf profile: the image's docker/nosfry.toml (bind, db path) plus
+#   - relay.max_connections_per_ip 128 -> 0 (unlimited; all load comes from one container IP)
+#   - relay.rate_limits: every per-connection and per-IP bucket 0 (disabled; shipped 20/100 per s)
+#   - relay.limits.max_filter_limit 500 -> 5000
+#   - relay.auth.restricted_read_kinds [4, 1059] -> [] (gift wraps and DMs readable without AUTH)
+# Every other key keeps the default from nosfry.example.toml.
+
+[db]
+path = "/data/nosfry-db"
+
+[relay]
+bind = "0.0.0.0"
+max_connections_per_ip = 0
+
+[relay.limits]
+max_filter_limit = 5000
+
+[relay.rate_limits]
+events_per_second = 0
+reqs_per_second = 0
+ip_events_per_second = 0
+ip_reqs_per_second = 0
+
+[relay.auth]
+restricted_read_kinds = []

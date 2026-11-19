@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nostr Relay Bench</title>
+<meta name="description" content="A weekly benchmark of Nostr relay implementations: performance, correctness and capability, side by side.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header class="top">
+    <h1>Nostr Relay Bench</h1>
+    <p class="lede">Every week, each actively developed Nostr relay is built from its latest release, loaded with the same million events on the same machine, and checked against the protocol. Capability is scored from each relay's code and docs.</p>
+    <p class="runline" id="runline">Loading…</p>
+  </header>
+
+  <section id="board-sec">
+    <div class="sec-head">
+      <h2>Scoreboard</h2>
+      <div class="seg" role="group" aria-label="Which relays" id="scope"></div>
+    </div>
+    <p class="note">Performance is each relay against strfry on the same run (strfry = 100), across writing, reading, live delivery and connections. Correctness is the share of relay-tester's required checks passed with the relay as shipped. Click a column to sort and a relay for its details.</p>
+    <div class="scroll"><table class="board" id="board"></table></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Performance by area</h2></div>
+    <p class="note">Each panel is the geometric mean of that area's tests, strfry = 100, on a log scale. A missing bar says why: not supported, refused by the relay's policy, or wrong answers (a fast wrong answer isn't counted).</p>
+    <div class="multiples" id="perf"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Capability by group</h2></div>
+    <p class="note">Eighteen criteria, each scored 0–3 and weighted 1–5, rolled up into four groups. The full matrix with the reasoning behind each score is below.</p>
+    <div class="multiples" id="cap"></div>
+    <details class="more">
+      <summary>All 18 criteria</summary>
+      <div class="scroll"><table class="heat" id="heat"></table></div>
+    </details>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Over time</h2></div>
+    <p class="note" id="trend-note"></p>
+    <div class="trends" id="trend"></div>
+  </section>
+
+  <section>
+    <details class="more">
+      <summary>Catalog: every relay implementation we know of <span class="muted" id="cat-count"></span></summary>
+      <p class="note">Active, slowing and dormant come from Vitor's commit survey of 19 Nov 2026. "Missed" were not in it. Benchmarked relays are refreshed weekly. To add one, send a PR to <code>catalog.toml</code>.</p>
+      <div class="seg" role="group" aria-label="Filter by tier" id="cat-f"></div>
+      <div class="scroll"><table class="cat" id="cat"></table></div>
+    </details>
+  </section>
+
+  <section>
+    <details class="more" id="method">
+      <summary>Method</summary>
+      <div class="prose" id="method-body"></div>
+    </details>
+  </section>
+
+  <footer class="foot">
+    <p>Harness, configs and raw results: <a id="repo-link" href="https://github.com/0ceanSlim/nostr-relay-bench">nostr-relay-bench</a>. If your relay's config is unfair to it, send a PR.</p>
+  </footer>
+</main>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+  <div id="d-body"></div>
+</dialog>
+<div id="tip" role="tooltip" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

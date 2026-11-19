@@ -1,0 +1,25 @@
+name = "nostrcheck"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 1
+write_policy = 2
+admission = 2
+rate_limits = 1
+negentropy = 0
+retention = 1
+deployment = 1
+backup = 1
+multi_role = 1
+count = 2
+search = 2
+protected_vanish = 2
+groups = 0
+admin_ui = 2
+moderation = 2
+observability = 1
+maturity = 1
+blossom = 3
+
+[evidence]

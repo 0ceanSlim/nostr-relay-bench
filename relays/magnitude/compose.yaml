@@ -1,0 +1,12 @@
+# Built with upstream's own Dockerfile at the resolved commit; the default profile is the
+# relay.toml that image ships.
+services:
+  relay:
+    build: { context: "https://github.com/VectorPrivacy/magnitude-relay.git#${REF}" }
+    image: rb-magnitude:${REF}
+    volumes: [data:/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

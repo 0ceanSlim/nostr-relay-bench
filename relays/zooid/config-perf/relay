@@ -1,0 +1,17 @@
+# zooid virtual relay, perf profile: the default config plus an open policy, so non-members
+# can read without AUTH and write (writes also need the zooid-perf binary, see Dockerfile).
+# zooid has no rate limits or kind allowlist to lift; gift wraps are readable by anyone it
+# lets read.
+host = "relay:3334"
+schema = "bench"
+secret = "72752b767ff8b538de9254bcdec9505ef4b5aed66e05a85fd8da9d84fc8e33bb"
+
+[info]
+name = "zooid"
+pubkey = "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4"
+description = "nostr-relay-bench instance"
+
+[policy]
+public_read = true
+anonymous_read = true
+public_write = true

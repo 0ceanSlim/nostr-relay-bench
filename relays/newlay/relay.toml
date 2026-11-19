@@ -1,0 +1,8 @@
+name = "newlay"
+repo = "https://code.relay.tools/opensauce/newlay"
+git = "https://code.relay.tools/opensauce/newlay.git"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 7777
+private_giftwraps = false   # shipped relay.mode is "open"; "nip17" would gate 1059 to the AUTHed recipient
+notes = "Built with upstream's Dockerfile at the tag (the published image is not pushed for every tag). Default profile: deploy/docker/newlay.toml with relay.url set to ws://relay:7777 so NIP-42 relay tags match. No identity key, so NIP-29/NIP-43 stay off. Default also sets [limits_message] enabled = false: relay-tester aborts on the NIP-65535 LIMITS frame newlay sends on connect. EVENTs on one connection are handled one at a time (the OK waits for the commit, ~60 ms here), so ingest and fan-out publishing scale with connections, not with the window. The shipped anon tier (30 events/min, cut further by the behavior score) rate-limits most relay-tester writes."

@@ -1,0 +1,536 @@
+{
+ "date": "2026-11-19",
+ "relays": {
+  "vespa-relay": {
+   "name": "vespa-relay",
+   "commits_90d": 913,
+   "last_commit": "2026-11-19"
+  },
+  "morp": {
+   "name": "MORP",
+   "commits_90d": 202,
+   "last_commit": "2026-11-04"
+  },
+  "nostrfy": {
+   "name": "nostrfy",
+   "commits_90d": 437,
+   "last_commit": "2026-11-10"
+  },
+  "nostream": {
+   "name": "nostream",
+   "commits_90d": 401,
+   "last_commit": "2026-11-19"
+  },
+  "ditto-relay": {
+   "name": "ditto-relay",
+   "commits_90d": 151,
+   "last_commit": "2026-11-19"
+  },
+  "newlay": {
+   "name": "newlay",
+   "commits_90d": 129,
+   "last_commit": "2026-11-19"
+  },
+  "zapstore-relay": {
+   "name": "zapstore relay",
+   "commits_90d": 103,
+   "last_commit": "2026-11-17"
+  },
+  "grain": {
+   "name": "grain",
+   "commits_90d": 72,
+   "last_commit": "2026-11-13"
+  },
+  "mattn-nostr-relay": {
+   "name": "nostr-relay (mattn)",
+   "commits_90d": 60,
+   "last_commit": "2026-11-11"
+  },
+  "citrine": {
+   "name": "Citrine",
+   "commits_90d": 57,
+   "last_commit": "2026-11-18"
+  },
+  "swarm": {
+   "name": "swarm",
+   "commits_90d": 51,
+   "last_commit": "2026-11-17"
+  },
+  "pyramid": {
+   "name": "pyramid",
+   "commits_90d": 51,
+   "last_commit": "2026-11-09"
+  },
+  "rnostr": {
+   "name": "rnostr",
+   "commits_90d": 45,
+   "last_commit": "2026-11-18"
+  },
+  "wisp": {
+   "name": "wisp",
+   "commits_90d": 33,
+   "last_commit": "2026-11-14"
+  },
+  "orly": {
+   "name": "ORLY",
+   "commits_90d": 23,
+   "last_commit": "2026-10-29"
+  },
+  "wot-relay": {
+   "name": "wot-relay",
+   "commits_90d": 20,
+   "last_commit": "2026-11-14"
+  },
+  "haven": {
+   "name": "HAVEN",
+   "commits_90d": 13,
+   "last_commit": "2026-11-14"
+  },
+  "hubstr": {
+   "name": "Hubstr / nostr-relay (johninnis)",
+   "commits_90d": 13,
+   "last_commit": "2026-11-09"
+  },
+  "servus": {
+   "name": "Servus",
+   "commits_90d": 3,
+   "last_commit": "2026-11-18"
+  },
+  "Relay Manager": {
+   "name": "Relay Manager",
+   "commits_90d": 0,
+   "last_commit": "2024-07-23"
+  },
+  "cagliostr": {
+   "name": "cagliostr",
+   "commits_90d": 30,
+   "last_commit": "2026-10-17"
+  },
+  "chronicle": {
+   "name": "chronicle",
+   "commits_90d": 9,
+   "last_commit": "2026-10-16"
+  },
+  "superconductor": {
+   "name": "SuperConductor",
+   "commits_90d": 61,
+   "last_commit": "2026-11-18"
+  },
+  "bcr-relay": {
+   "name": "bcr-relay",
+   "commits_90d": 2,
+   "last_commit": "2026-09-24"
+  },
+  "cfrelay": {
+   "name": "cfrelay",
+   "commits_90d": 4,
+   "last_commit": "2026-09-22"
+  },
+  "Nostra (Notra)": {
+   "name": "Nostra (Notra)",
+   "commits_90d": 25,
+   "last_commit": "2026-09-20"
+  },
+  "Relayer Basic": {
+   "name": "Relayer Basic",
+   "commits_90d": 17,
+   "last_commit": "2026-09-14"
+  },
+  "nostrdb-rs": {
+   "name": "nostrdb-rs",
+   "commits_90d": 7,
+   "last_commit": "2026-09-07"
+  },
+  "strfry": {
+   "name": "strfry",
+   "commits_90d": 8,
+   "last_commit": "2026-09-04"
+  },
+  "Transpher": {
+   "name": "Transpher",
+   "commits_90d": 4,
+   "last_commit": "2026-08-25"
+  },
+  "Minds Engine - Nostr": {
+   "name": "Minds Engine - Nostr",
+   "commits_90d": 1,
+   "last_commit": "2026-08-24"
+  },
+  "nostr-relay-tray": {
+   "name": "nostr-relay-tray",
+   "commits_90d": 1,
+   "last_commit": "2026-08-30"
+  },
+  "LNbits nostrrelay": {
+   "name": "LNbits nostrrelay",
+   "commits_90d": 3,
+   "last_commit": "2026-11-09"
+  },
+  "NNostr": {
+   "name": "NNostr",
+   "commits_90d": 0,
+   "last_commit": "2026-08-18"
+  },
+  "HORNET Storage": {
+   "name": "HORNET Storage",
+   "commits_90d": 0,
+   "last_commit": "2026-08-07"
+  },
+  "broadcastr": {
+   "name": "broadcastr",
+   "commits_90d": 0,
+   "last_commit": "2026-07-24"
+  },
+  "nostrcheck": {
+   "name": "nostrcheck-server",
+   "commits_90d": 0,
+   "last_commit": "2026-07-16"
+  },
+  "Nosflare": {
+   "name": "Nosflare",
+   "commits_90d": 0,
+   "last_commit": "2026-06-18"
+  },
+  "nostr-rs-relay": {
+   "name": "nostr-rs-relay",
+   "commits_90d": 0,
+   "last_commit": "2026-05-22"
+  },
+  "rely": {
+   "name": "rely",
+   "commits_90d": 0,
+   "last_commit": "2026-05-16"
+  },
+  "ngit-relay": {
+   "name": "ngit-relay",
+   "commits_90d": 0,
+   "last_commit": "2026-05-06"
+  },
+  "nostr-sqlite": {
+   "name": "nostr-sqlite",
+   "commits_90d": 0,
+   "last_commit": "2026-05-05"
+  },
+  "chorus": {
+   "name": "chorus",
+   "commits_90d": 0,
+   "last_commit": "2026-04-30"
+  },
+  "Fenrir-s": {
+   "name": "Fenrir-s",
+   "commits_90d": 0,
+   "last_commit": "2026-04-16"
+  },
+  "Bostr2": {
+   "name": "Bostr2",
+   "commits_90d": 0,
+   "last_commit": "2026-04-11"
+  },
+  "bloom": {
+   "name": "bloom",
+   "commits_90d": 0,
+   "last_commit": "2026-04-09"
+  },
+  "n0str": {
+   "name": "n0str",
+   "commits_90d": 0,
+   "last_commit": "2026-02-01"
+  },
+  "super_ball": {
+   "name": "super_ball",
+   "commits_90d": 0,
+   "last_commit": "2025-12-01"
+  },
+  "Shugur": {
+   "name": "Shugur",
+   "commits_90d": 0,
+   "last_commit": "2025-10-22"
+  },
+  "cassette": {
+   "name": "cassette",
+   "commits_90d": 0,
+   "last_commit": "2025-10-12"
+  },
+  "Bostr": {
+   "name": "Bostr",
+   "commits_90d": 0,
+   "last_commit": "2025-09-04"
+  },
+  "NIP-29 Group Chat Relay": {
+   "name": "NIP-29 Group Chat Relay",
+   "commits_90d": 0,
+   "last_commit": "2025-05-10"
+  },
+  "Nostpy": {
+   "name": "Nostpy",
+   "commits_90d": 0,
+   "last_commit": "2025-03-29"
+  },
+  "AlgoRelay": {
+   "name": "AlgoRelay",
+   "commits_90d": 0,
+   "last_commit": "2025-02-28"
+  },
+  "nostr-relay-nestjs": {
+   "name": "nostr-relay-nestjs",
+   "commits_90d": 0,
+   "last_commit": "2025-01-05"
+  },
+  "tandem": {
+   "name": "tandem",
+   "commits_90d": 0,
+   "last_commit": "2024-12-08"
+  },
+  "netstr": {
+   "name": "netstr",
+   "commits_90d": 0,
+   "last_commit": "2024-12-04"
+  },
+  "jingle": {
+   "name": "jingle",
+   "commits_90d": 0,
+   "last_commit": "2024-09-22"
+  },
+  "nostr-filter-relay": {
+   "name": "nostr-filter-relay",
+   "commits_90d": 0,
+   "last_commit": "2024-09-12"
+  },
+  "monstr": {
+   "name": "monstr",
+   "commits_90d": 0,
+   "last_commit": "2024-07-16"
+  },
+  "Denostr": {
+   "name": "Denostr",
+   "commits_90d": 0,
+   "last_commit": "2024-01-24"
+  },
+  "multiplextr": {
+   "name": "multiplextr",
+   "commits_90d": 0,
+   "last_commit": "2023-12-13"
+  },
+  "Nerostr": {
+   "name": "Nerostr",
+   "commits_90d": 12,
+   "last_commit": "2026-11-11"
+  },
+  "booger": {
+   "name": "booger",
+   "commits_90d": 0,
+   "last_commit": "2023-08-09"
+  },
+  "nostring": {
+   "name": "nostring",
+   "commits_90d": 0,
+   "last_commit": "2023-04-06"
+  },
+  "Nex": {
+   "name": "Nex",
+   "commits_90d": 0,
+   "last_commit": "2023-02-14"
+  },
+  "me.untethr.nostr-relay": {
+   "name": "me.untethr.nostr-relay",
+   "commits_90d": 0,
+   "last_commit": "2023-01-31"
+  },
+  "expensive-relay": {
+   "name": "expensive-relay",
+   "commits_90d": 0,
+   "last_commit": "2022-08-20"
+  },
+  "relay29": {
+   "name": "relay29",
+   "commits_90d": 0,
+   "last_commit": "2025-06-21"
+  },
+  "saltivka": {
+   "name": "saltivka",
+   "commits_90d": 0,
+   "last_commit": "2024-01-10"
+  },
+  "blobstr-relay": {
+   "name": "blobstr-relay",
+   "commits_90d": 0,
+   "last_commit": "2025-04-17"
+  },
+  "magnitude": {
+   "name": "magnitude-relay",
+   "commits_90d": 202,
+   "last_commit": "2026-10-30"
+  },
+  "zooid": {
+   "name": "zooid",
+   "commits_90d": 40,
+   "last_commit": "2026-11-11"
+  },
+  "Parrhesia": {
+   "name": "Parrhesia",
+   "commits_90d": 0,
+   "last_commit": "2026-06-09"
+  },
+  "nosfry": {
+   "name": "nosfry",
+   "commits_90d": 179,
+   "last_commit": "2026-11-16"
+  },
+  "Ditto (server)": {
+   "name": "Ditto (server)",
+   "commits_90d": 537,
+   "last_commit": "2026-11-19"
+  },
+  "lisp-nostr-relay": {
+   "name": "lisp-nostr-relay",
+   "commits_90d": 24,
+   "last_commit": "2026-11-19"
+  },
+  "SW2": {
+   "name": "SW2",
+   "commits_90d": 10,
+   "last_commit": "2026-11-12"
+  },
+  "nostr-relay-builder": {
+   "name": "nostr-relay-builder",
+   "commits_90d": 75,
+   "last_commit": "2026-11-17"
+  },
+  "nak serve": {
+   "name": "nak serve",
+   "commits_90d": 100,
+   "last_commit": "2026-11-08"
+  },
+  "smartflowsocial-blastr": {
+   "name": "smartflowsocial-blastr",
+   "commits_90d": 26,
+   "last_commit": "2026-11-18"
+  },
+  "relaycreator": {
+   "name": "relaycreator",
+   "commits_90d": 2,
+   "last_commit": "2026-10-26"
+  },
+  "hns-relay": {
+   "name": "hns-relay",
+   "commits_90d": 9,
+   "last_commit": "2026-10-23"
+  },
+  "Bucket": {
+   "name": "Bucket",
+   "commits_90d": 3,
+   "last_commit": "2026-10-23"
+  },
+  "Snowflare": {
+   "name": "Snowflare",
+   "commits_90d": 33,
+   "last_commit": "2026-10-03"
+  },
+  "nostr-relay (CodyTseng)": {
+   "name": "nostr-relay (CodyTseng)",
+   "commits_90d": 1,
+   "last_commit": "2026-08-30"
+  },
+  "nostr-filter": {
+   "name": "nostr-filter",
+   "commits_90d": 0,
+   "last_commit": "2026-08-14"
+  },
+  "ContextVM relay": {
+   "name": "ContextVM relay",
+   "commits_90d": 0,
+   "last_commit": "2026-03-20"
+  },
+  "groups_relay": {
+   "name": "groups_relay",
+   "commits_90d": 0,
+   "last_commit": "2026-02-11"
+  },
+  "noshtastic": {
+   "name": "noshtastic",
+   "commits_90d": 0,
+   "last_commit": "2025-06-02"
+  },
+  "Alienos": {
+   "name": "Alienos",
+   "commits_90d": 0,
+   "last_commit": "2025-02-23"
+  },
+  "Immortal": {
+   "name": "Immortal",
+   "commits_90d": null,
+   "last_commit": null,
+   "error": "exit 128: git clone -q --bare --filter=blob:none --depth=1 https://github.com/dezh-tech/immortal C:\\code\\nostr-relay-bench\\.cache\\git\\act-Immortal\nremote: Repository not found.\nfatal: repository 'http"
+  },
+  "noxir": {
+   "name": "noxir",
+   "commits_90d": 0,
+   "last_commit": "2025-01-20"
+  },
+  "mimoty": {
+   "name": "mimoty",
+   "commits_90d": 0,
+   "last_commit": "2024-10-26"
+  },
+  "note-mixer-relay": {
+   "name": "note-mixer-relay",
+   "commits_90d": 0,
+   "last_commit": "2024-10-04"
+  },
+  "keychat-relay-ext": {
+   "name": "keychat-relay-ext",
+   "commits_90d": 0,
+   "last_commit": "2024-07-10"
+  },
+  "blastr": {
+   "name": "blastr",
+   "commits_90d": 0,
+   "last_commit": "2024-01-25"
+  },
+  "NostrPostr Relay": {
+   "name": "NostrPostr Relay",
+   "commits_90d": 0,
+   "last_commit": "2023-10-13"
+  },
+  "gnost-relay": {
+   "name": "gnost-relay",
+   "commits_90d": 0,
+   "last_commit": "2023-09-05"
+  },
+  "pyrelay": {
+   "name": "pyrelay",
+   "commits_90d": 0,
+   "last_commit": "2023-04-08"
+  },
+  "Ephemerelay": {
+   "name": "Ephemerelay",
+   "commits_90d": 0,
+   "last_commit": "2023-03-27"
+  },
+  "knostr": {
+   "name": "knostr",
+   "commits_90d": 0,
+   "last_commit": "2023-03-08"
+  },
+  "Astro": {
+   "name": "Astro",
+   "commits_90d": 0,
+   "last_commit": "2023-02-21"
+  },
+  "peakshift nostr-relay": {
+   "name": "peakshift nostr-relay",
+   "commits_90d": 0,
+   "last_commit": "2023-01-25"
+  },
+  "søstr": {
+   "name": "søstr",
+   "commits_90d": 0,
+   "last_commit": "2023-01-02"
+  },
+  "gc_index_relay": {
+   "name": "gc_index_relay (Mercury)",
+   "commits_90d": 7,
+   "last_commit": "2026-09-08"
+  }
+ }
+}

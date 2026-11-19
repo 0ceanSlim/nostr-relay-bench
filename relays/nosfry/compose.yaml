@@ -1,0 +1,12 @@
+# Built with upstream's own Dockerfile at the resolved tag. The default profile is the config that
+# image ships (docker/nosfry.toml: bind 0.0.0.0, LMDB at /data/nosfry-db).
+services:
+  relay:
+    build: { context: "https://github.com/qntx/nosfry.git#${REF}" }
+    image: rb-nosfry:${REF}
+    volumes: [data:/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

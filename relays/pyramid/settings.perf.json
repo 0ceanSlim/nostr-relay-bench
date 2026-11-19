@@ -1,0 +1,15 @@
+{
+  "domain": "relay:3334",
+  "relay_name": "pyramid",
+  "relay_description": "nostr-relay-bench instance",
+  "relay_internal_secret_key": "72752b767ff8b538de9254bcdec9505ef4b5aed66e05a85fd8da9d84fc8e33bb",
+  "allowed_kinds_spec": "all",
+  "limits": {
+    "max_event_size": 10000,
+    "max_subscriptions_open": 1000000000,
+    "max_total_cost_open": 1000000000,
+    "max_indexable_tags": 14,
+    "max_entries_in_follow_list": 1600,
+    "max_query_limit": 5000
+  }
+}

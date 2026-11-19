@@ -1,0 +1,10 @@
+# ditto-relay perf profile: default.toml plus
+#   - max_limit 1000 -> 5000 (per-filter limit cap)
+#   - max_subscriptions 20 -> 200 (per connection)
+# There are no per-IP or per-pubkey rate limits to lift, every kind is accepted, and gift wraps
+# are already readable without AUTH (auth_kinds = [] is the default).
+url = "ws://relay:13131/"
+bind = "0.0.0.0:13131"
+data_dir = "/data"
+max_limit = 5000
+max_subscriptions = 200

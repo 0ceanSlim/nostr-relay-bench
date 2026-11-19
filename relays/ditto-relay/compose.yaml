@@ -1,0 +1,17 @@
+# ditto-relay built from source at the resolved tag (Dockerfile here; upstream ships none).
+# The config is picked by MODE: default.toml (the relay as shipped plus the settings it needs to
+# start in a container) or perf.toml.
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-ditto-relay:${REF}
+    environment: { MODE: "${MODE}" }
+    volumes:
+      - data:/data
+      - ./default.toml:/etc/ditto-relay/default.toml:ro
+      - ./perf.toml:/etc/ditto-relay/perf.toml:ro
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

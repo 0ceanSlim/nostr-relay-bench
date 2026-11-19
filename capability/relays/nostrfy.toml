@@ -1,0 +1,43 @@
+name = "nostrfy"
+scored = "2026-11-19"
+summary = "Rust LMDB (heed), iqbqioza. Per-event 1059 gating incl. negentropy. Claims 21-22k ev/s."
+
+[scores]
+auth = 3
+write_policy = 2
+admission = 2
+rate_limits = 2
+negentropy = 2
+retention = 1
+deployment = 2
+backup = 1
+multi_role = 1
+count = 2
+search = 2
+protected_vanish = 3
+groups = 3
+admin_ui = 2
+moderation = 2
+observability = 2
+maturity = 1
+blossom = 3
+
+[evidence]
+auth = "NIP-42; kind 1059/21059 served only to the authed recipient, per event, incl. negentropy; NIP-67 EOSE auth hint; require_auth option (docs/MANUAL.md section 8). Gating follows NIP-42 on/off."
+write_policy = "allowed/blocked kinds, pubkey allow/deny lists, require_pow, new_pubkey_min_age_secs, inbox/outbox write policies (docs/CONFIGURATION.md); no plugin hook."
+admission = "restrict_relay allowlist and NIP-43 invite claims via createclaim (docs/MANUAL.md section 7)."
+rate_limits = "max_connections_per_ip, max_connections_per_sec_per_ip, max_events_per_min_per_pubkey, global max_connections (docs/CONFIGURATION.md); no per-kind or REQ rate."
+negentropy = "NIP-77 with max_neg_items cap and recipient gating (src/nips/nip77)."
+retention = "NIP-40 purge every purge_interval_secs, NIP-09 and NIP-62 removal (src/db/removal.rs); no age- or kind-based retention."
+deployment = "Release binaries with install.sh, Dockerfile installing the release binary, Fly/AWS/GCP/VPS guides (docs/deploy); nostrfy init writes defaults."
+backup = "migrate-strfry imports a strfry DB or JSONL export (docs/MIGRATING-FROM-STRFRY.md); no export command."
+multi_role = "Separate /inbox and /outbox WS paths with their own write policies; several instances per host (docs/MANUAL.md 11b)."
+count = "NIP-45 COUNT with HyperLogLog registers, max_count cap reports approximate (docs/MANUAL.md section 8)."
+search = "NIP-50 full-text, relevance-ordered, search_index (src/nips/nip50.rs)."
+protected_vanish = "NIP-70; NIP-62 purges history and permanently bans the pubkey (docs/MANUAL.md section 8)."
+groups = "NIP-29 groups with subgroups and visibility settings, NIP-43 roles and invites (src/nips/nip29, src/nips/nip43.rs)."
+admin_ui = "SIGHUP config reload; NIP-86 changes kinds, IPs, pubkeys, relay name and roles at runtime, persisted; no web admin UI."
+moderation = "NIP-86 ban/allow pubkey, ban/allow event, blockip, kind allow, delegated method grants (docs/MANUAL.md section 7); listeventsneedingmoderation always empty."
+observability = "Prometheus /metrics, stats file and /relay/stats endpoint, log rotation (docs/MANUAL.md section 12)."
+maturity = "Repo created August 2026, v0.1.26, 20 GitHub stars; live instance relay.nostrfy.org."
+blossom = "Built-in Blossom server, local or S3/R2 storage, upload allowlist (docs/MANUAL.md section 11)."

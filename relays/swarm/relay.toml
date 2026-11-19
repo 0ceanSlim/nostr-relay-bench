@@ -1,0 +1,8 @@
+name = "swarm"
+repo = "https://github.com/HiveTalk/swarm"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3334
+# Setup, kept for when it is re-enabled: Upstream Dockerfile at the tag, environment from upstream docker-compose.yml. RELAY_PUBKEY and the team roster are a throwaway test key. Writes are team-only unless a kind is in PUBLIC_ALLOWED_KINDS: the perf profile lists every kind the bench sends and blanks the four rate limiters; the default profile has no public kinds and the shipped 5/10/2/100 limits, so relay-tester sees the gate.
+disabled = true
+notes = "khatru engine; benchmarked via pyramid (new engine) and haven (old engine)"

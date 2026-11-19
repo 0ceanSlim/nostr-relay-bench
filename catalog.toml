@@ -1,0 +1,959 @@
+# Every relay implementation we know of. tier: active / slowing / dormant are from Vitor's
+# 19 Nov 2026 commit survey; missed = not in it. id links to capability/relays/<id>.toml
+# and relays/<id>/ when the relay is scored or benchmarked. Add yours with a PR.
+
+[[relay]]
+name = "vespa-relay"
+id = "vespa-relay"
+tier = "active"
+repo = "https://github.com/NosFabrica/vespa-relay"
+language = "Kotlin"
+storage = "Vespa"
+about = "Search relay that ranks every read through the reader's web of trust; built on Amethyst's quartz"
+notes = "Reads need an observer: lens or AUTH by default; Vespa wants ~34 GB"
+
+[[relay]]
+name = "MORP"
+id = "morp"
+tier = "active"
+git = "https://relay.ngit.dev/npub1te6ect9y5n3z9wn6lz0xluc4u8f8ssl730g28elxre96tvwqwvnqgneqew/MORP-Base.git"
+repo = "https://gitworkshop.dev/npub1te6ect9y5n3z9wn6lz0xluc4u8f8ssl730g28elxre96tvwqwvnqgneqew/relay.ngit.dev/MORP-Base"
+language = "Python"
+storage = "SQLite"
+about = "Relay that bridges to Tor, I2P, LoRa and Reticulum meshes (MORP-Base, -Box, -NERD)"
+notes = "Paused until the NERD spec is done; commits authored by agent roles"
+
+[[relay]]
+name = "nostrfy"
+id = "nostrfy"
+tier = "active"
+repo = "https://github.com/iqbqioza/nostrfy"
+language = "Rust"
+storage = "LMDB (heed)"
+about = "Feature-heavy general relay: NIP-29 groups, Blossom, LiveKit, REST API"
+notes = "Claims 21-22k events/s (own bench); has migrate-strfry"
+
+[[relay]]
+name = "nostream"
+id = "nostream"
+tier = "active"
+repo = "https://github.com/cameri/nostream"
+language = "TypeScript"
+storage = "PostgreSQL + Redis"
+about = "Popular general-purpose relay"
+
+[[relay]]
+name = "ditto-relay"
+id = "ditto-relay"
+tier = "active"
+git = "https://relay.ngit.dev/npub10qdp2fc9ta6vraczxrcs8prqnv69fru2k6s2dj48gqjcylulmtjsg9arpj/ditto-relay.git"
+repo = "https://gitworkshop.dev/soapbox.pub/ditto-relay"
+language = "Rust"
+storage = "LMDB + Tantivy"
+about = "Soapbox's public relay, rewritten off OpenSearch; runs relay.ditto.pub"
+notes = "Claims 5x strfry on 2M real events; gift wraps public unless auth_kinds is set"
+
+[[relay]]
+name = "newlay"
+id = "newlay"
+tier = "active"
+repo = "https://code.relay.tools/opensauce/newlay"
+language = "Kotlin MP"
+storage = "LMDB"
+about = "Tiered-ACL relay for a server or a phone, with WoT, NIP-29/43 and Blossom"
+notes = "Top capability score; about 4 months old"
+
+[[relay]]
+name = "zapstore relay"
+id = "zapstore-relay"
+tier = "active"
+repo = "https://github.com/zapstore/relay"
+language = "Go"
+storage = "SQLite"
+about = "Backend for the Zapstore app store: catalog relay plus Blossom for APKs"
+notes = "Not a general relay; NIP-11 supported_nips is null"
+
+[[relay]]
+name = "grain"
+id = "grain"
+tier = "active"
+repo = "https://github.com/0ceanSlim/grain"
+language = "Go"
+storage = "nostrdb (LMDB)"
+about = "Configurable relay with web admin, plus a client library"
+
+[[relay]]
+name = "nostr-relay (mattn)"
+id = "mattn-nostr-relay"
+tier = "active"
+repo = "https://github.com/mattn/nostr-relay"
+language = "Go"
+storage = "SQLite / Postgres / MySQL"
+about = "Small general relay that scales out over Redis or Postgres pub/sub"
+notes = "Kind-less #p filters return gift wraps (relayer); /gc and /reload unauthenticated"
+
+[[relay]]
+name = "Citrine"
+id = "citrine"
+tier = "active"
+repo = "https://github.com/greenart7c3/Citrine"
+language = "Kotlin"
+storage = "Room (SQLite)"
+about = "Relay that runs on an Android phone"
+notes = "A REQ with no kinds/authors/#p may pass its AUTH gate (read in code, untested)"
+
+[[relay]]
+name = "swarm"
+id = "swarm"
+tier = "active"
+repo = "https://github.com/HiveTalk/swarm"
+language = "Go"
+storage = "Badger / LMDB / Postgres"
+about = "Team relay with Blossom, scheduled posts and X crossposting (khatru)"
+notes = "Trusted-client bypass reads a forgeable client tag"
+
+[[relay]]
+name = "pyramid"
+id = "pyramid"
+tier = "active"
+repo = "https://github.com/fiatjaf/pyramid"
+language = "Go"
+storage = "LMDB"
+about = "Invite-tree community relay with per-member DBs, Blossom and nsite"
+
+[[relay]]
+name = "rnostr"
+id = "rnostr"
+tier = "active"
+repo = "https://github.com/rnostr/rnostr"
+language = "Rust"
+storage = "LMDB"
+about = "Scalable, strfry-inspired relay"
+
+[[relay]]
+name = "wisp"
+id = "wisp"
+tier = "active"
+repo = "https://github.com/privkeyio/wisp"
+language = "Zig"
+storage = "LMDB"
+about = "Lightweight relay with a spider mode for follows"
+
+[[relay]]
+name = "ORLY"
+id = "orly"
+tier = "active"
+repo = "https://git.smesh.lol/orly"
+language = "Go"
+storage = "Badger (+ others)"
+about = "Relay with ACLs, Blossom and a web UI"
+notes = "Author's GitHub now 404s"
+
+[[relay]]
+name = "wot-relay"
+id = "wot-relay"
+tier = "active"
+repo = "https://github.com/barrydeen/wot-relay"
+language = "Go"
+storage = "LMDB"
+about = "Personal web-of-trust relay that archives your network's notes (khatru)"
+notes = "New NIP-75 funding gate; archive sync stores kind 4 it refuses on write"
+
+[[relay]]
+name = "HAVEN"
+id = "haven"
+tier = "active"
+repo = "https://github.com/barrydeen/haven"
+language = "Go"
+storage = "LMDB"
+about = "Four personal relays plus Blossom in one binary (khatru)"
+notes = "README: feature complete, bug fixes only"
+
+[[relay]]
+name = "Hubstr / nostr-relay (johninnis)"
+id = "hubstr"
+tier = "slowing"
+repo = "https://github.com/johninnis/hubstr-relay"
+language = "PHP 8.4"
+storage = "SQLite + FTS5"
+about = "Personal relay and NIP-17 inbox; built on his embeddable nostr-relay library"
+notes = "Survey spells it johnninnis; gates 1059 to the recipient in the store"
+
+[[relay]]
+name = "broadcast-relay"
+tier = "slowing"
+about = "Not found"
+notes = "Closest matches: broadcastr, smartflowsocial-blastr"
+
+[[relay]]
+name = "Servus"
+id = "servus"
+tier = "slowing"
+archived = true
+repo = "https://github.com/ibz/servus"
+language = "Rust"
+storage = "flat files"
+about = "Single-binary personal site that is also a relay and Blossom server"
+notes = "discontinued 18 Nov 2026"
+
+[[relay]]
+name = "Relay Manager"
+tier = "slowing"
+repo = "https://github.com/mikedilger/relay-manager"
+language = "Rust"
+about = "NIP-86 management CLI (best guess; name is ambiguous)"
+notes = "Not a relay"
+
+[[relay]]
+name = "cagliostr"
+tier = "slowing"
+repo = "https://github.com/mattn/cagliostr"
+language = "C++"
+storage = "SQLite / Postgres"
+about = "Fast general-purpose relay"
+
+[[relay]]
+name = "chronicle"
+tier = "slowing"
+repo = "https://github.com/dtonon/chronicle"
+language = "Go"
+storage = "bbolt / LMDB"
+about = "Personal outbox relay that archives your notes and threads (khatru)"
+
+[[relay]]
+name = "SuperConductor"
+id = "superconductor"
+tier = "slowing"
+repo = "https://github.com/avlo/superconductor"
+language = "Java"
+storage = "SQL via JPA / Redis"
+about = "Spring Boot relay framework and reference relay"
+notes = "supported_nips lists client-side NIPs"
+
+[[relay]]
+name = "bcr-relay"
+tier = "slowing"
+repo = "https://github.com/BitcreditProtocol/bcr-relay"
+language = "Rust"
+about = "Relay for the Bitcredit protocol"
+notes = "Moved into Wildcat-Auxiliary"
+
+[[relay]]
+name = "cfrelay"
+tier = "slowing"
+repo = "https://github.com/haorendashu/cfrelay"
+language = "JavaScript"
+storage = "Cloudflare D1"
+about = "Personal relay on Cloudflare Workers"
+
+[[relay]]
+name = "Nostra (Notra)"
+tier = "slowing"
+repo = "https://github.com/lontivero/Nostra"
+language = "F#"
+storage = "SQLite"
+about = "F# Nostr library plus relay"
+
+[[relay]]
+name = "Relayer Basic"
+tier = "slowing"
+repo = "https://github.com/fiatjaf/relayer"
+language = "Go"
+storage = "PostgreSQL"
+about = "Example relay on relayer, khatru's predecessor"
+notes = "Library example"
+
+[[relay]]
+name = "ngit-indexer"
+tier = "slowing"
+about = "Not found"
+notes = "Possibly an ngit/GRASP component"
+
+[[relay]]
+name = "nostrdb-rs"
+tier = "slowing"
+repo = "https://github.com/damus-io/nostrdb-rs"
+language = "Rust (C core)"
+storage = "nostrdb (LMDB)"
+about = "Rust bindings for nostrdb"
+notes = "A database, not a relay"
+
+[[relay]]
+name = "strfry"
+id = "strfry"
+tier = "slowing"
+repo = "https://github.com/hoytech/strfry"
+language = "C++"
+storage = "LMDB"
+about = "High-performance relay with negentropy, router and plugins"
+notes = "Largest install base"
+
+[[relay]]
+name = "Transpher"
+tier = "slowing"
+repo = "https://github.com/nostriphant/transpher"
+language = "PHP"
+storage = "SQLite / files"
+about = "Experimental PHP relay"
+
+[[relay]]
+name = "Minds Engine - Nostr"
+tier = "slowing"
+repo = "https://gitlab.com/minds/engine"
+language = "PHP"
+storage = "Minds platform DBs"
+about = "Nostr module inside the Minds backend"
+notes = "Not standalone"
+
+[[relay]]
+name = "nostr-relay-tray"
+tier = "slowing"
+repo = "https://github.com/CodyTseng/nostr-relay-tray"
+language = "TypeScript"
+storage = "SQLite"
+about = "Desktop tray relay for macOS, Windows and Linux"
+
+[[relay]]
+name = "LNbits nostrrelay"
+tier = "slowing"
+repo = "https://github.com/lnbits/nostrrelay"
+language = "Python"
+storage = "SQLite / Postgres"
+about = "LNbits extension: one-click relay with pay-to-join"
+
+[[relay]]
+name = "NNostr"
+tier = "dormant"
+repo = "https://github.com/Kukks/NNostr"
+language = "C#"
+storage = "PostgreSQL"
+about = ".NET relay and client"
+
+[[relay]]
+name = "HORNET Storage"
+tier = "dormant"
+repo = "https://github.com/HORNET-Storage/HORNETS-Nostr-Relay"
+language = "Go"
+storage = "Badger / bbolt + SQLite"
+about = "Multimedia relay with dashboard and paid modes"
+
+[[relay]]
+name = "broadcastr"
+tier = "dormant"
+repo = "https://github.com/codonaft/broadcastr"
+language = "Rust"
+storage = "none"
+about = "Forwards events to other relays"
+notes = "Proxy"
+
+[[relay]]
+name = "nostrcheck-server"
+id = "nostrcheck"
+tier = "dormant"
+repo = "https://github.com/quentintaranpino/nostrcheck-server"
+language = "TypeScript"
+storage = "MariaDB + Redis"
+about = "All-in-one relay, Blossom, NIP-05, WoT"
+
+[[relay]]
+name = "Nosflare"
+tier = "dormant"
+repo = "https://github.com/Spl0itable/nosflare"
+language = "JavaScript"
+storage = "Cloudflare D1"
+about = "Serverless relay on Cloudflare Workers"
+
+[[relay]]
+name = "nostr-rs-relay"
+id = "nostr-rs-relay"
+tier = "dormant"
+git = "https://git.sr.ht/~gheartsfield/nostr-rs-relay"
+repo = "https://sr.ht/~gheartsfield/nostr-rs-relay"
+language = "Rust"
+storage = "SQLite / Postgres"
+about = "Minimal, widely deployed relay"
+notes = "Second-largest install base; canonical repo is on sourcehut"
+
+[[relay]]
+name = "rely"
+tier = "dormant"
+repo = "https://github.com/pippellia-btc/rely"
+language = "Go"
+storage = "bring your own"
+about = "Framework for custom relays"
+notes = "Library"
+
+[[relay]]
+name = "ngit-relay"
+tier = "dormant"
+archived = true
+repo = "https://github.com/DanConwayDev/ngit-relay"
+language = "Go"
+storage = "Badger"
+about = "Git + relay + Blossom host for NIP-34 repos"
+notes = "superseded by ngit-grasp"
+
+[[relay]]
+name = "nostr-sqlite"
+tier = "dormant"
+repo = "https://github.com/vertex-lab/nostr-sqlite"
+language = "Go"
+storage = "SQLite"
+about = "SQLite event-store library"
+notes = "Library"
+
+[[relay]]
+name = "chorus"
+id = "chorus"
+tier = "dormant"
+repo = "https://github.com/mikedilger/chorus"
+language = "Rust"
+storage = "pocket"
+about = "Personal or community relay"
+
+[[relay]]
+name = "Fenrir-s"
+tier = "dormant"
+repo = "https://github.com/rushmi0/Fenrir-s"
+language = "Kotlin"
+storage = "PostgreSQL"
+about = "Relay with a GraalVM native build"
+
+[[relay]]
+name = "Bostr2"
+tier = "dormant"
+repo = "https://github.com/Yonle/bostr2"
+language = "Go"
+storage = "none"
+about = "Bouncer that aggregates relays"
+notes = "Proxy"
+
+[[relay]]
+name = "bloom"
+tier = "dormant"
+repo = "https://github.com/nostrnative/bloom"
+language = "Rust + TS"
+about = "Blossom server plus relay for desktop and mobile"
+
+[[relay]]
+name = "n0str"
+tier = "dormant"
+repo = "https://github.com/tani/n0str"
+language = "TypeScript"
+storage = "SQLite"
+about = "Simple, heavily tested relay on Bun"
+
+[[relay]]
+name = "super_ball"
+tier = "dormant"
+repo = "https://git.laantungir.net/laantungir/super_ball"
+language = "JavaScript"
+storage = "none"
+about = "Remailer chain for location privacy"
+notes = "Forwarder, not storage"
+
+[[relay]]
+name = "Shugur"
+tier = "dormant"
+repo = "https://github.com/Shugur-Network/relay"
+language = "Go"
+storage = "CockroachDB"
+about = "Horizontally scalable enterprise relay"
+
+[[relay]]
+name = "cassette"
+tier = "dormant"
+repo = "https://github.com/sandwichfarm/cassette"
+language = "Rust (WASM)"
+storage = "WASM bundles"
+about = "Portable read-only relays compiled to WASM"
+
+[[relay]]
+name = "Bostr"
+tier = "dormant"
+repo = "https://github.com/Yonle/bostr"
+language = "JavaScript"
+storage = "none"
+about = "Bouncer that aggregates relays"
+notes = "Superseded by Bostr2"
+
+[[relay]]
+name = "NIP-29 Group Chat Relay"
+tier = "dormant"
+repo = "https://github.com/max21dev/groups-relay"
+language = "Go"
+storage = "LMDB"
+about = "NIP-29 group chat relay (khatru + relay29)"
+
+[[relay]]
+name = "Nostpy"
+tier = "dormant"
+repo = "https://github.com/UTXOnly/nostpy-relay"
+language = "Python"
+storage = "PostgreSQL + Redis"
+about = "Easy-to-deploy Python relay"
+
+[[relay]]
+name = "AlgoRelay"
+tier = "dormant"
+repo = "https://github.com/barrydeen/algo-relay"
+language = "Go"
+storage = "PostgreSQL"
+about = "Personalized-feed relay (khatru)"
+
+[[relay]]
+name = "nostr-relay-nestjs"
+tier = "dormant"
+repo = "https://github.com/CodyTseng/nostr-relay-nestjs"
+language = "TypeScript"
+storage = "PostgreSQL + MeiliSearch"
+about = "NestJS relay"
+
+[[relay]]
+name = "tandem"
+tier = "dormant"
+repo = "https://github.com/TheRebelOfBabylon/tandem"
+language = "Go"
+storage = "EdgeDB"
+about = "Community-focused relay, work in progress"
+
+[[relay]]
+name = "netstr"
+tier = "dormant"
+repo = "https://github.com/bezysoftware/netstr"
+language = "C#"
+storage = "PostgreSQL"
+about = "General-purpose .NET relay"
+
+[[relay]]
+name = "jingle"
+tier = "dormant"
+repo = "https://github.com/fiatjaf/jingle"
+language = "Go"
+storage = "SQLite / LMDB / Badger"
+about = "Relay with JavaScript policy scripts (khatru)"
+
+[[relay]]
+name = "nostr-filter-relay"
+tier = "dormant"
+repo = "https://github.com/atrifat/nostr-filter-relay"
+language = "Docker"
+storage = "strfry"
+about = "strfry plus NSFW, language and toxicity filters"
+
+[[relay]]
+name = "monstr"
+tier = "dormant"
+repo = "https://github.com/monty888/monstr"
+language = "Python"
+storage = "SQLite / Postgres"
+about = "Python Nostr library with relay code"
+notes = "Library"
+
+[[relay]]
+name = "Denostr"
+tier = "dormant"
+repo = "https://github.com/denostr-lab/denostr"
+language = "TypeScript (Deno)"
+storage = "MongoDB + Redis"
+about = "Cloud-native Deno relay"
+
+[[relay]]
+name = "multiplextr"
+tier = "dormant"
+archived = true
+repo = "https://github.com/coracle-social/multiplextr"
+language = "JavaScript"
+storage = "none"
+about = "Multiplexing relay proxy"
+
+[[relay]]
+name = "Nerostr"
+tier = "dormant"
+repo = "https://github.com/pluja/nerostr"
+language = "Go"
+storage = "LMDB / SQLite"
+about = "Paid relay with Monero admission (khatru)"
+notes = "Survey says dormant, but main had a commit on 11 Nov"
+
+[[relay]]
+name = "booger"
+tier = "dormant"
+repo = "https://github.com/stackernews/booger"
+language = "JavaScript"
+storage = "PostgreSQL"
+about = "Stacker News relay"
+
+[[relay]]
+name = "nostring"
+tier = "dormant"
+repo = "https://github.com/xbol0/nostring"
+language = "TypeScript (Deno)"
+storage = "PostgreSQL"
+about = "Deno relay library"
+
+[[relay]]
+name = "Nex"
+tier = "dormant"
+archived = true
+repo = "https://github.com/aaronrussell/nex"
+language = "Elixir"
+storage = "PostgreSQL"
+about = "Scalable Elixir relay"
+
+[[relay]]
+name = "me.untethr.nostr-relay"
+tier = "dormant"
+repo = "https://github.com/atdixon/me.untethr.nostr-relay"
+language = "Clojure"
+storage = "SQLite"
+about = "Fast Clojure relay"
+
+[[relay]]
+name = "expensive-relay"
+tier = "dormant"
+archived = true
+repo = "https://github.com/fiatjaf/expensive-relay"
+language = "Go"
+storage = "PostgreSQL"
+about = "Paid relay, one-time registration"
+
+[[relay]]
+name = "relay29"
+tier = "dormant"
+archived = true
+repo = "https://github.com/fiatjaf/relay29"
+language = "Go"
+storage = "LMDB"
+about = "Library for NIP-29 relays"
+
+[[relay]]
+name = "saltivka"
+tier = "dormant"
+repo = "https://github.com/viktorvsk/saltivka"
+language = "Ruby"
+storage = "PostgreSQL + Redis"
+about = "Rails relay with admin UI"
+
+[[relay]]
+name = "blobstr-relay"
+tier = "dormant"
+repo = "https://github.com/Leaf-Computer/blobstr-relay"
+language = "Go"
+storage = "SQLite / Badger"
+about = "Relay plus Blossom for selective file sharing (khatru)"
+
+[[relay]]
+name = "magnitude-relay"
+id = "magnitude"
+tier = "missed"
+repo = "https://github.com/VectorPrivacy/magnitude-relay"
+language = "Rust"
+storage = "own log + LSM"
+about = "Vector's relay: gift wraps, NIP-77, per-core reactors"
+notes = "Fastest in our rerun; no AUTH"
+
+[[relay]]
+name = "khatru"
+tier = "missed"
+repo = "https://fiatjaf.com/nostr"
+language = "Go"
+storage = "pluggable"
+about = "Relay framework behind HAVEN, pyramid, swarm and many more"
+notes = "Library; now in the fiatjaf.com/nostr monorepo"
+
+[[relay]]
+name = "zooid"
+id = "zooid"
+tier = "missed"
+repo = "https://gitea.coracle.social/coracle/zooid"
+language = "Go"
+about = "Multi-tenant community relay (khatru)"
+notes = "Moved off GitHub to Gitea"
+
+[[relay]]
+name = "Parrhesia"
+tier = "missed"
+repo = "https://git.teralink.net/tribes/parrhesia"
+language = "Elixir"
+storage = "PostgreSQL"
+about = "Relay with negentropy and a management API"
+notes = "Beta; Gitea-hosted"
+
+[[relay]]
+name = "nosfry"
+id = "nosfry"
+tier = "missed"
+repo = "https://github.com/qntx/nosfry"
+language = "Rust"
+storage = "LMDB / SQLite"
+about = "Relay for bare metal and Cloudflare Workers"
+notes = "Published the most rigorous relay benchmark (Round 7)"
+
+[[relay]]
+name = "NFDB"
+tier = "missed"
+about = "Closed-source relay"
+notes = "Not open source"
+
+[[relay]]
+name = "Ditto (server)"
+tier = "missed"
+repo = "https://github.com/soapbox-pub/ditto"
+language = "TypeScript (Deno)"
+storage = "PostgreSQL"
+about = "Relay plus Mastodon-API social server"
+notes = "Separate from ditto-relay"
+
+[[relay]]
+name = "lisp-nostr-relay"
+tier = "missed"
+repo = "https://github.com/mattn/lisp-nostr-relay"
+language = "Common Lisp"
+about = "Relay in Common Lisp"
+
+[[relay]]
+name = "SW2"
+tier = "missed"
+repo = "https://github.com/bitvora/sw2"
+language = "Go"
+storage = "LMDB"
+about = "Relay with read/write whitelisting (khatru)"
+
+[[relay]]
+name = "nostr-relay-builder"
+tier = "missed"
+repo = "https://github.com/nostrdevkit/nostr"
+language = "Rust"
+storage = "LMDB / SQLite / nostrdb"
+about = "rust-nostr's relay-building crate"
+notes = "Library"
+
+[[relay]]
+name = "nak serve"
+tier = "missed"
+repo = "https://github.com/fiatjaf/nak"
+language = "Go"
+storage = "LMDB / memory"
+about = "CLI with a local relay"
+notes = "Tool"
+
+[[relay]]
+name = "smartflowsocial-blastr"
+tier = "missed"
+repo = "https://github.com/smartflowsocial/smartflowsocial-blastr"
+language = "TypeScript"
+storage = "none"
+about = "Entitlement-gated broadcast relay"
+notes = "Proxy"
+
+[[relay]]
+name = "relaycreator"
+tier = "missed"
+repo = "https://github.com/relaytools/relaycreator"
+language = "TypeScript"
+storage = "MySQL (app)"
+about = "relay.tools hosting platform; relays are strfry"
+notes = "Hosting"
+
+[[relay]]
+name = "hns-relay"
+tier = "missed"
+repo = "https://github.com/wildroot-io/hns-relay"
+language = "Go"
+storage = "Badger"
+about = "Relay with NIP-05 domain write admission (khatru)"
+
+[[relay]]
+name = "Bucket"
+tier = "missed"
+repo = "https://github.com/coracle-social/bucket"
+language = "JavaScript"
+storage = "memory"
+about = "Test relay for client development"
+
+[[relay]]
+name = "Snowflare"
+tier = "missed"
+repo = "https://github.com/SnowCait/snowflare"
+language = "TypeScript"
+storage = "Cloudflare D1"
+about = "Relay on Cloudflare Workers"
+
+[[relay]]
+name = "nostr-relay (CodyTseng)"
+tier = "missed"
+repo = "https://github.com/CodyTseng/nostr-relay"
+language = "TypeScript"
+storage = "pluggable"
+about = "Relay framework behind the tray app"
+notes = "Library"
+
+[[relay]]
+name = "nostr-filter"
+tier = "missed"
+repo = "https://github.com/imksoo/nostr-filter"
+language = "TypeScript"
+storage = "none"
+about = "Regex-filtering proxy relay"
+notes = "Proxy"
+
+[[relay]]
+name = "ContextVM relay"
+tier = "missed"
+repo = "https://github.com/ContextVM/contextvm-relay"
+language = "Go"
+about = "Relay for MCP over Nostr"
+
+[[relay]]
+name = "groups_relay"
+tier = "missed"
+repo = "https://github.com/verse-pbc/groups_relay"
+language = "Rust"
+storage = "LMDB"
+about = "NIP-29 group relay"
+
+[[relay]]
+name = "noshtastic"
+tier = "missed"
+repo = "https://github.com/ksedgwic/noshtastic"
+language = "Rust"
+about = "Negentropy relay over Meshtastic radio"
+
+[[relay]]
+name = "Alienos"
+tier = "missed"
+repo = "https://github.com/mkfate/alienos"
+about = "Pluggable relay, Blossom and NIP-05 stack"
+notes = "Original dezh-tech org now 404s"
+
+[[relay]]
+name = "Immortal"
+tier = "missed"
+repo = "https://github.com/dezh-tech/immortal"
+language = "Go"
+about = "Relay built for scale"
+notes = "dezh-tech org now 404s"
+
+[[relay]]
+name = "noxir"
+tier = "missed"
+repo = "https://github.com/kphrx/noxir"
+language = "Elixir"
+storage = "Mnesia"
+about = "Elixir relay"
+
+[[relay]]
+name = "mimoty"
+tier = "missed"
+repo = "https://github.com/gzuuus/mimoty"
+language = "Go"
+storage = "SQLite"
+about = "Small relay (khatru)"
+
+[[relay]]
+name = "note-mixer-relay"
+tier = "missed"
+repo = "https://github.com/gzuuus/note-mixer-relay"
+language = "Go"
+storage = "SQLite"
+about = "Mixes notes between users for anonymity (khatru)"
+
+[[relay]]
+name = "keychat-relay-ext"
+tier = "missed"
+repo = "https://github.com/keychat-io/keychat-relay-ext"
+language = "Rust"
+about = "Cashu per-message payment gate for nostr-rs-relay"
+notes = "Extension"
+
+[[relay]]
+name = "blastr"
+tier = "missed"
+repo = "https://github.com/MutinyWallet/blastr"
+language = "Rust"
+storage = "none"
+about = "Publishes to all known relays (CF Workers)"
+notes = "Proxy"
+
+[[relay]]
+name = "NostrPostr Relay"
+tier = "missed"
+repo = "https://github.com/Giszmo/NostrPostr"
+language = "Kotlin"
+storage = "SQLite / Postgres"
+about = "Library plus relay"
+
+[[relay]]
+name = "gnost-relay"
+tier = "missed"
+repo = "https://github.com/barkyq/gnost-relay"
+language = "Go"
+storage = "PostgreSQL"
+about = "Go relay"
+
+[[relay]]
+name = "pyrelay"
+tier = "missed"
+repo = "https://github.com/johnny423/pyrelay"
+language = "Python"
+storage = "SQLite"
+about = "Asyncio relay"
+
+[[relay]]
+name = "Ephemerelay"
+tier = "missed"
+repo = "https://gitlab.com/soapbox-pub/ephemerelay"
+language = "TypeScript"
+storage = "memory"
+about = "Relay that keeps no history"
+
+[[relay]]
+name = "knostr"
+tier = "missed"
+repo = "https://github.com/lpicanco/knostr"
+language = "Kotlin"
+storage = "PostgreSQL"
+about = "Relay with metrics"
+
+[[relay]]
+name = "Astro"
+tier = "missed"
+repo = "https://github.com/Nostrology/astro"
+language = "Elixir"
+storage = "PostgreSQL"
+about = "Elixir relay"
+
+[[relay]]
+name = "peakshift nostr-relay"
+tier = "missed"
+repo = "https://github.com/peakshift/nostr-relay"
+language = "TypeScript"
+about = "Relay"
+
+[[relay]]
+name = "søstr"
+tier = "missed"
+repo = "https://github.com/metasikander/s0str"
+language = "Rust"
+storage = "SQLite / Postgres"
+about = "Private relay serving one pubkey's notes"
+
+[[relay]]
+name = "nostr_relay (Python)"
+tier = "missed"
+web = "https://code.pobblelabs.org/fossil/nostr_relay"
+language = "Python"
+storage = "SQLite / Postgres"
+about = "Python relay on PyPI"
+notes = "Fossil-hosted"
+
+[[relay]]
+name = "gc_index_relay (Mercury)"
+id = "gc_index_relay"
+tier = "missed"
+repo = "https://git.imwald.eu/silberengel/gc_index_relay"
+language = "Elixir"
+storage = "PostgreSQL + Apache AGE"
+about = "GitCitadel's index relay: NIP-01 over WebSocket plus a REST query API"
+notes = "Self-hosted Gitea"

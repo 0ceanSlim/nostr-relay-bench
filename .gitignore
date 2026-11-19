@@ -1,0 +1,5 @@
+data/
+.cache/
+results/quick/
+__pycache__/
+site/data/

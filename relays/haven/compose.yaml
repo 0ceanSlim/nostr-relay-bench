@@ -1,0 +1,34 @@
+# HAVEN, benchmarked on its outbox relay (the public one, served at "/"). The other three
+# relays (private, chat, inbox) and Blossom run in the same process as shipped.
+# Default profile: the .env.example the release ships (BadgerDB, its rate limits), plus
+#   - required identity values set to a throwaway test npub and URL,
+#   - BLASTR_RELAYS_FILE and IMPORT_SEED_RELAYS_FILE pointed at an empty list, so the relay
+#     never contacts public relays (the outbox re-broadcasts every stored event to the blastr
+#     list, which would push bench data to the public network),
+#   - WHITELISTED_NPUBS_FILE / BLACKLISTED_NPUBS_FILE blank ("disabled", per .env.example):
+#     the example names files the release does not ship, so the owner is the only writer,
+#   - db/ and blossom/ on named volumes.
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-haven:${REF}
+    environment:
+      MODE: "${MODE}"
+      OWNER_NPUB: &npub npub1mgnglst6x3l46nmgzggstwmtkxezd8em4u0dwu7x2p8x9ju5kr2q9mu9my
+      PRIVATE_RELAY_NPUB: *npub
+      CHAT_RELAY_NPUB: *npub
+      OUTBOX_RELAY_NPUB: *npub
+      INBOX_RELAY_NPUB: *npub
+      RELAY_URL: relay:3355
+      BLASTR_RELAYS_FILE: /app/no-relays.json
+      IMPORT_SEED_RELAYS_FILE: /app/no-relays.json
+      WHITELISTED_NPUBS_FILE: ""
+      BLACKLISTED_NPUBS_FILE: ""
+    volumes:
+      - db:/app/db
+      - blossom:/app/blossom
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { db: {}, blossom: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

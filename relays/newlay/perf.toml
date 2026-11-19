@@ -1,0 +1,38 @@
+# newlay perf profile: default.toml (upstream deploy/docker/newlay.toml) with the throttles lifted
+# for the single load-generator IP. Changed:
+#   [tier.anon]  every per-minute rate (publish, REQ, REQ cost, bytes, messages) -> 1e9;
+#                behavior multiplier pinned to 1.0 (as upstream's admin tier does) so behavior
+#                scoring can't scale those rates down; max_subscriptions 20 -> 1000 per connection;
+#                max_limit 500 -> 5000; can_sync = true (NIP-77 is off for every tier by default).
+#   [ip_gate]    per-IP connection cap, connect-attempt rate and events/min backstop -> 1e9
+#                (0 is rejected by the config loader).
+# Every kind is already accepted (no accepted/blocked kinds); gift wraps are already open
+# (relay.mode defaults to "open").
+
+[relay]
+url = "ws://relay:7777"
+data_dir = "/var/lib/newlay/data"
+listen_host = "0.0.0.0"
+listen_port = 7777
+
+[tier.anon]
+rank = 0
+can_read = true
+can_write = true
+can_sync = true
+max_subscriptions = 1000
+max_limit = 5000
+publishing_rate_limit = 1000000000
+filter_rate_limit = 1000000000
+req_cost_budget = 1000000000
+bytes_in_per_min = 1000000000
+messages_per_min = 1000000000
+behavior_multiplier = { min = 1.0, max = 1.0 }
+
+[ip_gate]
+max_connections_per_ip = 1000000000
+connect_attempts_per_min = 1000000000
+events_per_min_per_ip = 1000000000
+
+[log]
+level = "info"

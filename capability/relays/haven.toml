@@ -1,0 +1,43 @@
+name = "HAVEN"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 2
+rate_limits = 2
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 3
+multi_role = 3
+count = 2
+search = 0
+protected_vanish = 1
+groups = 0
+admin_ui = 2
+moderation = 2
+observability = 1
+maturity = 2
+blossom = 3
+
+[evidence]
+auth = "NIP-42 on the private relay (MustAuth + whitelist, init.go) and chat relay (MustAuth + WoT); chat serves kind 1059 to any authed WoT member, not only the p-tagged recipient. Outbox and inbox reads are open."
+write_policy = "Per relay: owner/whitelist-only outbox and private, WoT-gated inbox and chat, blacklist, chat-kind allowlist, gift-wrap-only DMs on inbox, base64 media rejection (policies.go)."
+admission = "Whitelist/blacklist npub files plus a WoT model of depth 0-3 with a minimum-followers threshold (pkg/wot/simple_in_memory.go, docs/wot.md)."
+rate_limits = "khatru EventIPRateLimiter and ConnectionRateLimiter per relay, each configurable by env (limits.go); no per-pubkey or per-kind limits."
+negentropy = "khatru Negentropy flag never set (init.go); no NIP-77."
+retention = "NIP-40 expiration from khatru; no age, size or per-kind retention settings."
+deployment = "goreleaser binaries for Linux/macOS/Windows (.goreleaser.yaml), .env config; no upstream Dockerfile (README points to a community haven-docker repo)."
+backup = "backup/restore commands, JSONL and zip export/import per relay (jsonl.go, backup.go), periodic S3 cloud backups (BACKUP_PROVIDER)."
+multi_role = "Private, chat, inbox and outbox relays plus Blossom in one process, routed by path (main.go dynamicRelayHandler)."
+count = "CountEvents wired on all four relays (init.go), backed by the eventstore; no HyperLogLog."
+search = "No NIP-50."
+protected_vanish = "NIP-70 enforced by khatru v0.19.1 handlers.go; no NIP-62."
+groups = "Chat relay accepts NIP-29 kinds but keeps no group state; no NIP-43."
+admin_ui = "Web management console, notes browser and dashboard (admin.go, templates/admin.html) merged on master after v1.2.2; the v1.2.2 release has none."
+moderation = "NIP-86 ban/allow pubkey, ban event, block IP, rename (nip86.go, nip86_methods.go) on master after v1.2.2; owner can delete any event. No NIP-56 report intake."
+observability = "slog levels via HAVEN_LOG_LEVEL; master adds in-process traffic/kind counters shown on the dashboard (metrics.go); no Prometheus or other export."
+maturity = "Go/khatru since 2024, 207 GitHub stars, v1.2.2 Feb 2026; README states feature complete, bug fixes only."
+blossom = "Blossom server on the outbox via khatru/blossom, owner/whitelist uploads, local or S3 storage (init.go, docs/cloud-storage.md)."

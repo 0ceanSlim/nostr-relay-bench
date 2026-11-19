@@ -1,0 +1,15 @@
+# nostream perf profile: merged over default-settings.yaml (arrays replace, objects merge).
+# All load comes from one container IP, so the per-IP rate limits are emptied (an empty
+# rateLimits list skips the check) and the per-connection subscription cap is raised.
+# Unchanged because they already fit: maxLimit is 5000, no kinds are blocked, and kind 1059
+# reads are open (nip42.restrictedReads.enabled = false).
+limits:
+  connection:
+    rateLimits: []        # default 12/s and 48/min new connections per IP
+  message:
+    rateLimits: []        # default 240 messages/min per IP
+  event:
+    rateLimits: []        # default per-kind 6-60/min plus 720/hour per pubkey/IP
+  client:
+    subscription:
+      maxSubscriptions: 200   # default 10 per connection

@@ -1,0 +1,17 @@
+# Weekly benchmark run. Install with deploy/install.sh, or copy both units to
+# /etc/systemd/system/, set User= and WorkingDirectory=, then:
+#   systemctl daemon-reload && systemctl enable --now nostr-relay-bench.timer
+[Unit]
+Description=nostr-relay-bench weekly run
+Wants=network-online.target docker.service
+After=network-online.target docker.service
+
+[Service]
+Type=oneshot
+User=bench
+WorkingDirectory=/opt/nostr-relay-bench
+# Pull first so config PRs merged during the week are in this run.
+ExecStartPre=/usr/bin/git pull --ff-only
+ExecStart=/usr/bin/python3 bench/run.py --publish
+TimeoutStartSec=12h
+Nice=-5

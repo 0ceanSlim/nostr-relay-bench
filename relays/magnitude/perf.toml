@@ -1,0 +1,12 @@
+# magnitude perf profile: their own benchmark config (bench/box/ours.toml) with bind opened,
+# every kind accepted, and per-IP allowances off (all load comes from one container IP).
+[relay]
+bind = "0.0.0.0:7777"
+
+[policy]
+kinds = "all"
+
+[limits]
+max_connections_per_ip = 0
+events_per_minute_per_ip = 0
+connections_per_minute_per_ip = 0

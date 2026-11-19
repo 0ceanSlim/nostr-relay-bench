@@ -1,0 +1,10 @@
+# ORLY perf profile. All load comes from one container IP, so the per-IP HTTP guard budgets are
+# raised and the per-filter result cap goes from 256 to 5000. Nothing else changes.
+# Not liftable: ORLY_MAX_CONN_PER_IP is clamped to 10 in code. Already open as shipped: every kind
+# is accepted (ACL mode none) and kind 1059 is served without AUTH (ORLY_AUTH_REQUIRED=false).
+services:
+  relay:
+    environment:
+      ORLY_HTTP_GUARD_WS_PER_MIN: "1000000"   # default 10 WebSocket upgrades/min per IP
+      ORLY_HTTP_GUARD_RPM: "1000000"          # default 120 HTTP requests/min per IP
+      ORLY_QUERY_RESULT_LIMIT: "5000"         # default 256 events per filter

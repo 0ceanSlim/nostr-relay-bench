@@ -1,0 +1,15 @@
+# nostr-rs-relay perf profile. The compiled-in defaults (what the default profile runs) already
+# have no event or subscription rate limit, no kind allow/blocklist, no cap on filter limits, and
+# gift wraps readable by anyone (nip42_dms = false), so nothing needs lifting: this file only
+# states those settings. The 32-subscriptions-per-connection cap is hard-coded (src/conn.rs).
+[network]
+address = "0.0.0.0"
+port = 8080
+
+[limits]
+# messages_per_sec and subscriptions_per_min unset = unlimited (the default)
+limit_scrapers = false
+
+[authorization]
+nip42_auth = false
+nip42_dms = false

@@ -1,0 +1,8 @@
+name = "wot-relay"
+repo = "https://github.com/barrydeen/wot-relay"   # moved from bitvora/wot-relay
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3334
+# Setup, kept for when it is re-enabled: Owner pubkey is a throwaway test key that follows nobody, so the trust network is empty and wot-relay's fail-open rule (accept everything until a trust map exists) admits all writers in both profiles; relay-tester therefore does not see the WoT gate. ARCHIVAL_SYNC off as .env.example ships it. Its per-IP event, REQ and connection limits and the 500 filter-limit cap are hard-coded, so the perf profile runs the tag with those four lines changed in main.go; the default profile is the tag as is.
+disabled = true
+notes = "khatru engine; benchmarked via pyramid (new engine) and haven (old engine)"

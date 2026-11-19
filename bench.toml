@@ -1,0 +1,33 @@
+# Run settings. RELAY_CPUS / LOAD_CPUS in the environment override [host].
+
+[host]
+# The relay stack (every container of it) is pinned to relay_cpus; the load tools to load_cpus.
+# Keep them disjoint, and keep the relay set the same size from week to week.
+relay_cpus = "0-3"
+load_cpus = "4-11"
+load_threads = 4
+label = ""
+
+[full]
+events = 1000000          # dataset size; ~30% public events, ~70% gift wraps (relay-bench's mix)
+seed = 1
+queries = 4000
+dup_count = 100000
+neg_sessions = 400
+fanout_seconds = 20
+idle_conns = 10000
+roundtrip_events = 20000
+build_timeout = 3600
+start_timeout = 180
+load_timeout = 2400
+query_timeout = 1200
+tester_timeout = 900
+
+[quick]
+events = 50000
+queries = 400
+dup_count = 5000
+neg_sessions = 40
+fanout_seconds = 5
+idle_conns = 1000
+roundtrip_events = 2000

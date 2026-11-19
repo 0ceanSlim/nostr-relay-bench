@@ -1,0 +1,25 @@
+name = "Citrine"
+scored = "2026-11-19"
+summary = "Kotlin Android, Room/SQLite. Personal relay on a phone. Possible bug: unfiltered REQ leaks private kinds past AuthGate (code read, untested)."
+
+[scores]
+auth = 2
+write_policy = 1
+admission = 1
+rate_limits = 0
+negentropy = 2
+retention = 2
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 2
+protected_vanish = 1
+groups = 2
+admin_ui = 2
+moderation = 2
+observability = 1
+maturity = 2
+blossom = 0
+
+[evidence]

@@ -1,0 +1,43 @@
+name = "newlay"
+scored = "2026-11-19"
+summary = "Kotlin MP on LMDB, MIT, relay.tools. HLL COUNT, NIP-29/43, ~50 NIP-86 methods, bundled Blossom, phone or server. NIPs 1,9,11,29,40,42,43,45,50,70,77,86."
+
+[scores]
+auth = 3
+write_policy = 3
+admission = 3
+rate_limits = 3
+negentropy = 2
+retention = 1
+deployment = 3
+backup = 3
+multi_role = 1
+count = 3
+search = 2
+protected_vanish = 1
+groups = 3
+admin_ui = 2
+moderation = 3
+observability = 1
+maturity = 1
+blossom = 3
+
+[evidence]
+auth = "NIP-42 mixed mode: AUTH raises a connection's tier (README); relay.mode nip17 / read_privacy recipient_gated serves kind 1059 only to the AUTHed p-tag (docs/newlay.example.toml). Default mode is open."
+write_policy = "Per-tier accepted/blocked kinds, required tags, size/tag/created_at caps, NIP-13 PoW, WoT write gate, event-derived ACL rules (docs/newlay.example.toml [tier.*], [wot], [[acl_rule]]). No scripting hook."
+admission = "Tiered ACL with static [[assignment]], follow-list/follow-set [[acl_rule]] grants, GrapeRank WoT tier rules, NIP-43 join/invite codes. No payments."
+rate_limits = "Per-tier publish/REQ/REQ-cost/bytes/messages per minute scaled by a behavior score, plus [ip_gate] per-IP connection, attempt and events/min caps (policy/LimitProfile.kt, policy/IpGate.kt)."
+negentropy = "NIP-77 server sessions gated by tier can_sync, plus outbound negentropy sync jobs (client module, server/NegSessionManager.kt)."
+retention = "NIP-40 expiration sweeper over an idx_expire index (store/Databases.kt); no age, size or per-kind purge."
+deployment = "Dockerfile + published image + compose quickstart, Helm chart (deploy/charts/newlay), Android APK; only relay.url required."
+backup = "newlay backup/restore: portable zip archives that replay across versions and platforms, or raw LMDB snapshots, both safe on a live relay (docs/backup.md)."
+multi_role = "One relay per process; multi-homed relay.urls and the buzz/cordn planes share it, no separate inbox/outbox/private relays."
+count = "NIP-45 COUNT with HyperLogLog (core/hll/Hll.kt), cost-weighted (cost_weights.count_multiplier)."
+search = "NIP-50 over a store-time token index for [search] indexed_kinds (default 0, 1, 30023), WoT include:spam filtering."
+protected_vanish = "NIP-70 listed; no NIP-62 handling in the code."
+groups = "NIP-29 groups (39000-39003 signed by the relay identity) and NIP-43 membership (docs/newlay.example.toml [nip29], [nip43])."
+admin_ui = "No web admin UI; NIP-86 methods change live settings (setipcaps, setrelaymode, setwotgatewrites, tiers) without a restart (docs/MANAGEMENT_API.md)."
+moderation = "NIP-86 management API (54 methods in docs/MANAGEMENT_API.md), bans, moderation audit log, kind 1984 reports moderator-only with 9044 resolve (server/ModerationService.kt)."
+observability = "Leveled newlay.* logs and an admin-only getrelaystatus aggregate snapshot ([status]); no metrics endpoint."
+maturity = "First commit 2026-07-08, 308 commits, frequent v0.3.x tags; small install base."
+blossom = "Bundled Blossom BUD-01/02/04/06/12 server ([blossom])."

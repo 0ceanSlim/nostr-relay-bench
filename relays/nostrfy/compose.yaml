@@ -1,0 +1,17 @@
+# Built with upstream's own Dockerfile at the resolved tag: it installs the published release
+# binary for NOSTRFY_VERSION. The default profile is the config baked into that image
+# (deploy/nostrfy.container.toml: 0.0.0.0:8080, LMDB in /data). Upstream's compose file gives
+# the relay 35 s to drain on stop (its graceful shutdown budget is 27 s).
+services:
+  relay:
+    build:
+      context: "https://github.com/iqbqioza/nostrfy.git#${REF}"
+      args: { NOSTRFY_VERSION: "${REF}" }
+    image: rb-nostrfy:${REF}
+    volumes: [data:/data]
+    stop_grace_period: 35s
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

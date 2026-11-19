@@ -1,0 +1,13 @@
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-grain:${REF}
+    environment: { MODE: "${MODE}" }
+    volumes:
+      - data:/home/grain/.grain/data
+      - ./perf.yml:/bench/perf.yml:ro
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

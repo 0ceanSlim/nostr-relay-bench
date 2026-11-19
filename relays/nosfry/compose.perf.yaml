@@ -1,0 +1,3 @@
+services:
+  relay:
+    volumes: [./perf.toml:/etc/nosfry/nosfry.toml:ro]

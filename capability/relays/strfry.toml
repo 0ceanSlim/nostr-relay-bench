@@ -1,0 +1,25 @@
+name = "strfry"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 1
+rate_limits = 1
+negentropy = 3
+retention = 1
+deployment = 2
+backup = 3
+multi_role = 0
+count = 2
+search = 0
+protected_vanish = 1
+groups = 0
+admin_ui = 1
+moderation = 0
+observability = 2
+maturity = 3
+blossom = 0
+
+[evidence]

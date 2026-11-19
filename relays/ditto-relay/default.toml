@@ -1,0 +1,6 @@
+# ditto-relay default profile: every setting at its shipped default except what it needs to run
+# in a container. url is required (it has no default); ws://relay:13131/ is a fixed test value.
+# bind is opened from 127.0.0.1:13131 to all interfaces, data_dir points at the volume.
+url = "ws://relay:13131/"
+bind = "0.0.0.0:13131"
+data_dir = "/data"

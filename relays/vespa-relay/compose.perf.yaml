@@ -1,0 +1,11 @@
+# vespa-relay perf profile. Changed:
+#   REQUIRE_READ_LENS=false  anonymous REQ/COUNT/NEG-OPEN answered without a web-of-trust lens
+#                            (on by default: every unauthenticated read must name observer: or include:spam)
+#   MAX_SUBSCRIPTIONS 50 -> 1000 per connection
+# MAX_LIMIT is already 5000, every kind is accepted, gift wraps are not gated, and there are no
+# per-IP or per-pubkey rate limits to lift.
+services:
+  relay:
+    environment:
+      REQUIRE_READ_LENS: "false"
+      MAX_SUBSCRIPTIONS: "1000"

@@ -1,0 +1,6 @@
+name = "rnostr"
+repo = "https://github.com/rnostr/rnostr"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 8080
+notes = "Default profile is the image's own config (rnostr.example.toml, with the image's RNOSTR_NETWORK__HOST=0.0.0.0). COUNT (NIP-45) and search (NIP-50) are extensions that ship disabled and are left off in both profiles. Upstream's Dockerfile is on Debian 11, whose archive now 404s its apt step, so compose.yaml swaps both stages to the Debian 12 images. Answers 'replaced' to some addressable events and returns fewer kind-30023 versions than NIP-01 expects; relay behaviour, not config."

@@ -1,0 +1,22 @@
+# Built with upstream's own Dockerfile at the resolved tag. One change: that Dockerfile is on
+# Debian 11 (rust:1.80.1-slim-bullseye, debian:bullseye-slim), whose security archive no longer
+# serves the packages its apt-get step needs (404s), so both stages are swapped for the same
+# images on Debian 12 via named build contexts. The Dockerfile itself still runs `rustup update`
+# and builds on current stable, as upstream's does.
+# The default profile is the config that image ships (rnostr.example.toml copied to
+# /rnostr/config/rnostr.toml; the image sets RNOSTR_NETWORK__HOST=0.0.0.0). Data goes to the
+# /rnostr/data volume.
+services:
+  relay:
+    build:
+      context: "https://github.com/rnostr/rnostr.git#${REF}"
+      additional_contexts:
+        "rust:1.80.1-slim-bullseye": "docker-image://rust:1.80.1-slim-bookworm"
+        "debian:bullseye-slim": "docker-image://debian:bookworm-slim"
+    image: rb-rnostr:${REF}
+    volumes: [data:/rnostr/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

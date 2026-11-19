@@ -1,0 +1,15 @@
+# The project's own image, published by its release workflow for every tag. SQLite (the default
+# driver). Only change from shipped: the database path points into the data volume. There is no
+# perf overlay: the per-connection limiter (5 msg/s, burst 1), max filter limit (500) and content
+# length (16384) are constants in main.go/relay.go with no flag or env var, so both profiles run
+# the relay as shipped.
+services:
+  relay:
+    image: ghcr.io/mattn/nostr-relay:${REF}
+    environment: { DATABASE_URL: /data/nostr-relay.sqlite }
+    volumes: [data:/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

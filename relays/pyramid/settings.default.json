@@ -1,0 +1,6 @@
+{
+  "domain": "relay:3334",
+  "relay_name": "pyramid",
+  "relay_description": "nostr-relay-bench instance",
+  "relay_internal_secret_key": "72752b767ff8b538de9254bcdec9505ef4b5aed66e05a85fd8da9d84fc8e33bb"
+}

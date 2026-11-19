@@ -1,0 +1,4 @@
+services:
+  relay:
+    command: ["relay", "/etc/wisp/perf.toml"]
+    volumes: [./perf.toml:/etc/wisp/perf.toml:ro]

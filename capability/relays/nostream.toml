@@ -1,0 +1,43 @@
+name = "nostream"
+scored = "2026-11-19"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 3
+admission = 3
+rate_limits = 3
+negentropy = 2
+retention = 3
+deployment = 1
+backup = 3
+multi_role = 0
+count = 2
+search = 2
+protected_vanish = 2
+groups = 1
+admin_ui = 2
+moderation = 2
+observability = 3
+maturity = 2
+blossom = 0
+
+[evidence]
+auth = "NIP-42 with authRequired for writes and nip42.restrictedReads serving kinds 4/1059 only to author or p-tagged recipient on REQ, live and COUNT; restrictedReads ships disabled."
+write_policy = "Kind and pubkey white/blacklists, per-kind content length, created_at window, static and adaptive NIP-13 PoW with WoT-distance reductions, NIP-05 enforcement (default-settings.yaml limits.event)."
+admission = "Pay-to-relay admission and recurring plans (Zebedee, LNbits, LNURL, Nodeless, OpenNode, NWC), NIP-43 invites, NIP-05 domain lists, WoT graph."
+rate_limits = "Per-IP connection and message limits, per-kind and global event limits per pubkey, invoice/admin/invite limits, ewma or sliding-window strategy in Redis, per-plan overrides."
+negentropy = "NIP-77 on Postgres with per-session and per-connection caps; ships disabled (nip77.enabled = false)."
+retention = "limits.event.retention.maxDays with kind and pubkey whitelists; NIP-40 expiry."
+deployment = "Docker compose stack of relay, Postgres, Redis (+ optional otel/Prometheus/Grafana); setup CLI writes .env and settings. Not a single binary."
+backup = "nostream export / import CLI, JSONL or JSON with gzip/xz (src/cli/commands/export.ts, import.ts); settings backups and restore in the admin API."
+multi_role = "One relay per deployment."
+count = "NIP-45 COUNT on by default, exact Postgres count; no HyperLogLog."
+search = "NIP-50 via Postgres to_tsvector/plainto_tsquery with ranking (src/repositories/event-repository.ts); ships disabled."
+protected_vanish = "NIP-70 enforced (event-message-handler isProtectedEventBlocked) and NIP-62 request-to-vanish (src/handlers/event-strategies/vanish-event-strategy.ts)."
+groups = "NIP-43 membership only; no NIP-29."
+admin_ui = "Admin dashboard (resources/admin/dashboard.html) editing settings with validation, backups and restore, moderation actions, NIP-98 login; off by default."
+moderation = "Admin moderation actions and limits API, NIP-56 report intake scored by WoT distance with optional hiding; no NIP-86."
+observability = "OpenTelemetry metrics exported to the bundled Prometheus and Grafana dashboards, admin metrics SSE, health and diagnostics endpoints, debug logging namespaces."
+maturity = "Since 2022-04, 1027 commits (365 in the last 90 days), tagged releases to 3.16.0, long-running public deployments."
+blossom = "No Blossom server."

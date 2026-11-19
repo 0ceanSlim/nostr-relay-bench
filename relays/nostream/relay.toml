@@ -1,0 +1,7 @@
+name = "nostream"
+repo = "https://github.com/cameri/nostream"
+track = "tag"
+tag_pattern = '^nostream@\d+\.\d+\.\d+$'
+port = 8008
+private_giftwraps = false   # nip42.restrictedReads (1059/4 to recipient only) exists but ships disabled
+notes = "Upstream Dockerfile at the tag, with Postgres 15 (upstream postgresql.conf) and Redis 7 as in its docker-compose.yml; the observability stack (otel, Prometheus, Grafana) is left out. Migrations run in the relay container before start. SECRET is set to a fixed throwaway value: without it every EVENT is dropped (src/utils/secret.ts throws). workers.count = 0 forks one worker per host CPU (os.cpus()), not per pinned core. NIP-77 negentropy ships disabled (nip77.enabled = false) and stays off in both profiles. Relay behaviour seen in the quick run, not config: gift-wrap content must parse as a NIP-44 v2 payload (gift-wrap-event-strategy.ts), so most of the bench's kind 1059 events are refused as invalid; kind 7 without an e or a tag is refused; the default profile's per-kind event limits (6-12/min) throttle relay-tester's writes, so several of its lookups find nothing."

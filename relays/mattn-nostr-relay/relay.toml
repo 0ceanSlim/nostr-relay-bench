@@ -1,0 +1,8 @@
+name = "mattn/nostr-relay"
+repo = "https://github.com/mattn/nostr-relay"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 7447
+private_giftwraps = false   # REQs naming kind 1059 need AUTH as the p-tagged recipient, but a filter without kinds returns gift wraps to anyone (relayer validateFilterAccess)
+notes = "Upstream image ghcr.io/mattn/nostr-relay at the tag, SQLite. No perf profile is possible: every limit is a compile-time constant. A 5 msg/s per-connection limiter (relayer.WithPerConnectionLimiter(5.0, 1) in main.go, burst 1) delays every message, so both profiles are throttled to 5 messages/s per connection. Max filter limit is fixed at 500, content length at 16384 bytes. At 5 msg/s x 8 connections a full-size load (about 300k public events) needs roughly 2 hours, past load_timeout. Seen in the quick run: about 8% of the public load got OK false \"error: failed to save (database is locked)\" from SQLite with 8 concurrent writers; duplicates are answered OK true with no duplicate: prefix."
+perf = false   # relayer.WithPerConnectionLimiter(5, 1) is hardcoded (main.go): a load test would measure only the throttle

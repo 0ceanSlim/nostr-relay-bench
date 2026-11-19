@@ -1,0 +1,43 @@
+name = "grain"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 3
+write_policy = 2
+admission = 1
+rate_limits = 3
+negentropy = 0
+retention = 3
+deployment = 3
+backup = 1
+multi_role = 0
+count = 2
+search = 2
+protected_vanish = 1
+groups = 0
+admin_ui = 3
+moderation = 2
+observability = 1
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "NIP-42 session AUTH; kind 1059 served only to the authenticated recipient, always on (config/dmPrivacy.go)."
+write_policy = "Pubkey, kind and NIP-05 domain allow/deny lists; word bans that escalate from temporary to permanent; mute-list import. No WoT, PoW or scripting hook."
+admission = "Allowlist and NIP-05 domain only; no WoT, invites or payments."
+rate_limits = "Connection, WS, EVENT and REQ limits, per-category and per-kind token buckets, per-IP limiter."
+negentropy = "No NIP-77."
+retention = "Purge by category or kind, keep_kinds, whitelist exemption, NIP-40, LMDB map gauge that refuses writes before the map fills."
+deployment = "Single binary with embedded UI; writes a default config on first run; Docker image."
+backup = "--import and --delete CLI, plus forwarding to a backup relay. No JSONL export or snapshots."
+multi_role = "One relay per process."
+count = "NIP-45, exact; no HyperLogLog."
+search = "NIP-50 via nostrdb full-text index."
+protected_vanish = "NIP-70; no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "/admin web dashboard edits every config section live; config files hot-reload."
+moderation = "NIP-86 management API with NIP-98 auth; no NIP-56 report intake."
+observability = "Structured logs and dashboard stats; no metrics endpoint."
+maturity = "Small install base, actively maintained."
+blossom = "No bundled Blossom server."

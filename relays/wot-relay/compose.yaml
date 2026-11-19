@@ -1,0 +1,26 @@
+# wot-relay. Both profiles: the shipped .env.example (baked into the image as .env) with the
+# required identity values replaced by a throwaway owner pubkey and URL, ARCHIVAL_SYNC FALSE as
+# that file ships it, and the LMDB db/ on a named volume. Seed relays stay at the built-in
+# public list, so at boot the relay asks public relays for the owner's follow list.
+#
+# The throwaway owner follows nobody, so the trust network comes out empty, and wot-relay
+# accepts every write while its trust map is empty (main.go: "While the trust network is still
+# being built for the first time (no list yet), accept everything"). That is how the bench's
+# random keys get in, in both profiles, with no change to the WoT code.
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-wot-relay:${REF}
+    environment:
+      MODE: "${MODE}"
+      RELAY_NAME: wot-relay
+      RELAY_DESCRIPTION: nostr-relay-bench instance
+      RELAY_PUBKEY: da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4
+      RELAY_URL: ws://relay:3334
+    volumes: [data:/app/db]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    init: true
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

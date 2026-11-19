@@ -1,0 +1,28 @@
+# pyramid, benchmarked on its main relay at "/". The sub-relays (inbox, internal, groups,
+# blossom...) run in the same process as shipped.
+# Both profiles start from a seeded data/: settings.json with a domain (relay:3334) and a fixed
+# throwaway relay key, and management.jsonl making a throwaway pubkey the root member, because
+# pyramid answers nothing but its /setup/ pages until both exist.
+#   default: settings.default.json, which is only those required values (plus a name); every
+#            other setting is pyramid's built-in default.
+#   perf:    settings.perf.json, which also sets
+#              allowed_kinds_spec "all"          (default list has no 1059 and many other kinds)
+#              limits.max_query_limit 5000       (default 500)
+#              limits.max_subscriptions_open, limits.max_total_cost_open 1e9
+#                                                (per-IP caps, default 2000 subs / cost 7200)
+#            and runs the binary that admits non-members (see Dockerfile).
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-pyramid:${REF}
+    environment: { MODE: "${MODE}" }
+    volumes:
+      - data:/app/data
+      - ./settings.default.json:/bench/settings.default.json:ro
+      - ./settings.perf.json:/bench/settings.perf.json:ro
+      - ./management.jsonl:/bench/management.jsonl:ro
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

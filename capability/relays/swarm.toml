@@ -1,0 +1,43 @@
+name = "swarm"
+scored = "2026-11-19"
+summary = "Go khatru, HiveTalk team relay (fork of team-relay). Trusted-client bypass via forgeable [\"client\"] tag; roster data race."
+
+[scores]
+auth = 1
+write_policy = 1
+admission = 1
+rate_limits = 2
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 1
+multi_role = 0
+count = 0
+search = 0
+protected_vanish = 1
+groups = 0
+admin_ui = 1
+moderation = 0
+observability = 1
+maturity = 1
+blossom = 3
+
+[evidence]
+auth = "No NIP-42 requests or restricted reads in main.go; khatru answers AUTH; all events, kind 1059 included, served to anyone."
+write_policy = "Roster-only writes, ALLOWED_KINDS for members, PUBLIC_ALLOWED_KINDS for anyone, kind-5 rules, base64 media rejection; TRUSTED_CLIENT_NAME bypass reads the event's own client tag (main.go)."
+admission = "Team roster from local or remote nostr.json (NPUB_DOMAIN), refreshed hourly (main.go fetchNostrData); no WoT, invites or payments."
+rate_limits = "PUBKEY_RATE_LIMIT (non-members), IP_RATE_LIMIT, CONN_RATE_LIMIT, QUERY_RATE_LIMIT sliding windows, each optional by env (main.go applySpamProtection)."
+negentropy = "khatru Negentropy flag not set; no NIP-77."
+retention = "NIP-40 expiration from khatru v0.19.1; no age or size policies."
+deployment = "Upstream Dockerfile, docker-compose and fly.toml; Badger, LMDB or Postgres backends."
+backup = "backup.sh/restore.sh in the image tar the db and blossom dirs (Dockerfile), deploy/predeploy-backup.sh; no event export."
+multi_role = "One relay per process."
+count = "No CountEvents hook registered (main.go); no NIP-45."
+search = "No NIP-50."
+protected_vanish = "NIP-70 enforced by khatru v0.19.1; no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "/dashboard with NIP-98 login for roster and env inspection (main.go setupDashboardHandlers); config is environment variables read at start."
+moderation = "No NIP-86 or NIP-56 handling."
+observability = "/health/live and /health/ready with database/roster/storage checks (main.go registerHealthHandlers); plain logs."
+maturity = "Go/khatru, HiveTalk fork of team-relay, 5 GitHub stars, v0.2.0 Oct 2026."
+blossom = "Blossom for roster members with size cap, /mirror endpoint, /list, filesystem or S3/Tigris storage (main.go, s3storage.go)."

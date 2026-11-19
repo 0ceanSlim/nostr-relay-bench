@@ -1,0 +1,43 @@
+name = "vespa-relay"
+scored = "2026-11-19"
+summary = "Kotlin/quartz on Vespa, MIT. WoT-ranked search relay. Reads need observer: lens or AUTH by default. NIPs 1,9,11,40,42,45,50,62,77(+86)."
+
+[scores]
+auth = 1
+write_policy = 1
+admission = 1
+rate_limits = 1
+negentropy = 2
+retention = 1
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 3
+protected_vanish = 1
+groups = 0
+admin_ui = 1
+moderation = 2
+observability = 2
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "NIP-42 makes the AUTHed key the read's web-of-trust observer (docs/configuration.md, Reads before AUTH); no recipient gate on kind 1059 or other restricted reads."
+write_policy = "ALLOW/DENY_PUBKEYS, ALLOW/DENY_KINDS, MIN_POW_DIFFICULTY, size/tag/created_at limits (docs/configuration.md, Access control, Limits). No scripting or WoT write gate."
+admission = "Pubkey allowlist only (ALLOW_PUBKEYS); WoT ranks reads but does not gate writes. No invites or payments."
+rate_limits = "Per-connection caps (MAX_SUBSCRIPTIONS, SEARCH_CONCURRENCY_PER_CONNECTION) and a global HTTP_RELAY_TOTAL; no per-IP or per-pubkey rate limits (docs/configuration.md)."
+negentropy = "NIP-77 server (NEG_* settings, 1,000,000-id cap) plus the sync router's negentropy backfill from upstream relays."
+retention = "NIP-40 expiry as a Vespa garbage-collection selection plus EXPIRATION_SWEEP_SECONDS; no age, size or per-kind pruning."
+deployment = "docker-compose.yml with Vespa + relay built from the Dockerfile; schema auto-deploys on boot. Vespa is sized at 34 GB by default."
+backup = "The sync router mirrors down from and up to other relays (up/both streams, NIP-77); no JSONL export/import tool; otherwise Vespa's own backup."
+multi_role = "One relay per deployment (sync and monitor are helper processes, not extra relays)."
+count = "NIP-45 COUNT, including ranked/search counts."
+search = "NIP-50 full-text on Vespa ranked by the reader's NIP-85 web of trust, reference expansion, its own query language (README)."
+protected_vanish = "NIP-62 right to vanish scoped by RELAY_URL; NIP-70 not advertised."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "Operator pages and search UI on the relay port are read-only; NIP-86 changes name/description/icon and bans live, everything else is env vars at boot."
+moderation = "NIP-86 (RELAY_ADMIN_PUBKEYS, NIP-98) with ban lists persisted to RELAY_STATE_FILE and purge by filter (server/Nip86Route.kt). No NIP-56 intake."
+observability = "/pulse.json + /pulse.html cost dashboard, /stats.json corpus rollups, store metrics log lines (STORE_METRICS_LOG_SECONDS)."
+maturity = "First commit 2026-07-20, about 1,750 commits, no tags; live deployment at search.brainstorm.world (docs/operations.md)."
+blossom = "No Blossom."

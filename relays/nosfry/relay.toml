@@ -1,0 +1,6 @@
+name = "nosfry"
+repo = "https://github.com/qntx/nosfry"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 7777
+notes = "Default profile is the config the image ships (docker/nosfry.toml: bind 0.0.0.0, db in /data). service_url is empty there, which disables AUTH, so kinds 4/1059 are stored but never served in the default profile. relay-tester can't exercise AUTH in the default profile for that reason."

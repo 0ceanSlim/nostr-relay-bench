@@ -1,0 +1,25 @@
+name = "zapstore"
+scored = "2026-11-19"
+summary = "Go, rely + SQLite. App-store backend, not general. NIP-11 supported_nips is null."
+
+[scores]
+auth = 1
+write_policy = 2
+admission = 2
+rate_limits = 2
+negentropy = 0
+retention = 1
+deployment = 1
+backup = 1
+multi_role = 0
+count = 0
+search = 1
+protected_vanish = 0
+groups = 0
+admin_ui = 1
+moderation = 1
+observability = 1
+maturity = 1
+blossom = 2
+
+[evidence]

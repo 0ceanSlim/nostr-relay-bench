@@ -1,0 +1,13 @@
+# Built with upstream's own Dockerfile at the resolved tag. The default profile is that image as
+# shipped: no config file, so wisp runs on its built-in defaults; the image already sets
+# WISP_HOST=0.0.0.0 and the working directory /data, so the database lands in the data volume.
+services:
+  relay:
+    build: { context: "https://github.com/privkeyio/wisp.git#${REF}" }
+    image: rb-wisp:${REF}
+    volumes: [data:/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

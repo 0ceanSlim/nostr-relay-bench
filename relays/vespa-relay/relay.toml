@@ -1,0 +1,7 @@
+name = "vespa-relay"
+repo = "https://github.com/NosFabrica/vespa-relay"
+track = "branch:main"   # no tags
+port = 7777
+private_giftwraps = false   # no recipient gate on kind 1059
+heavy = true                # upstream sizes Vespa at 34 GB (VESPA_MEM_LIMIT); more than the default bench host has
+notes = "Upstream docker-compose.yml's vespa + relay services (sync, monitor and tor profiles left out). RELAY_URL is set to ws://relay:7777. Default profile keeps REQUIRE_READ_LENS on, so an anonymous REQ/COUNT/NEG-OPEN without AUTH, observer: or include:spam is CLOSED auth-required; perf turns it off. VESPA_MEM_LIMIT / RELAY_MEM_LIMIT in the environment override the 34g / 6g limits; the 50k quick run passed every perf step at VESPA_MEM_LIMIT=8g RELAY_MEM_LIMIT=3g (4.2 GB RSS), the 1M run is untested."

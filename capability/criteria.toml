@@ -1,0 +1,128 @@
+# The capability criteria. weight 1-5; each relay scores 0-3 per criterion
+# (0 absent, 1 partial, 2 solid, 3 best in field).
+
+[[criterion]]
+id = "auth"
+name = "AUTH + restricted reads"
+weight = 5
+group = "protocol"
+why = "Every major client does NIP-42; NIP-17 inboxes must serve kind 1059 only to the recipient."
+
+[[criterion]]
+id = "write_policy"
+name = "Write-policy depth"
+weight = 5
+group = "policy"
+why = "Per-kind/pubkey/content rules plus scripting or WoT/PoW. The most-requested feature set in strfry's history."
+
+[[criterion]]
+id = "admission"
+name = "Admission models"
+weight = 4
+group = "policy"
+why = "Allowlist, WoT, invite tree, paid, NIP-43. This is how operators actually beat spam."
+
+[[criterion]]
+id = "rate_limits"
+name = "Rate limiting"
+weight = 4
+group = "policy"
+why = "Per-IP, per-pubkey, per-kind limits and connection caps. Spam is the top operator burden."
+
+[[criterion]]
+id = "negentropy"
+name = "Negentropy sync"
+weight = 4
+group = "protocol"
+why = "NIP-77: 36% of relays and 87% of strfry instances claim it. The basis for mirroring, backfill and client sync."
+
+[[criterion]]
+id = "retention"
+name = "Retention controls"
+weight = 4
+group = "operations"
+why = "Storage is the main recurring cost. Big LMDB relays degrade badly (strfry #157)."
+
+[[criterion]]
+id = "deployment"
+name = "Deployment"
+weight = 4
+group = "operations"
+why = "Single binary or Docker, sane defaults. Most operators are hobbyists."
+
+[[criterion]]
+id = "backup"
+name = "Import / export / backup"
+weight = 4
+group = "operations"
+why = "relay.damus.io wiped its DB to upgrade strfry. Operators need to be able to move their data."
+
+[[criterion]]
+id = "multi_role"
+name = "Multi-role hosting"
+weight = 3
+group = "ecosystem"
+why = "HAVEN holds 14% of installs by running outbox, inbox, chat and private relays in one box."
+
+[[criterion]]
+id = "count"
+name = "COUNT"
+weight = 3
+group = "protocol"
+why = "NIP-45 is claimed by 54% of relays and used by Amethyst. HyperLogLog is the next request."
+
+[[criterion]]
+id = "search"
+name = "Search"
+weight = 3
+group = "protocol"
+why = "Only 14% of relays offer NIP-50, so a relay that does can serve as a search relay."
+
+[[criterion]]
+id = "protected_vanish"
+name = "Protected + vanish"
+weight = 3
+group = "protocol"
+why = "NIP-70 is table stakes (63%). NIP-62 vanish is rare (7%) but carries privacy and legal value."
+
+[[criterion]]
+id = "groups"
+name = "Groups (29/43)"
+weight = 3
+group = "ecosystem"
+why = "Flotilla, Chachi and 0xchat need relay-side group state, and they have no fallback without it."
+
+[[criterion]]
+id = "admin_ui"
+name = "Admin UI + live config"
+weight = 3
+group = "operations"
+why = "Being able to change settings without a restart or SSH."
+
+[[criterion]]
+id = "moderation"
+name = "Moderation API"
+weight = 3
+group = "policy"
+why = "NIP-86 (36%, used by Amethyst and HAVEN) plus NIP-56 report intake and ban workflows."
+
+[[criterion]]
+id = "observability"
+name = "Observability"
+weight = 3
+group = "operations"
+why = "Accurate metrics and structured logs. strfry's metrics count rejected events as stored (#255)."
+
+[[criterion]]
+id = "maturity"
+name = "Maturity"
+weight = 3
+group = "ecosystem"
+why = "Install base, maintenance and interop history."
+
+[[criterion]]
+id = "blossom"
+name = "Blossom media"
+weight = 2
+group = "ecosystem"
+why = "Bundled in HAVEN, pyramid and zooid, though a separate media server also works."

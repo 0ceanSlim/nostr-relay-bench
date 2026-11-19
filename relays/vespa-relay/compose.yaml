@@ -1,0 +1,47 @@
+# Upstream docker-compose.yml, relay + vespa services only (the sync, monitor and tor services are
+# opt-in profiles upstream too). The relay is built with upstream's Dockerfile at the resolved
+# commit and deploys its bundled Vespa application package on boot (AUTO_DEPLOY, default on).
+# Changed for the bench: host port publishes and the .audit/onion mounts dropped, RELAY_URL set
+# to the address the tools dial, healthcheck start_period folded into retries. Memory limits and
+# JVM flags are upstream's defaults; VESPA_MEM_LIMIT / RELAY_MEM_LIMIT override them as upstream.
+services:
+  vespa:
+    image: vespaengine/vespa:8.763.13
+    hostname: vespa
+    mem_limit: ${VESPA_MEM_LIMIT:-34g}
+    volumes: [vespa_var:/opt/vespa/var]
+    cpuset: "${RELAY_CPUS}"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          if curl -fs -o /dev/null http://localhost:19071/application/v2/tenant/default/application/default;
+          then curl -fSs 'http://localhost:8080/search/?yql=select+*+from+sources+*+where+true&hits=0&timeout=3s'
+          | grep -q '"nodes":[1-9]';
+          else curl -fs http://localhost:19071/state/v1/health | grep -q '"code" : "up"';
+          fi
+      interval: 5s
+      timeout: 5s
+      retries: 120
+  relay:
+    build: { context: "https://github.com/NosFabrica/vespa-relay.git#${REF}" }
+    image: rb-vespa-relay:${REF}
+    mem_limit: ${RELAY_MEM_LIMIT:-6g}
+    depends_on: { vespa: { condition: service_healthy } }
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=70 -XX:InitialRAMPercentage=35"
+      VESPA_URL: http://vespa:8080
+      RELAY_PORT: "7777"
+      RELAY_URL: ws://relay:7777
+      RELAY_NAME: vespa-relay
+      VESPA_FEED_COMPRESSION: none
+      VESPA_FEED_BATCH: "100"
+      FTS_CURSOR_FILE: /var/lib/vespa-relay/fts-cursor.txt
+    volumes: [state:/var/lib/vespa-relay]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 524288 }
+    networks:
+      default: {}
+      relaybench: { aliases: [relay] }
+volumes: { vespa_var: {}, state: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

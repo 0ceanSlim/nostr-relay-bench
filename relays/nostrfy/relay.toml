@@ -1,0 +1,6 @@
+name = "nostrfy"
+repo = "https://github.com/iqbqioza/nostrfy"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 8080
+notes = "Image from upstream's Dockerfile, which installs the published release binary for the tag (sha256-checked). Default profile is the config baked into that image (deploy/nostrfy.container.toml). Live fan-out is batched every live_batch_interval_ms (20 ms default, left as shipped), which adds up to that much latency to fan-out. 35 s stop grace period, as upstream's compose file sets. Limited queries get wrong sets in the quick run: limit:1 returns a different event than the newest, time windows and multi-filter REQs return limit+1 or extra events; relay behaviour, not config."

@@ -1,0 +1,7 @@
+name = "HAVEN"
+repo = "https://github.com/barrydeen/haven"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3355
+private_giftwraps = false   # the outbox serves kind 1059 to anyone; the chat relay is the AUTH-gated one
+notes = "Outbox relay (the public one) is what's measured. Its writes are owner/whitelist only and there is no setting to open them, so the perf profile runs the tag built from source with that one policy removed; default profile is the release binary as shipped, so relay-tester sees the gate. Owner npub is a throwaway test key. Blastr and import relay lists are empty so nothing reaches public relays. BadgerDB, as .env.example ships."

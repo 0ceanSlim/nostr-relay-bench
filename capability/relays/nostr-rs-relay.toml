@@ -1,0 +1,43 @@
+name = "nostr-rs-relay"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 2
+rate_limits = 1
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 1
+multi_role = 0
+count = 0
+search = 0
+protected_vanish = 0
+groups = 0
+admin_ui = 0
+moderation = 0
+observability = 2
+maturity = 3
+blossom = 0
+
+[evidence]
+auth = "NIP-42 (authorization.nip42_auth); nip42_dms serves kinds 4/44/1059 only to the authed author or first p-tag (src/server.rs allowed_to_send). Off by default."
+write_policy = "Pubkey whitelist, event_kind_allowlist/blacklist, NIP-05 domain allow/deny, external gRPC event admission server (docs/grpc-extensions.md)."
+admission = "pubkey_whitelist, NIP-05 verified_users with domain whitelist, pay_to_relay admission fee via LNBits/CLN (docs/pay-to-relay.md)."
+rate_limits = "messages_per_sec is relay-wide, subscriptions_per_min per connection (src/server.rs); no per-IP, per-pubkey or connection caps."
+negentropy = "No NIP-77 in src/."
+retention = "NIP-40 expired events hidden; [retention] keys parse in src/config.rs but nothing reads them; manual SQL in docs/database-maintenance.md."
+deployment = "Single binary, SQLite by default, upstream Dockerfile, runs with no config file (compiled-in defaults)."
+backup = "bulkloader binary imports JSONL from stdin (src/bin/bulkloader.rs); no export command; SQLite file copy."
+multi_role = "One relay per process."
+count = "No NIP-45 COUNT; supported_nips omits 45 (src/info.rs)."
+search = "No NIP-50."
+protected_vanish = "No NIP-70 '-' tag handling and no NIP-62 in src/."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "No admin UI; config file read at startup."
+moderation = "No NIP-86 or NIP-56 handling."
+observability = "Prometheus /metrics counters and histograms (src/server.rs), tracing logs with optional log files."
+maturity = "Rust relay since 2021, 725 GitHub stars on the mirror, release 0.10.0 May 2026."
+blossom = "No bundled Blossom server."

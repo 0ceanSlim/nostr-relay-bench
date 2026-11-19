@@ -1,0 +1,7 @@
+name = "wisp"
+repo = "https://github.com/privkeyio/wisp"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 7777
+private_giftwraps = true   # kind 1059/21059 served only to an authenticated p-tagged recipient, not configurable (src/connection.zig mayRead)
+notes = "Upstream Dockerfile at the tag (ReleaseSafe, baseline CPU). Shipped storage defaults in both profiles: sync = \"meta\", workers = auto (min(CPU, 4)). Relay behaviour seen in the quick run, not config: NIP-78 app data (kinds 78/30078) is refused on write and on read without AUTH as the author, so those events are missing from every query answer; query_scan_multiplier (default 20, left on) stops scans at limit x 20 entries, which truncates selective #t and multi-filter answers; some concurrent limit-500 REQs get the connection closed with 4997 \"wsz\"."

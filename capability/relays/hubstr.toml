@@ -1,0 +1,43 @@
+name = "Hubstr"
+scored = "2026-11-19"
+summary = "PHP 8.4 AMPHP, SQLite FTS5. 1059 gated in-store before limit. No Docker."
+
+[scores]
+auth = 3
+write_policy = 2
+admission = 1
+rate_limits = 2
+negentropy = 0
+retention = 1
+deployment = 1
+backup = 2
+multi_role = 1
+count = 2
+search = 2
+protected_vanish = 1
+groups = 0
+admin_ui = 1
+moderation = 2
+observability = 1
+maturity = 0
+blossom = 1
+
+[evidence]
+auth = "NIP-42 lifts a tenant to the full cache; innis/nostr-relay matches kind 1059/21059 only where its p tag names an AUTHed key, inside the store query (README, NIP-17 and NIP-59 sections)."
+write_policy = "Guest write kinds, tagged_to_tenant and tag_prefixes provenance rules, word/pubkey/hashtag blacklists, NIP-09 checked on arrival (README, Guest Policy, Content Filtering). No scripting, PoW or WoT gate."
+admission = "Tenant list (allowpubkey/unallowpubkey) is the only admission model; everyone else is a guest."
+rate_limits = "Per-IP events and subscriptions per minute, live via NIP-86 (innis/nostr-relay RateLimitGate keyed on IP), connection_limits.max_connections, IP blocking. No per-pubkey or per-kind limits."
+negentropy = "No NIP-77."
+retention = "NIP-40 expired events swept every ten minutes, not configurable (ADR-0028); no age, size or kind pruning."
+deployment = "No Dockerfile or image; PHP 8.4 + ext-ffi + libsecp256k1, composer install, systemd unit and Caddyfile in resources/."
+backup = "bin/export.php and bin/import.php move JSONL with kind/author/tagged/since/until filters; data/ is the whole state (README, CLI tools)."
+multi_role = "One process serves the owner's public presence, private archive and NIP-17 inbox; no separate relay roles."
+count = "NIP-45 COUNT, exact up to max_limit, then marked approximate."
+search = "NIP-50 via SQLite FTS5."
+protected_vanish = "NIP-70 (accepted only from the AUTHed author); no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "Landing page only; guest policy, limits, blacklists and metadata change live over NIP-86, no restart."
+moderation = "NIP-86 with NIP-98 auth: tenants, word/pubkey/hashtag blacklists, IP blocks, client/subscription monitoring (docs/MANAGEMENT_API.md). No NIP-56 intake."
+observability = "Logs to stdout only; NIP-86 getstats/monitoring methods and cached explore stats."
+maturity = "Public history starts 2026-09-24 (13 commits), tags v0.1.2 to v0.5.0."
+blossom = "Media goes to a separate hubstr-blossom service, not bundled."

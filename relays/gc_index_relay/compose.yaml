@@ -1,0 +1,68 @@
+# Upstream compose.yaml (Apache AGE Postgres -> user setup -> migrator -> server), built from
+# upstream's docker/server.Dockerfile and docker/setup.Dockerfile at the resolved commit.
+# Changed for the bench: an nginx stand-in for the TLS proxy (nginx.conf), host port publishes and the postgres CPU/memory limits are dropped
+# (the whole stack is pinned to RELAY_CPUS instead), restart policies dropped, volumes named.
+# Nothing in the relay is configurable for perf (kinds, the 100 limit cap and read-only
+# WebSocket are hardcoded), so there is no compose.perf.yaml.
+x-src: &src "https://git.imwald.eu/silberengel/gc_index_relay.git#${REF}"
+services:
+  postgres:
+    image: docker.io/apache/age:release_PG17_1.6.0
+    volumes: [pgdata:/var/lib/postgresql/data]
+    environment: { POSTGRES_DB: gc_index_relay_dev, POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres }
+    cpuset: "${RELAY_CPUS}"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d gc_index_relay_dev"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  setup:
+    build: { context: *src, dockerfile: docker/setup.Dockerfile }
+    image: rb-gc-index-relay-setup:${REF}
+    command: ["/usr/local/bin/usersetup.sh"]
+    depends_on: { postgres: { condition: service_healthy } }
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: gc_index_relay_dev
+      POSTGRES_RUNTIME_USER: gc_index_relay
+      POSTGRES_RUNTIME_PASSWORD: gc_index_relay_runtime
+    cpuset: "${RELAY_CPUS}"
+  migrator:
+    build: { context: *src, dockerfile: docker/server.Dockerfile }
+    image: rb-gc-index-relay:${REF}
+    command: ["/app/bin/migrate"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      setup: { condition: service_completed_successfully }
+    environment:
+      DATABASE_URL: "ecto://postgres:postgres@postgres:5432/gc_index_relay_dev"
+      SECRET_KEY_BASE: "0000000000000000000000000000000000000000000000000000000000000000"
+    cpuset: "${RELAY_CPUS}"
+  mercury:
+    build: { context: *src, dockerfile: docker/server.Dockerfile }
+    image: rb-gc-index-relay:${REF}
+    command: ["/app/bin/server"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      migrator: { condition: service_completed_successfully }
+    environment:
+      DATABASE_URL: "ecto://gc_index_relay:gc_index_relay_runtime@postgres:5432/gc_index_relay_dev"
+      SECRET_KEY_BASE: "0000000000000000000000000000000000000000000000000000000000000000"
+      POOL_SIZE: "20"
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+  # Stand-in for the TLS proxy upstream runs in front (see nginx.conf): without it every request
+  # is a 301 to https://, because the release is built with force_ssl.
+  relay:
+    image: nginx:1.27.3-alpine
+    depends_on: [mercury]
+    volumes: [./nginx.conf:/etc/nginx/nginx.conf:ro]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks:
+      default: {}
+      relaybench: { aliases: [relay] }
+volumes: { pgdata: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

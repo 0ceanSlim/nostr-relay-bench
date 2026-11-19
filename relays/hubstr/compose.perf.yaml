@@ -1,0 +1,3 @@
+services:
+  relay:
+    volumes: [./perf.php:/bench/perf.php:ro]

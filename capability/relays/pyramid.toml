@@ -1,0 +1,43 @@
+name = "pyramid"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 2
+admission = 3
+rate_limits = 1
+negentropy = 2
+retention = 1
+deployment = 3
+backup = 2
+multi_role = 3
+count = 3
+search = 2
+protected_vanish = 1
+groups = 3
+admin_ui = 3
+moderation = 2
+observability = 1
+maturity = 2
+blossom = 3
+
+[evidence]
+auth = "NIP-42 offered when paywall or groups are on (core.go onConnect); inbox serves kind 1059 only to authed users (inbox/core.go rejectFilter), with RequireAuthForDM for writes; main relay reads are open."
+write_policy = "Members-only writes, allowed-kinds spec, indexable-tag caps, unprefixed-reference rejection, schema validation option, per-kind special cases for zaps/reports/joins (core.go basicRejectionLogic)."
+admission = "Invite tree with per-level invite quotas, access requests, NIP-43 join/leave (28934/28936), paywall (NIP-63), WoT for inbox/network/moderated relays (pyramid/members.go, wot/)."
+rate_limits = "Per-IP open-subscription and filter-cost caps on the main relay (global/subscription_limits.go); FilterIPRateLimiter on sub-relays, EventPubKeyRateLimiter on inbox, hard-coded; IP block list."
+negentropy = "relay.Negentropy = true on the main relay (main.go); two-way sync page in sync.go."
+retention = "NIP-40 expiration manager on the main relay (main.go StartExpirationManager); no age or size policies."
+deployment = "Upstream Dockerfile, prebuilt amd64/arm64 binaries on releases, easy.sh installer, in-place self-update; setup done in the web UI."
+backup = "Database page with JSONL inject and per-event delete (database_inject.templ); data is mmm files on disk."
+multi_role = "Main, internal, personal, favorites, bookmarks, inbox, popular, uppermost, moderated, network, groups, scheduled relays in one process (main.go run)."
+count = "NIP-45 COUNT and HyperLogLog counts on the main relay (main.go relay.Count, relay.CountHLL)."
+search = "Optional NIP-50 full-text search with language detection (search/, Settings.Search)."
+protected_vanish = "NIP-70 enforced by khatru (fiatjaf.com/nostr khatru/handlers.go); no NIP-62."
+groups = "NIP-29 groups with roles, LiveKit calls and NIP-AD names (groups/), NIP-43 membership."
+admin_ui = "Web settings, invite tree, member pages, database browser, logs and stats; settings saved live (handler.go settingsHandler)."
+moderation = "NIP-86 ban/allow pubkey, ban event, kinds, IP block, roles (main.go ManagementAPI); NIP-56 reports accepted for local events and members; moderated relay with vote queue."
+observability = "zerolog logs to file with a /log page and a /stats page (global/logging.go, stats.go); no metrics export."
+maturity = "Go, fiatjaf, 82 GitHub stars, frequent releases (v1.4.6 Nov 2026)."
+blossom = "Blossom server for members with per-level upload quotas (blossom/, Settings.Blossom)."

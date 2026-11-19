@@ -1,0 +1,25 @@
+name = "magnitude"
+scored = "2026-11-19"
+summary = "Rust, own log+LSM, AGPL. No AUTH; #p 1059 served to anyone. NIPs 1,9,11,17,24,30,38,40,45,46,58,59,62,65,70,77,78. ACME TLS built in, strfry-format import/export, peer sync over NIP-77."
+
+[scores]
+auth = 1
+write_policy = 1
+admission = 1
+rate_limits = 2
+negentropy = 3
+retention = 1
+deployment = 3
+backup = 3
+multi_role = 0
+count = 3
+search = 0
+protected_vanish = 3
+groups = 0
+admin_ui = 1
+moderation = 0
+observability = 2
+maturity = 1
+blossom = 0
+
+[evidence]

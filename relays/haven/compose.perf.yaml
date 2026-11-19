@@ -1,0 +1,18 @@
+# HAVEN perf profile. The binary is the release tag built from source without the outbox's
+# whitelist-only write policy (see Dockerfile), so the bench's random keys can publish.
+# Settings changed from the shipped .env.example, outbox relay only (the one benchmarked):
+#   - per-IP event limiter (10 tokens/60 min, burst 100) and connection limiter
+#     (3/min, burst 9) raised far past what one load container can reach,
+#   - empty and "complex" (multi-tag) filters allowed, so every query shape is answered.
+# DB engine, kinds and everything else stay as shipped.
+services:
+  relay:
+    environment:
+      OUTBOX_RELAY_EVENT_IP_LIMITER_TOKENS_PER_INTERVAL: "100000000"
+      OUTBOX_RELAY_EVENT_IP_LIMITER_INTERVAL: "1"
+      OUTBOX_RELAY_EVENT_IP_LIMITER_MAX_TOKENS: "100000000"
+      OUTBOX_RELAY_CONNECTION_RATE_LIMITER_TOKENS_PER_INTERVAL: "100000000"
+      OUTBOX_RELAY_CONNECTION_RATE_LIMITER_INTERVAL: "1"
+      OUTBOX_RELAY_CONNECTION_RATE_LIMITER_MAX_TOKENS: "100000000"
+      OUTBOX_RELAY_ALLOW_EMPTY_FILTERS: "true"
+      OUTBOX_RELAY_ALLOW_COMPLEX_FILTERS: "true"

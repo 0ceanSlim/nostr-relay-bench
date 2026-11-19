@@ -1,0 +1,43 @@
+name = "rnostr"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 1
+write_policy = 1
+admission = 1
+rate_limits = 1
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 2
+multi_role = 0
+count = 1
+search = 1
+protected_vanish = 1
+groups = 0
+admin_ui = 1
+moderation = 0
+observability = 2
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "NIP-42 in the auth extension; REQ/EVENT gated by IP and authed-pubkey allow/deny lists (extensions/src/auth.rs). No per-kind restricted reads, so kind 1059 goes to anyone."
+write_policy = "auth.event IP, authed-pubkey and event-author allow/deny lists, allow_mentioning_whitelisted_pubkeys (rnostr.example.toml); no kind rules, PoW or plugin hook."
+admission = "Pubkey whitelist only (auth.event.pubkey_whitelist / event_pubkey_whitelist)."
+rate_limits = "rate_limiter extension: per-IP EVENT limits per period, scoped by kind ranges, with an IP whitelist (extensions/src/rate_limiter.rs); off by default; no REQ or connection caps."
+negentropy = "No NIP-77."
+retention = "rnostr delete removes by filter (README Commands); NIP-40 expiration index (db/src/db.rs); no scheduled purge."
+deployment = "Single binary, LMDB, upstream Dockerfile and docker-compose.yml; Dockerfile's Debian 11 base no longer builds as shipped."
+backup = "rnostr import and export JSONL, delete by filter (src/main.rs, README Commands)."
+multi_role = "One relay per process."
+count = "NIP-45 count extension, exact scan bounded by db_query_timeout; off by default, README calls it experimental."
+search = "NIP-50 extension: exact-match, case-insensitive, kind 1 content only; off by default, README calls it experimental."
+protected_vanish = "NIP-70 enforced with AUTH (extensions/src/auth.rs, relay/src/message.rs); no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "relay --watch hot-reloads most config keys from the config dir; no admin UI."
+moderation = "No NIP-86 or NIP-56 handling."
+observability = "Prometheus metrics extension (extensions/src/metrics.rs), tracing logs via RUST_LOG."
+maturity = "Since 2023, 126 GitHub stars, last release v0.4.9 (June 2026)."
+blossom = "No bundled Blossom server."

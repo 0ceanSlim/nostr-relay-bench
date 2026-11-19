@@ -1,0 +1,43 @@
+name = "zooid"
+scored = "2026-11-12"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 1
+admission = 2
+rate_limits = 0
+negentropy = 2
+retention = 1
+deployment = 1
+backup = 2
+multi_role = 3
+count = 0
+search = 0
+protected_vanish = 1
+groups = 3
+admin_ui = 1
+moderation = 2
+observability = 1
+maturity = 1
+blossom = 3
+
+[evidence]
+auth = "OnConnect requests NIP-42; reads and writes need AUTH unless anonymous_read (zooid/instance.go OnRequest, onEvent); gift wraps and zap receipts admitted for a member recipient; stored 1059 served to any permitted reader."
+write_policy = "Members-only unless public_write, author must equal the authed pubkey, banned pubkeys/events, internal and read-only kinds refused, NIP-29 group write checks (instance.go onEvent)."
+admission = "Member list per virtual relay, invite claims via NIP-86 createclaim and kind 28934 join requests, public_join, NIP-43 (management.go)."
+rate_limits = "No rate limiting of any kind in zooid/ or cmd/."
+negentropy = "Relay.Negentropy = true per virtual relay (instance.go)."
+retention = "NIP-40 expiration manager per relay (instance.go StartExpirationManager); no age or size policies."
+deployment = "OCI image and Dockerfile; needs PostgreSQL 16+ since 0.3.0 (README); one TOML file per virtual relay."
+backup = "Per-relay JSONL export/import over the API and bin/export, bin/import (README, zooid/transfer.go); pg_dump."
+multi_role = "Any number of virtual relays per instance, routed by Host, each with its own schema and policy (zooid/lib.go Dispatch)."
+count = "No Count hook set; no NIP-45."
+search = "No NIP-50."
+protected_vanish = "NIP-70 enforced by khatru (Coracle nostrlib fork, khatru/handlers.go); no NIP-62."
+groups = "Full NIP-29 with roles, invites and LiveKit calls (zooid/groups.go, livekit.go); NIP-43 membership."
+admin_ui = "No web UI; NIP-98 REST API creates/patches relay configs and config files hot-reload via fsnotify (zooid/api.go, lib.go)."
+moderation = "NIP-86 methods with per-pubkey method assignment, /moderation feed of recent events and uploads (README, management.go)."
+observability = "Optional pprof plus expvar DB pool stats on PPROF_ADDR, slow-query log (SLOW_QUERY_MS); per-event accept/reject log lines."
+maturity = "Go/khatru by Coracle, history from Sep 2025, moved from GitHub to gitea.coracle.social; v0.3.0 Sep 2026."
+blossom = "Per-relay Blossom with local or S3 storage and optional authenticated reads (zooid/blossom.go, README [blossom])."

@@ -1,0 +1,12 @@
+# Default profile: the image as upstream's Dockerfile sets it up (listen 0.0.0.0:3334, data in
+# /data, every other setting at its built-in default). Nothing changed.
+services:
+  relay:
+    build: { context: ., args: { REF: "${REF}" } }
+    image: rb-orly:${REF}
+    volumes: [data:/data]
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

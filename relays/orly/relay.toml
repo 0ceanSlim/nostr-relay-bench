@@ -1,0 +1,7 @@
+name = "ORLY"
+repo = "https://git.smesh.lol/orly"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3334
+private_giftwraps = false   # privileged kinds (4, 14, 1059...) are only party-checked when ORLY_AUTH_REQUIRED is on, which ships off
+notes = "Source from git.smesh.lol/orly (the author's GitHub is gone); the last tag (v0.65.60, 2026-06-11) trails main by 20+ commits. Built with upstream's Dockerfile steps from a submodule-free clone (the next/tinygo submodule is SSH-only), with -mod=mod because the committed vendor/ tree is missing protobuf's editions_defaults.binpb. Per-IP WebSocket connections are clamped to 10 in code (app/handle-websocket.go: maxConnPerIP > 10 -> 10), with 200 ms more delay per open connection from that IP; not configurable. Worse, the per-IP count leaks: ConnIPDec drops the decrement when its 16-slot actor inbox is full (app/server_actors.go TrySend), so after the first load step the bench's IP stays at 10/10 with no sockets open and every later step is refused with HTTP 429 (seen for 4+ minutes after the clients left). Duplicates are answered OK false 'blocked:' rather than 'duplicate:'."

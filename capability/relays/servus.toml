@@ -1,0 +1,25 @@
+name = "Servus"
+scored = "2026-11-19"
+summary = "Rust, DISCONTINUED 2026-11-18. Personal CMS+relay; ignores tag filters."
+
+[scores]
+auth = 0
+write_policy = 1
+admission = 1
+rate_limits = 0
+negentropy = 0
+retention = 0
+deployment = 2
+backup = 1
+multi_role = 1
+count = 0
+search = 0
+protected_vanish = 0
+groups = 0
+admin_ui = 1
+moderation = 0
+observability = 0
+maturity = 0
+blossom = 2
+
+[evidence]

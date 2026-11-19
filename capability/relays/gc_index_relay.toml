@@ -1,0 +1,43 @@
+name = "gc_index_relay (Mercury)"
+scored = "2026-11-19"
+summary = "Elixir/Phoenix on Postgres + Apache AGE. GitCitadel's publication/wiki index: writes through a REST API, read-only NIP-01 WebSocket serving corpus kinds 30023/30040/30041/30817/30818. NIPs 1,11,70 (+09 via REST)."
+
+[scores]
+auth = 0
+write_policy = 1
+admission = 0
+rate_limits = 1
+negentropy = 0
+retention = 1
+deployment = 2
+backup = 1
+multi_role = 0
+count = 0
+search = 1
+protected_vanish = 1
+groups = 0
+admin_ui = 0
+moderation = 1
+observability = 1
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "No NIP-42; relay_info sets auth_required false and the validator rejects every NIP-70 event because there is no AUTH (lib/gc_index_relay/nostr/validator.ex)."
+write_policy = "Hardcoded corpus-kind allow list (lib/gc_index_relay/nostr/kind_policy.ex) plus event validation on the REST write path; WebSocket EVENT always refused. No per-pubkey or content rules."
+admission = "No allowlist, WoT, invites or payments: any valid corpus event POSTed to /api/events is stored."
+rate_limits = "Only a 4-slot semaphore on the search endpoints, 503 when full (lib/gc_index_relay/search_limiter.ex, plugs/search_concurrency_limit.ex). No per-IP, per-pubkey or connection limits."
+negentropy = "No NIP-77."
+retention = "Release commands purge_social (drop non-corpus events) and purge_maintenance (orphans older than N days) (rel/overlays/bin, lib/gc_index_relay/release.ex). No NIP-40, no scheduled pruning."
+deployment = "compose.yaml with Apache AGE Postgres, a user-setup job, a migrator and the server (docker/server.Dockerfile); prod release forces https, so it needs a TLS proxy in front."
+backup = "Per-publication export endpoint (GET /api/publications/:naddr/export); no whole-store export or import tool beyond Postgres dumps."
+multi_role = "Single index role."
+count = "No NIP-45; catalog counts only through the REST/HTML catalog."
+search = "Full-text publication, section and wiki search over REST (/api/publications/search, /api/wiki/search); no NIP-50 on the WebSocket."
+protected_vanish = "NIP-70 handled by refusing every protected event; no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "No admin UI; MAINTENANCE_BANNER and other settings are environment variables read at boot (config/runtime.exs). LiveDashboard is only routed with dev_routes."
+moderation = "Admin bearer-token DELETE /api/events/:id (controllers/event_controller.ex) and NIP-09 kind 5 with tombstones (nostr/deletion.ex). No NIP-86 or NIP-56."
+observability = "Phoenix telemetry and a /health endpoint; standard Logger output. No metrics endpoint in prod."
+maturity = "First commit 2026-01-28, 127 commits, no tags; one known deployment (mercury-relay.imwald.eu)."
+blossom = "No Blossom."

@@ -1,0 +1,43 @@
+# swarm, built with upstream's own Dockerfile at the resolved tag.
+# Default profile: the environment upstream's docker-compose.yml ships (BadgerDB, Blossom off,
+# PUBKEY/IP/CONN/QUERY rate limits 5/10/2/100, no public kinds), plus
+#   - RELAY_PUBKEY set to a throwaway test key,
+#   - the team roster (public/.well-known/nostr.json) replaced by a one-entry throwaway roster
+#     (the image ships HiveTalk's real team list),
+#   - the db on a named volume.
+services:
+  relay:
+    build: { context: "https://github.com/HiveTalk/swarm.git#${REF}" }
+    image: rb-swarm:${REF}
+    environment:
+      RELAY_NAME: Swarm Relay
+      RELAY_PUBKEY: da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4
+      RELAY_DESCRIPTION: Team Nostr relay
+      DB_ENGINE: badger
+      DB_PATH: /app/db/
+      TEAM_DOMAIN: ""
+      NPUB_DOMAIN: ""
+      RELAY_PORT: "3334"
+      BLOSSOM_ENABLED: "false"
+      BLOSSOM_PATH: blossom/
+      BLOSSOM_URL: http://relay:3334
+      WEBSOCKET_URL: ws://relay:3334
+      ALLOWED_KINDS: ""
+      PUBLIC_ALLOWED_KINDS: ""
+      TRUSTED_CLIENT_NAME: ""
+      TRUSTED_CLIENT_KINDS: ""
+      MAX_UPLOAD_SIZE_MB: "200"
+      ALLOWED_MIRROR_HOSTS: ""
+      PUBKEY_RATE_LIMIT: "5"
+      IP_RATE_LIMIT: "10"
+      CONN_RATE_LIMIT: "2"
+      QUERY_RATE_LIMIT: "100"
+      STORAGE_BACKEND: filesystem
+    volumes:
+      - data:/app/db
+      - ./nostr.json:/app/public/.well-known/nostr.json:ro
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

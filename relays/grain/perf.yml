@@ -1,0 +1,58 @@
+# grain perf profile: stock settings with per-client throttles lifted so the load generator,
+# not the rate limiter, is what gets measured. Gift wraps stay recipient-only (not configurable).
+logging:
+  level: "warn"
+  file: "debug"
+  max_log_size_mb: 10
+  structure: false
+  check_interval_min: 10
+  backup_count: 1
+client:
+  index_relays: []
+database:
+  path: "data"
+  map_size_mb: 65536
+server:
+  port: :8181
+  read_timeout: 60
+  write_timeout: 20
+  idle_timeout: 1200
+  max_connections: 20000
+  max_subscriptions_per_client: 200
+  implicit_req_limit: 500
+  connection_rate_limit_per_ip: 0
+resource_limits:
+  cpu_cores: 4
+  memory_mb: 8192
+  heap_size_mb: 4096
+auth:
+  enabled: false
+  relay_url: "ws://relay:8181/"
+backup_relay:
+  enabled: false
+  urls: []
+event_purge:
+  enabled: false
+  disable_at_startup: true
+  keep_interval_hours: 24
+  purge_interval_minutes: 240
+  purge_by_category: {regular: false, replaceable: false, addressable: false, deprecated: false}
+  purge_by_kind_enabled: false
+  kinds_to_purge: []
+  keep_kinds: []
+  exclude_whitelisted: true
+event_time_constraints:
+  min_created_at: 1577836800
+  max_created_at_string: now+5m
+rate_limit:
+  ws_limit: 10000000
+  ws_burst: 10000000
+  event_limit: 10000000
+  event_burst: 10000000
+  req_limit: 10000000
+  req_burst: 10000000
+  max_event_size: 524288
+  max_content_length: 0
+  kind_size_limits: []
+  category_limits: {}
+  kind_limits: []

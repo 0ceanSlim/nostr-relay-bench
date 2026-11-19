@@ -1,0 +1,17 @@
+# Built with upstream's own Dockerfile at the resolved tag (git build context; buildkit pulls the
+# third_party/kotlin-lmdb submodule). artifacts.relay.tools/opensauce/newlay:<X.Y.Z> is the same
+# build, but CI does not publish it for every tag. MODE picks the config file.
+services:
+  relay:
+    build: { context: "https://code.relay.tools/opensauce/newlay.git#${REF}" }
+    image: rb-newlay:${REF}
+    command: ["--config", "/etc/newlay/${MODE}.toml"]
+    volumes:
+      - data:/var/lib/newlay/data
+      - ./default.toml:/etc/newlay/default.toml:ro
+      - ./perf.toml:/etc/newlay/perf.toml:ro
+    cpuset: "${RELAY_CPUS}"
+    ulimits: { nofile: 1048576 }
+    networks: { relaybench: { aliases: [relay] } }
+volumes: { data: {} }
+networks: { relaybench: { external: true, name: "${RB_NET:-relaybench}" } }

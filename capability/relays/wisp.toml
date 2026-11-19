@@ -1,0 +1,43 @@
+name = "wisp"
+scored = "2026-11-19"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 1
+admission = 1
+rate_limits = 1
+negentropy = 2
+retention = 1
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 1
+protected_vanish = 1
+groups = 0
+admin_ui = 0
+moderation = 2
+observability = 2
+maturity = 1
+blossom = 0
+
+[evidence]
+auth = "NIP-42 with auth_required / to_write; kinds 1059/21059 served only to an authenticated p-tagged recipient and NIP-78 only to its author, on REQ, live, COUNT and negentropy, always on (src/connection.zig mayRead)."
+write_policy = "NIP-86 pubkey, kind and event allow/ban lists, min_pow_difficulty, max_event_age and size caps. No scripting or WoT."
+admission = "NIP-86 allowpubkey list plus auth_to_write; no WoT, invites or payments."
+rate_limits = "Per-IP events_per_minute, queries_per_minute (REQ/COUNT/NEG-OPEN) and max_connections_per_ip, global max_connections (src/rate_limiter.zig). No per-pubkey or per-kind limits."
+negentropy = "NIP-77 with max_sync_events and per-connection max_sessions; on by default."
+retention = "max_event_age at ingest, NIP-40 expiry, NIP-09 deletions with deleted_retention_days cleanup. No purge by age or kind."
+deployment = "Single Zig binary with embedded LMDB, upstream Dockerfile and ghcr.io image, Nix module; runs on defaults with no config file."
+backup = "wisp export / wisp import JSONL (README Import/Export)."
+multi_role = "One relay per process."
+count = "NIP-45 COUNT, exact; no HyperLogLog."
+search = "NIP-50 accepted only with a kinds filter (src/handler.zig validateSearchFilters) and matched while scanning; no search index."
+protected_vanish = "NIP-70 enforced (src/handler.zig isProtected); no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "No admin UI; NIP-86 changerelayname/description/icon only."
+moderation = "NIP-86 ban/allow pubkey, event and kind, blockip, listeventsneedingmoderation (src/nip86.zig); no NIP-56 report intake."
+observability = "Prometheus /metrics (connections, stored/rejected/broadcast events, REQs, rate limiting) in src/relay_metrics.zig; std.log text logs."
+maturity = "First commit 2025-12; 240 commits, tagged releases v0.7-v0.9.3, small install base."
+blossom = "No Blossom server."

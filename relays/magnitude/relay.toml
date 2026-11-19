@@ -1,0 +1,4 @@
+name = "magnitude"
+repo = "https://github.com/VectorPrivacy/magnitude-relay"
+track = "branch"            # default branch head; magnitude tags no releases
+port = 7777

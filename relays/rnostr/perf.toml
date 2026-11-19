@@ -1,0 +1,48 @@
+# rnostr perf profile: the shipped rnostr.example.toml with
+#   - network.host 0.0.0.0 (the image sets this through RNOSTR_NETWORK__HOST anyway)
+#   - limitation.max_limit 300 -> 5000 (per-filter limit clamp)
+#   - limitation.max_subscriptions 20 -> 200 (per connection)
+# Everything else as shipped: rate limiter and auth extensions off (so nothing is per-IP
+# limited and gift wraps are readable by anyone), COUNT and search extensions off.
+
+[information]
+name = "rnostr"
+description = "A high-performance and scalable nostr relay written in Rust."
+software = "https://github.com/rnostr/rnostr"
+
+[data]
+path = "./data"
+db_query_timeout = "100ms"
+
+[network]
+host = "0.0.0.0"
+port = 8080
+
+[thread]
+
+[limitation]
+max_message_length = 524288
+max_subscriptions = 200
+max_filters = 10
+max_limit = 5000
+max_subid_length = 100
+min_prefix = 10
+max_event_tags = 5000
+max_event_time_older_than_now = 94608000
+max_event_time_newer_than_now = 900
+
+[metrics]
+enabled = true
+auth = "auth_key"
+
+[auth]
+enabled = false
+
+[rate_limiter]
+enabled = false
+
+[count]
+enabled = false
+
+[search]
+enabled = false

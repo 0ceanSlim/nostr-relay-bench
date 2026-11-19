@@ -1,0 +1,43 @@
+name = "ORLY"
+scored = "2026-11-19"
+summary = ""
+
+[scores]
+auth = 2
+write_policy = 3
+admission = 2
+rate_limits = 3
+negentropy = 2
+retention = 1
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 2
+protected_vanish = 1
+groups = 0
+admin_ui = 2
+moderation = 2
+observability = 1
+maturity = 1
+blossom = 2
+
+[evidence]
+auth = "NIP-42; with ORLY_AUTH_REQUIRED privileged kinds (4, 14, 1059...) go only to an involved party (app/handle-req.go IsPartyInvolved). Ships off, so gift wraps are public by default."
+write_policy = "JSON policy engine per kind/pubkey/tag (ORLY_POLICY_ENABLED, policy.json), sprocket event-processing plugins, blacklists, follows and WoT-depth throttles."
+admission = "ACL modes follows, managed (NIP-86) and curating, NIP-43 invites, NWC-paid subscriptions, GrapeVine WoT auto-whitelist."
+rate_limits = "Per-IP connection cap (clamped to 10, app/handle-websocket.go) with progressive delay, per-IP HTTP and WebSocket-upgrade budgets (pkg/httpguard), global connection and goroutine caps, adaptive PID read/write throttling, per-connection graph-query RPM."
+negentropy = "NIP-77 in-process or as a gRPC sync service; ships disabled (ORLY_NEGENTROPY_ENABLED=false)."
+retention = "ORLY_MAX_STORAGE_BYTES with access-pattern GC that is off and marked experimental; NIP-40 expiry."
+deployment = "Single Go binary (relay, db, acl, launcher subcommands) and Dockerfile; Badger embedded, Neo4j or gRPC backends optional. No published image."
+backup = "/api/export and /api/import endpoints and the orly-export command (app/server.go)."
+multi_role = "One relay per process."
+count = "NIP-45 COUNT via DB CountEvents across filters (app/handle-count.go), exact."
+search = "NIP-50 over a word-token index built at ingest (pkg/database/get-indexes-from-filter.go TokenHashes)."
+protected_vanish = "NIP-70 checked against the authed pubkey (pkg/event/validation/protected.go); NIP-62 only defined as a constant, not handled."
+groups = "NIP-43 membership only; no NIP-29."
+admin_ui = "Embedded web UI with log viewer, policy config and ACL management; settings come from env vars at start."
+moderation = "NIP-86 in managed/curating ACL modes: ban/allow pubkey, event and kind, blockip, events needing moderation (app/handle-nip86.go). No NIP-56 intake."
+observability = "Leveled logs with an in-memory buffer shown in the web UI, optional pprof; no metrics endpoint."
+maturity = "Author's GitHub is gone; source now at git.smesh.lol/orly (history from 2025-08, 850 commits, last tag v0.65.60 on 2026-06-11)."
+blossom = "Blossom server built in and on by default (pkg/blossom, ORLY_BLOSSOM_ENABLED=true) with BUD payments and rate limits."

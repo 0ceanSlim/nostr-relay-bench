@@ -1,0 +1,28 @@
+# newlay default profile: upstream deploy/docker/newlay.toml (the docker-compose quickstart
+# config) as shipped. Changed: relay.url localhost -> ws://relay:7777, the address the tools dial,
+# so NIP-42 relay-tag checks match; [limits_message] enabled = false, because relay-tester aborts
+# on the first frame it cannot parse ("Unknown Message: LIMITS") and newlay pushes a NIP-65535
+# LIMITS frame on connect. data_dir, listen_host and listen_port are already container values.
+
+[relay]
+url = "ws://relay:7777"
+data_dir = "/var/lib/newlay/data"
+listen_host = "0.0.0.0"
+listen_port = 7777
+
+# Open anonymous tier so the relay accepts reads and writes out of the box.
+[tier.anon]
+rank = 0
+can_read = true
+can_write = true
+max_subscriptions = 20
+max_limit = 500
+publishing_rate_limit = 30
+filter_rate_limit = 60
+
+# Bench change: off so relay-tester can run (see top). Upstream default is true.
+[limits_message]
+enabled = false
+
+[log]
+level = "info"

@@ -1,0 +1,8 @@
+# zooid perf profile: the open-policy config (public_read, anonymous_read, public_write) and
+# the zooid-perf binary (writes without NIP-42 AUTH, per-filter cap 1000 -> 5000; see
+# Dockerfile). Postgres is stock postgres:16 in both profiles.
+services:
+  relay:
+    entrypoint: ["/bin/zooid-perf"]
+    volumes:
+      - ./config-perf:/app/config:ro

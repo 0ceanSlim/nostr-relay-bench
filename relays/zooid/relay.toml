@@ -1,0 +1,8 @@
+name = "zooid"
+repo = "https://gitea.coracle.social/coracle/zooid"
+track = "tag"
+tag_pattern = '^v\d+\.\d+\.\d+$'
+port = 3334
+# Setup, kept for when it is re-enabled: Moved off GitHub to gitea.coracle.social. Needs PostgreSQL 16 (run beside it, on the relay's cores). One virtual relay with a throwaway secret and owner. zooid requires NIP-42 AUTH as the author for every write, even with public_write on, so the perf profile runs the tag with onEvent treating the author as authenticated, raises the hard 1000-event filter cap to 5000, and sets public_read/anonymous_read/public_write; the default profile is the tag as is with policy defaults (members-only, AUTH for reads and writes), so relay-tester sees the gate.
+disabled = true
+notes = "khatru engine; benchmarked via pyramid (new engine) and haven (old engine)"

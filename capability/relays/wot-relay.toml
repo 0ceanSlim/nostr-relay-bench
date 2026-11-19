@@ -1,0 +1,43 @@
+name = "wot-relay"
+scored = "2026-11-19"
+summary = "Go khatru LMDB, bitvora. WoT + NIP-75 funding gate. Archive sync stores kind 4 it refuses on write."
+
+[scores]
+auth = 1
+write_policy = 2
+admission = 2
+rate_limits = 1
+negentropy = 0
+retention = 2
+deployment = 2
+backup = 2
+multi_role = 0
+count = 2
+search = 0
+protected_vanish = 1
+groups = 0
+admin_ui = 0
+moderation = 0
+observability = 1
+maturity = 2
+blossom = 0
+
+[evidence]
+auth = "NIP-42 handled by khatru but never requested or required; no restricted reads, kind 1059 served to anyone (main.go)."
+write_policy = "Writes only from pubkeys in the computed trust network, kind 4 rejected, base64 media rejected (main.go OnEvent); master adds zap receipts for a NIP-75 funding goal (funding.go)."
+admission = "Web of trust from the owner's follows with MINIMUM_FOLLOWERS, IGNORE_FOLLOWS_LIST; master adds a monthly NIP-75 zap funding goal. The gate accepts everything while the trust map is empty."
+rate_limits = "EventIPRateLimiter 5/min, FilterIPRateLimiter 5/min, ConnectionRateLimiter 10/2min, all hard-coded in main.go; no per-pubkey limits."
+negentropy = "khatru Negentropy flag not set; no NIP-77."
+retention = "MAX_AGE_DAYS deletes archive kinds older than the limit on each refresh (main.go deleteOldNotes); ARCHIVE_KINDS selects kinds; NIP-40 from khatru."
+deployment = "Upstream Dockerfile and docker-compose (plus arm64 and Tor variants), .env config; no release binaries."
+backup = "cmd/import-jsonl and tools/export-badger on master; LMDB file copy."
+multi_role = "One relay per process."
+count = "COUNT through khatru UseEventstore on LMDB; no HyperLogLog."
+search = "No NIP-50."
+protected_vanish = "NIP-70 enforced by khatru; no NIP-62."
+groups = "No NIP-29 or NIP-43."
+admin_ui = "No admin UI; README points to a separate optional WoT Relay Manager."
+moderation = "No NIP-86 or NIP-56 handling."
+observability = "/debug/stats counters, /debug/goroutines and pprof endpoints (main.go), periodic memory/performance log lines."
+maturity = "Go/khatru since 2024, 89 GitHub stars, moved from bitvora to barrydeen; v0.2.1 Apr 2026 with 28 commits on master since."
+blossom = "No bundled Blossom server."
