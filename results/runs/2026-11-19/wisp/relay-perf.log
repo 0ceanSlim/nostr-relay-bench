@@ -1,0 +1,4 @@
+relay-1  | info: Wisp v0.9.3 starting
+relay-1  | info: Listening on 0.0.0.0:7777
+relay-1  | info: Storage: ./data (sync=meta)
+relay-1  | info(server): Server running on 0.0.0.0:7777

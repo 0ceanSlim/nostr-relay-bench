@@ -1,0 +1,165 @@
+{
+ "relay": "orly",
+ "name": "ORLY",
+ "version": "v0.65.60",
+ "commit": "66c156d8082d65fbb659ebb9e61c5e3a2dc6fc23",
+ "started": "2026-11-20T09:16:37+00:00",
+ "activity": {
+  "commits_90d": 23,
+  "last_commit": "2026-10-29"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 2,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 2,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 2,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 2,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "ORLY",
+  "description": "relay powered by the orly framework https://git.smesh.lol/orly dashboard: http://relay:3334/",
+  "pubkey": "7538480939ce585c755f90b417027ad80b1962eafb01c7b61e1e6a96ec8fe8f6",
+  "supported_nips": [
+   1,
+   4,
+   9,
+   11,
+   12,
+   16,
+   20,
+   33,
+   40,
+   42,
+   45,
+   50,
+   65,
+   70
+  ],
+  "software": "https://git.smesh.lol/orly",
+  "version": "0.65.60\n",
+  "limitation": {
+   "auth_required": false,
+   "payment_required": true,
+   "restricted_writes": false
+  },
+  "icon": "https://i.nostr.build/6wGXAn7Zaw9mHxFg.png",
+  "addresses": [
+   "ws://0.0.0.0:3334/"
+  ],
+  "graph_query": {
+   "enabled": true,
+   "max_depth": 16,
+   "max_results": 10000,
+   "methods": [
+    "follows",
+    "followers",
+    "mentions",
+    "thread"
+   ]
+  },
+  "proxy_query": {
+   "enabled": true,
+   "max_relays": 16
+  },
+  "theme": "auto",
+  "blossom_enabled": true,
+  "db_type": "badger"
+ },
+ "footprint": {
+  "rss_mb": 560.3,
+  "disk_mb": 70.2
+ },
+ "nip11_default": {
+  "name": "ORLY",
+  "description": "relay powered by the orly framework https://git.smesh.lol/orly dashboard: http://relay:3334/",
+  "pubkey": "668a7396004af5575a45abaa0fd4fb4135fff8872c5ce5aa87d55469234c7041",
+  "supported_nips": [
+   1,
+   4,
+   9,
+   11,
+   12,
+   16,
+   20,
+   33,
+   40,
+   42,
+   45,
+   50,
+   65,
+   70
+  ],
+  "software": "https://git.smesh.lol/orly",
+  "version": "0.65.60\n",
+  "limitation": {
+   "auth_required": false,
+   "payment_required": true,
+   "restricted_writes": false
+  },
+  "icon": "https://i.nostr.build/6wGXAn7Zaw9mHxFg.png",
+  "addresses": [
+   "ws://0.0.0.0:3334/"
+  ],
+  "graph_query": {
+   "enabled": true,
+   "max_depth": 16,
+   "max_results": 10000,
+   "methods": [
+    "follows",
+    "followers",
+    "mentions",
+    "thread"
+   ]
+  },
+  "proxy_query": {
+   "enabled": true,
+   "max_relays": 16
+  },
+  "theme": "auto",
+  "blossom_enabled": true,
+  "db_type": "badger"
+ },
+ "minutes": 6.4
+}

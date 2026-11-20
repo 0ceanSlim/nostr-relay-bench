@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:3355/",
+  "relay_name": "haven",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 84.95,
+      "avg_latency_ms": 59.970,
+      "p50_latency_ms": 0.201,
+      "p90_latency_ms": 8.948,
+      "p95_latency_ms": 28.515,
+      "p99_latency_ms": 2068.740,
+      "success_rate": 99.4,
+      "total_events": 19874,
+      "errors": 126
+    }
+  ]
+}

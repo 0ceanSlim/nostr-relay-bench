@@ -1,0 +1,105 @@
+{
+ "relay": "haven",
+ "name": "HAVEN",
+ "version": "v1.2.2",
+ "commit": "45d835fbb98e71bf7dc96d073c92a8a9b4555e85",
+ "started": "2026-11-20T02:49:37+00:00",
+ "activity": {
+  "commits_90d": 13,
+  "last_commit": "2026-11-14"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "utxo's outbox relay",
+  "description": "a relay and Blossom server for public messages and media",
+  "pubkey": "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4",
+  "contact": "",
+  "supported_nips": [
+   1,
+   11,
+   40,
+   42,
+   70,
+   86,
+   9,
+   45
+  ],
+  "software": "https://github.com/barrydeen/haven",
+  "version": "v1.2.2+dirty",
+  "icon": "https://image.nostr.build/b50979a0def2f99f9524dd6dfcbb7e4dd45df29c1c2f9b1bf39c15c2f4d1bdb3.png",
+  "banner": ""
+ },
+ "footprint": {
+  "rss_mb": 3284.0,
+  "disk_mb": 1537.4
+ },
+ "nip11_default": {
+  "name": "utxo's outbox relay",
+  "description": "a relay and Blossom server for public messages and media",
+  "pubkey": "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4",
+  "contact": "",
+  "supported_nips": [
+   1,
+   11,
+   40,
+   42,
+   70,
+   86,
+   9,
+   45
+  ],
+  "software": "https://github.com/barrydeen/haven",
+  "version": "v1.2.2",
+  "icon": "https://image.nostr.build/b50979a0def2f99f9524dd6dfcbb7e4dd45df29c1c2f9b1bf39c15c2f4d1bdb3.png",
+  "banner": ""
+ },
+ "minutes": 42.2
+}

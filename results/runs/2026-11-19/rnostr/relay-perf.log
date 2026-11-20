@@ -1,0 +1,15 @@
+relay-1  | [2m2026-11-20T10:32:28.447017Z[0m [32m INFO[0m [2mrnostr::relay[0m[2m:[0m Start relay server
+relay-1  | [2m2026-11-20T10:32:28.447109Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Watch config file "./config/rnostr.toml", config will be overrided by ENV seting with prefix `RNOSTR_`
+relay-1  | [2m2026-11-20T10:32:28.447919Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Setting { information: Information { name: "rnostr", description: "A high-performance and scalable nostr relay written in Rust.", pubkey: None, contact: None, software: "https://github.com/rnostr/rnostr", version: "0.4.9", supported_nips: [1, 2, 4, 9, 11, 12, 15, 16, 20, 22, 25, 26, 28, 33, 40, 70] }, data: Data { path: "./data", db_query_timeout: Some(NonZeroDuration(100ms)) }, thread: Thread { http: 0, reader: 0 }, network: Network { host: "0.0.0.0", port: 8080, heartbeat_timeout: NonZeroDuration(120s), heartbeat_interval: NonZeroDuration(60s), real_ip_header: None, index_redirect_to: None }, limitation: Limitation { max_message_length: 524288, max_subscriptions: 200, max_filters: 10, max_limit: 5000, max_subid_length: 100, min_prefix: 10, max_event_tags: 5000, max_event_time_older_than_now: 94608000, max_event_time_newer_than_now: 900 }, extra: {"count": Object {"enabled": Bool(false)}, "metrics": Object {"auth": String("auth_key"), "enabled": Bool(true)}, "rate_limiter": Object {"enabled": Bool(false)}, "auth": Object {"enabled": Bool(false)}, "search": Object {"enabled": Bool(false)}}, extensions: {}, ext_information: {}, ext_limitation: {} }
+relay-1  | [2m2026-11-20T10:32:28.473219Z[0m [32m INFO[0m [2mnostr_relay::server[0m[2m:[0m starting 2 reader workers
+relay-1  | [2m2026-11-20T10:32:28.474315Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Add extension metrics
+relay-1  | [2m2026-11-20T10:32:28.474335Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Add extension auth
+relay-1  | [2m2026-11-20T10:32:28.474342Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Add extension rate_limiter
+relay-1  | [2m2026-11-20T10:32:28.474347Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Add extension count
+relay-1  | [2m2026-11-20T10:32:28.474350Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Add extension search
+relay-1  | [2m2026-11-20T10:32:28.474358Z[0m [32m INFO[0m [2mnostr_relay::app[0m[2m:[0m Start http server 0.0.0.0:8080
+relay-1  | [2m2026-11-20T10:32:28.474501Z[0m [32m INFO[0m [2mactix_server::builder[0m[2m:[0m starting 2 workers
+relay-1  | [2m2026-11-20T10:32:28.474512Z[0m [32m INFO[0m [2mactix_server::server[0m[2m:[0m Actix runtime found; starting in Actix runtime
+relay-1  | [2m2026-11-20T10:32:28.474522Z[0m [32m INFO[0m [2mactix_server::server[0m[2m:[0m starting service: "actix-web-service-0.0.0.0:8080", workers: 2, listening on: 0.0.0.0:8080
+relay-1  | [2m2026-11-20T10:32:28.475351Z[0m [32m INFO[0m [2mnostr_relay::writer[0m[2m:[0m Actor writer started
+relay-1  | [2m2026-11-20T10:32:28.475905Z[0m [32m INFO[0m [2mnostr_relay::server[0m[2m:[0m Actor server started

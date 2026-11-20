@@ -1,0 +1,139 @@
+{
+ "relay": "rnostr",
+ "name": "rnostr",
+ "version": "v0.4.9",
+ "commit": "0983e527b23d3fe18f3d92b407ce31793900e767",
+ "started": "2026-11-20T10:25:51+00:00",
+ "activity": {
+  "commits_90d": 45,
+  "last_commit": "2026-11-18"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 0,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "contact": null,
+  "description": "A high-performance and scalable nostr relay written in Rust.",
+  "limitation": {
+   "max_event_tags": 5000,
+   "max_event_time_newer_than_now": 900,
+   "max_event_time_older_than_now": 94608000,
+   "max_filters": 10,
+   "max_limit": 5000,
+   "max_message_length": 524288,
+   "max_subid_length": 100,
+   "max_subscriptions": 200,
+   "min_prefix": 10
+  },
+  "name": "rnostr",
+  "pubkey": null,
+  "software": "https://github.com/rnostr/rnostr",
+  "supported_nips": [
+   1,
+   2,
+   4,
+   9,
+   11,
+   12,
+   15,
+   16,
+   20,
+   22,
+   25,
+   26,
+   28,
+   33,
+   40,
+   70
+  ],
+  "version": "0.4.9"
+ },
+ "footprint": {
+  "rss_mb": 215.4,
+  "disk_mb": 3537.5
+ },
+ "nip11_default": {
+  "contact": null,
+  "description": "A high-performance and scalable nostr relay written in Rust.",
+  "limitation": {
+   "max_event_tags": 5000,
+   "max_event_time_newer_than_now": 900,
+   "max_event_time_older_than_now": 94608000,
+   "max_filters": 10,
+   "max_limit": 300,
+   "max_message_length": 524288,
+   "max_subid_length": 100,
+   "max_subscriptions": 20,
+   "min_prefix": 10
+  },
+  "name": "rnostr",
+  "pubkey": null,
+  "software": "https://github.com/rnostr/rnostr",
+  "supported_nips": [
+   1,
+   2,
+   4,
+   9,
+   11,
+   12,
+   15,
+   16,
+   20,
+   22,
+   25,
+   26,
+   28,
+   33,
+   40,
+   70
+  ],
+  "version": "0.4.9"
+ },
+ "minutes": 22.7
+}

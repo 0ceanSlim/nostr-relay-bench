@@ -1,0 +1,169 @@
+{
+ "relay": "newlay",
+ "name": "newlay",
+ "version": "v0.3.55",
+ "commit": "48639d7ae631235826285f54e36219e23a56e008",
+ "started": "2026-11-20T05:00:26+00:00",
+ "activity": {
+  "commits_90d": 129,
+  "last_commit": "2026-11-19"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "newlay",
+  "description": "a newlay nostr relay",
+  "software": "newlay",
+  "version": "0.3.55",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   29,
+   40,
+   42,
+   43,
+   45,
+   50,
+   70,
+   77,
+   86,
+   65535
+  ],
+  "limitation": {
+   "can_read": true,
+   "can_write": true,
+   "auth_for_read": true,
+   "auth_for_write": false,
+   "max_message_length": 262144,
+   "max_subscriptions": 1000,
+   "max_filters": 10,
+   "max_limit": 5000,
+   "max_event_tags": 2000,
+   "max_content_length": 131072,
+   "behavior_multiplier": 1.0,
+   "accepted_event_kinds": [],
+   "blocked_event_kinds": [],
+   "required_tags": [],
+   "min_pow_difficulty": 0,
+   "created_at_msecs_ago": 31536000000,
+   "created_at_msecs_ahead": 900000,
+   "created_at_lower_limit": 1763615062,
+   "created_at_upper_limit": 1795151962,
+   "filter_rate_limit": 1000000000,
+   "publishing_rate_limit": 1000000000,
+   "max_subid_length": 64,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": false
+  },
+  "gift_wrap": {
+   "read_privacy": "open",
+   "deletion": "honor"
+  }
+ },
+ "footprint": {
+  "rss_mb": 2274.3,
+  "disk_mb": 3369.1
+ },
+ "nip11_default": {
+  "name": "newlay",
+  "description": "a newlay nostr relay",
+  "software": "newlay",
+  "version": "0.3.55",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   29,
+   40,
+   42,
+   43,
+   45,
+   50,
+   70,
+   77,
+   86,
+   65535
+  ],
+  "limitation": {
+   "can_read": true,
+   "can_write": true,
+   "auth_for_read": true,
+   "auth_for_write": false,
+   "max_message_length": 262144,
+   "max_subscriptions": 20,
+   "max_filters": 10,
+   "max_limit": 500,
+   "max_event_tags": 2000,
+   "max_content_length": 131072,
+   "behavior_multiplier": 1.0,
+   "accepted_event_kinds": [],
+   "blocked_event_kinds": [],
+   "required_tags": [],
+   "min_pow_difficulty": 0,
+   "created_at_msecs_ago": 31536000000,
+   "created_at_msecs_ahead": 900000,
+   "created_at_lower_limit": 1763617571,
+   "created_at_upper_limit": 1795154471,
+   "filter_rate_limit": 60,
+   "publishing_rate_limit": 30,
+   "max_subid_length": 64,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": false
+  },
+  "gift_wrap": {
+   "read_privacy": "open",
+   "deletion": "honor"
+  }
+ },
+ "minutes": 46.9
+}

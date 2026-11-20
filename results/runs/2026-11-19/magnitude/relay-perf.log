@@ -1,0 +1,6 @@
+relay-1  | Magnitude Relay 0.1.0 (dev) listening on 0.0.0.0:7777: 2 reactors, 0 events, ready in 0.01s
+relay-1  | index check: all 0 blocks sound (0.00s, while serving)
+relay-1  | heavy burst: 24.0 MB in 0.8 s, 540 REQs, app -, last request kinds 1,7,30023 · limit 100
+relay-1  | heavy burst: 21.1 MB in 0.7 s, 473 REQs, app -, last request kinds 1,7,30023 · limit 100
+relay-1  | heavy burst: 83.3 MB in 0.9 s, 489 REQs, app -, last request kinds 1059 · #p×1 · limit 500 (26 more since the last line)
+relay-1  | heavy burst: 77.8 MB in 1.0 s, 472 REQs, app -, last request kinds 1059 · #p×1 · limit 500 (27 more since the last line)

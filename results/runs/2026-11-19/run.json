@@ -1,0 +1,53 @@
+{
+ "date": "2026-11-19",
+ "relays": [
+  "ditto-relay",
+  "grain",
+  "haven",
+  "hubstr",
+  "magnitude",
+  "mattn-nostr-relay",
+  "newlay",
+  "nosfry",
+  "nostr-rs-relay",
+  "nostream",
+  "nostrfy",
+  "orly",
+  "pyramid",
+  "rnostr",
+  "strfry",
+  "wisp"
+ ],
+ "host": {
+  "cpu": "Intel(R) Core(TM) i5-6500T CPU @ 2.50GHz",
+  "threads": 4,
+  "kernel": "7.0.0-43-generic",
+  "docker": "29.7.2",
+  "relay_cpus": "0-1",
+  "load_cpus": "2-3",
+  "label": ""
+ },
+ "settings": {
+  "events": 1000000,
+  "seed": 1,
+  "queries": 4000,
+  "dup_count": 100000,
+  "neg_sessions": 400,
+  "fanout_seconds": 20,
+  "idle_conns": 10000,
+  "roundtrip_events": 20000,
+  "build_timeout": 3600,
+  "start_timeout": 180,
+  "load_timeout": 2400,
+  "query_timeout": 1200,
+  "tester_timeout": 900,
+  "relay_cpus": "0-1",
+  "load_cpus": "2-3",
+  "load_threads": 4
+ },
+ "tools": {
+  "relay-bench": "e7b7fd53460d",
+  "relay-tester": "30b3d1ff93bc",
+  "nostr-bench": "c20421a9e113"
+ }
+}

@@ -1,0 +1,205 @@
+{
+ "relay": "nostream",
+ "name": "nostream",
+ "version": "nostream@3.16.0",
+ "commit": "aa3656dccfcdf28b7c6463d86ca04ca213995ead",
+ "started": "2026-11-20T07:19:02+00:00",
+ "activity": {
+  "commits_90d": 401,
+  "last_commit": "2026-11-19"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 2,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 2,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "nostream.your-domain.com",
+  "description": "A nostr relay written in Typescript.",
+  "banner": "https://nostream.your-domain.com/banner.png",
+  "icon": "https://nostream.your-domain.com/icon.png",
+  "pubkey": "replace-with-your-pubkey-in-hex",
+  "self": "965372a3519954fa5176d176ebaf8211320810dd33d0382f1756e96e9d98bbfb",
+  "contact": "mailto:operator@your-domain.com",
+  "supported_nips": [
+   1,
+   2,
+   3,
+   4,
+   9,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   20,
+   22,
+   25,
+   28,
+   33,
+   40,
+   42,
+   44,
+   45,
+   50,
+   65
+  ],
+  "supported_nip_extensions": [],
+  "supported_mips": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "software": "git+https://github.com/cameri/nostream.git",
+  "version": "3.16.0",
+  "terms_of_service": "https://nostream.your-domain.com/terms",
+  "limitation": {
+   "max_message_length": 524288,
+   "max_subscriptions": 200,
+   "max_filters": 10,
+   "max_filter_values": 2500,
+   "max_limit": 5000,
+   "max_subid_length": 256,
+   "min_prefix": 4,
+   "max_event_tags": 2500,
+   "max_content_length": 102400,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "created_at_lower_limit": 0,
+   "created_at_upper_limit": 900,
+   "default_limit": 500,
+   "restricted_writes": false,
+   "search_supported": false
+  },
+  "payments_url": "https://nostream.your-domain.com/invoices",
+  "fees": {
+   "admission": []
+  },
+  "peering": {
+   "enabled": false
+  }
+ },
+ "footprint": {
+  "rss_mb": 5639.9,
+  "disk_mb": 7707.3
+ },
+ "nip11_default": {
+  "name": "nostream.your-domain.com",
+  "description": "A nostr relay written in Typescript.",
+  "banner": "https://nostream.your-domain.com/banner.png",
+  "icon": "https://nostream.your-domain.com/icon.png",
+  "pubkey": "replace-with-your-pubkey-in-hex",
+  "self": "965372a3519954fa5176d176ebaf8211320810dd33d0382f1756e96e9d98bbfb",
+  "contact": "mailto:operator@your-domain.com",
+  "supported_nips": [
+   1,
+   2,
+   3,
+   4,
+   9,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   20,
+   22,
+   25,
+   28,
+   33,
+   40,
+   42,
+   44,
+   45,
+   50,
+   65
+  ],
+  "supported_nip_extensions": [],
+  "supported_mips": [
+   0,
+   1,
+   2,
+   3
+  ],
+  "software": "git+https://github.com/cameri/nostream.git",
+  "version": "3.16.0",
+  "terms_of_service": "https://nostream.your-domain.com/terms",
+  "limitation": {
+   "max_message_length": 524288,
+   "max_subscriptions": 10,
+   "max_filters": 10,
+   "max_filter_values": 2500,
+   "max_limit": 5000,
+   "max_subid_length": 256,
+   "min_prefix": 4,
+   "max_event_tags": 2500,
+   "max_content_length": 102400,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "created_at_lower_limit": 0,
+   "created_at_upper_limit": 900,
+   "default_limit": 500,
+   "restricted_writes": false,
+   "search_supported": false
+  },
+  "payments_url": "https://nostream.your-domain.com/invoices",
+  "fees": {
+   "admission": []
+  },
+  "peering": {
+   "enabled": false
+  }
+ },
+ "minutes": 68.2
+}

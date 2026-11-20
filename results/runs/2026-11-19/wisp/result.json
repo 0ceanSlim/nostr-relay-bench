@@ -1,0 +1,149 @@
+{
+ "relay": "wisp",
+ "name": "wisp",
+ "version": "v0.9.3",
+ "commit": "d85998eb26104a2c92d6376bef0effe7b9f38224",
+ "started": "2026-11-20T11:08:18+00:00",
+ "activity": {
+  "commits_90d": 33,
+  "last_commit": "2026-11-14"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 1,
+   "tail": "workload         conns       ops      ops/s       p50       p90       p99     p99.9       max errors  wrong\nfanout: 500 DM + 500 Concord subscribers in 25 communities, 4 publishers, 2000 events/s for 20s\nfanout: signed 40000 events in 2.7s\nerror: only 900 of 1000 subscribers finished setting up\n"
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "Wisp",
+  "description": "A lightweight Nostr relay",
+  "supported_nips": [
+   1,
+   2,
+   9,
+   11,
+   13,
+   16,
+   17,
+   33,
+   40,
+   42,
+   45,
+   50,
+   51,
+   59,
+   65,
+   70,
+   77,
+   78,
+   86
+  ],
+  "software": "https://github.com/privkeyio/wisp",
+  "version": "0.9.3",
+  "limitation": {
+   "max_message_length": 65536,
+   "max_subscriptions": 200,
+   "max_filters": 10,
+   "max_subid_length": 64,
+   "max_event_tags": 2000,
+   "max_content_length": 102400,
+   "max_limit": 5000,
+   "default_limit": 500,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "created_at_lower_limit": 94608000,
+   "created_at_upper_limit": 900
+  }
+ },
+ "footprint": {
+  "rss_mb": 310.9,
+  "disk_mb": 3114.6
+ },
+ "nip11_default": {
+  "name": "Wisp",
+  "description": "A lightweight Nostr relay",
+  "supported_nips": [
+   1,
+   2,
+   9,
+   11,
+   13,
+   16,
+   17,
+   33,
+   40,
+   42,
+   45,
+   50,
+   51,
+   59,
+   65,
+   70,
+   77,
+   78,
+   86
+  ],
+  "software": "https://github.com/privkeyio/wisp",
+  "version": "0.9.3",
+  "limitation": {
+   "max_message_length": 65536,
+   "max_subscriptions": 20,
+   "max_filters": 10,
+   "max_subid_length": 64,
+   "max_event_tags": 2000,
+   "max_content_length": 102400,
+   "max_limit": 5000,
+   "default_limit": 500,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "created_at_lower_limit": 94608000,
+   "created_at_upper_limit": 900
+  }
+ },
+ "minutes": 28.4
+}

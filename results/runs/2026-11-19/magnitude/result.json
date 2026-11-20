@@ -1,0 +1,133 @@
+{
+ "relay": "magnitude",
+ "name": "magnitude",
+ "version": "master@b710dc5f",
+ "commit": "b710dc5f7882478d87ff26a466b5cf3b9decbb15",
+ "started": "2026-11-20T04:52:13+00:00",
+ "activity": {
+  "commits_90d": 202,
+  "last_commit": "2026-10-30"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 0,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "Magnitude Relay",
+  "description": "A relay for Vector.",
+  "software": "https://github.com/VectorPrivacy/magnitude-relay",
+  "version": "0.1.0",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   17,
+   24,
+   30,
+   38,
+   40,
+   45,
+   46,
+   58,
+   59,
+   62,
+   65,
+   70,
+   77,
+   78
+  ],
+  "limitation": {
+   "max_message_length": 262144,
+   "max_subscriptions": 200,
+   "max_limit": 5000,
+   "default_limit": 500,
+   "max_event_tags": 2000,
+   "auth_required": false,
+   "restricted_writes": false
+  }
+ },
+ "footprint": {
+  "rss_mb": 183.3,
+  "disk_mb": 1335.2
+ },
+ "nip11_default": {
+  "name": "Magnitude Relay",
+  "description": "A relay for Vector.",
+  "software": "https://github.com/VectorPrivacy/magnitude-relay",
+  "version": "0.1.0",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   17,
+   24,
+   30,
+   38,
+   40,
+   45,
+   46,
+   58,
+   59,
+   62,
+   65,
+   70,
+   77,
+   78
+  ],
+  "limitation": {
+   "max_message_length": 262144,
+   "max_subscriptions": 200,
+   "max_limit": 5000,
+   "default_limit": 500,
+   "max_event_tags": 2000,
+   "auth_required": false,
+   "restricted_writes": true
+  }
+ },
+ "minutes": 6.0
+}

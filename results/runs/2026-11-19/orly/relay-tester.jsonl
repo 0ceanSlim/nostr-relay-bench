@@ -1,0 +1,81 @@
+{"info":null,"pass":true,"required":false,"test":"NIP-11 document is provided"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-04 (old DMs)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-09 (Deletion)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-11 (Relay Information Document)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-26 (Delegated Event Signing)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-29 (Relay-based Groups)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-40 (Expiration Timestamp)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-42 (AUTH)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-45 (COUNT)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-50 (SEARCH)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-59 (Giftwrap)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-65 (Relay Lists)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-94 (File Metadata)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-96 (HTTP file storage)"}
+{"info":null,"pass":true,"required":false,"test":"Prompts for AUTH when client connects"}
+{"info":null,"pass":true,"required":true,"test":"Auth event kind is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event relay is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event challenge is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event time is verified"}
+{"info":"Timed out after EOSE","pass":true,"required":true,"test":"Supports EOSE"}
+{"info":"Did not close after EOSE","pass":false,"required":false,"test":"Closes complete subscriptions after EOSE"}
+{"info":"Did not close after EOSE","pass":true,"required":true,"test":"Keeps open incomplete subscriptions after EOSE"}
+{"info":null,"pass":true,"required":false,"test":"Public can write"}
+{"info":null,"pass":true,"required":false,"test":"Accepts relay lists from the public"}
+{"info":null,"pass":true,"required":false,"test":"Accepts DM relay lists from the public"}
+{"info":null,"pass":true,"required":false,"test":"Accepts ephemeral events from the public"}
+{"info":null,"pass":true,"required":true,"test":"Sends OK after EVENT"}
+{"info":"blocked: signature is invalid","pass":true,"required":true,"test":"Verifies event signatures"}
+{"info":"blocked: event id is computed incorrectly, event has ID cafebabecafebabecafebabecafebabecafebabecafebabecafebabecafebabe, but when computed it is a84c691278c25768d581d9be8ce1b4b63e02bfcb642a762e65a27d152d457355","pass":true,"required":true,"test":"Verifies event ID hashes"}
+{"info":null,"pass":true,"required":true,"test":"Accepts NIP-01 JSON escape sequences"}
+{"info":"blocked: event id is computed incorrectly, event has ID 66ea3be61c5e0a53cc717e2518aedf7d75a0b945cd055dd2df44626463546424, but when computed it is 7a6764f429c9194c7dec8fb817ad6ac906faa2ce015869ae5b62f05b3ca4b2b2","pass":false,"required":false,"test":"Accepts unlisted JSON escape sequences"}
+{"info":"Timed out","pass":false,"required":false,"test":"Accepts literals for JSON escape sequences"}
+{"info":null,"pass":true,"required":true,"test":"Accepts UTF-8 non-characters"}
+{"info":null,"pass":true,"required":true,"test":"Accepts event.created_at one week old"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at one month old"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at one year old"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at from before nostr"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at from before 2000"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at from 1970"}
+{"info":"blocked: event id is computed incorrectly, event has ID c15fb6b06dbb617beb75e956becbfc16653b14a305f6e84380198e61a3672cd7, but when computed it is 84f8e2e261d8e938f389b622807633af4c23a65828600764ee69261096cc0ea1","pass":false,"required":false,"test":"Accepts event.created_at from before 1970"}
+{"info":"blocked: timestamp too far in the future","pass":false,"required":false,"test":"Accepts event.created_at one year into the future"}
+{"info":"blocked: timestamp too far in the future","pass":false,"required":false,"test":"Accepts event.created_at in the distant future"}
+{"info":"blocked: timestamp too far in the future","pass":false,"required":false,"test":"Accepts event.created_at greater than signed 32-bit"}
+{"info":"blocked: timestamp too far in the future","pass":false,"required":false,"test":"Accepts event.created_at greater than unsigned 32-bit"}
+{"info":"blocked: event id is computed incorrectly, event has ID 033bfd7faaf0c7b4ce2df49b0ca454bbc075531d931b26edb0127e270dfd703a, but when computed it is 9164f7b0123c0858b3f62ead1e9358416bb01c962669c6aae7302ac4dd38686e","pass":false,"required":false,"test":"Accepts event.created_at in scientific notation"}
+{"info":null,"pass":true,"required":false,"test":"Accepts events with empty tags"}
+{"info":null,"pass":true,"required":true,"test":"Events are ordered from newest to oldest"}
+{"info":null,"pass":true,"required":true,"test":"Newest events are returned when filter is limited"}
+{"info":"Expected event is missing: 41d0164f0e7071cba2288c1543a7d79f694a8ca7aa13774d2e9a264de7ef7c61","pass":false,"required":true,"test":"Finds by id"}
+{"info":"Expected event is missing: 41d0164f0e7071cba2288c1543a7d79f694a8ca7aa13774d2e9a264de7ef7c61","pass":false,"required":true,"test":"Finds by pubkey and kind"}
+{"info":null,"pass":true,"required":true,"test":"Finds by pubkey and tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by kind and tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by multiple tags"}
+{"info":"Expected event is missing: 41d0164f0e7071cba2288c1543a7d79f694a8ca7aa13774d2e9a264de7ef7c61","pass":false,"required":true,"test":"Finds by pubkey"}
+{"info":"Expected event is missing: 41d0164f0e7071cba2288c1543a7d79f694a8ca7aa13774d2e9a264de7ef7c61","pass":false,"required":true,"test":"Finds by scrape"}
+{"info":null,"pass":true,"required":true,"test":"Since and until filters are inclusive"}
+{"info":null,"pass":true,"required":true,"test":"Limit zero works"}
+{"info":null,"pass":true,"required":false,"test":"Ephemeral subscriptions work"}
+{"info":null,"pass":false,"required":false,"test":"Persists ephemeral events"}
+{"info":null,"pass":true,"required":true,"test":"Accepts metadata"}
+{"info":"Multiple metadata are returned","pass":false,"required":true,"test":"Replaces metadata"}
+{"info":null,"pass":false,"required":true,"test":"Accepts Contactlists"}
+{"info":"Not accepting contact lists","pass":false,"required":true,"test":"Replaces Contactlists"}
+{"info":null,"pass":false,"required":false,"test":"Replaced events are still available by ID"}
+{"info":"Older replaceable event was not replaced by newer one","pass":false,"required":true,"test":"Replaceable events replace older ones"}
+{"info":"Refused submission of older replaceable event","pass":true,"required":true,"test":"Replaceable events rejected if a newer one exists"}
+{"info":"Older addressable event was not replaced by newer one","pass":false,"required":true,"test":"Addressable events replace older ones"}
+{"info":"Refused submission of older addressable event","pass":true,"required":true,"test":"Addressable events rejected if a newer one exists"}
+{"info":null,"pass":true,"required":true,"test":"Finds replaceable events"}
+{"info":null,"pass":true,"required":true,"test":"Finds addressable events"}
+{"info":null,"pass":true,"required":true,"test":"Deletes by id"}
+{"info":"Deleted event did not get deleted","pass":false,"required":true,"test":"Deletes by a-tag address"}
+{"info":null,"pass":true,"required":true,"test":"Delete by a-tag deletes older but not newer"}
+{"info":"Failed to delete","pass":false,"required":true,"test":"Delete by a-tag is bound by a-tag"}
+{"info":null,"pass":true,"required":true,"test":"Cannot delete by id of other people's events"}
+{"info":null,"pass":true,"required":true,"test":"Cannot delete by a-tag of other people's events"}
+{"info":"Accepted a deleted event","pass":false,"required":true,"test":"Resubmission of deleted-by-id event is rejected"}
+{"info":"Accepted a deleted event","pass":false,"required":true,"test":"Rejects submission of event before address is deleted"}
+{"info":null,"pass":true,"required":true,"test":"Accepts submission of event after address is deleted"}
+{"info":null,"pass":true,"required":false,"test":"Can AUTH as unknown"}

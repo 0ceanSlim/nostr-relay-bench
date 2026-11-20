@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:7777/",
+  "relay_name": "strfry",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 1064.85,
+      "avg_latency_ms": 7.486,
+      "p50_latency_ms": 7.285,
+      "p90_latency_ms": 8.856,
+      "p95_latency_ms": 9.607,
+      "p99_latency_ms": 13.288,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

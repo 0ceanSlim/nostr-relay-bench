@@ -1,0 +1,121 @@
+{
+ "relay": "nosfry",
+ "name": "nosfry",
+ "version": "v0.3.0",
+ "commit": "95bccbcbe99f956fe572ba0466abbeb1941e6f6c",
+ "started": "2026-11-20T05:47:22+00:00",
+ "activity": {
+  "commits_90d": 179,
+  "last_commit": "2026-11-16"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 0,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "limitation": {
+   "auth_required": false,
+   "created_at_lower_limit": 94608000,
+   "created_at_upper_limit": 900,
+   "default_limit": 5000,
+   "max_event_tags": 2000,
+   "max_limit": 5000,
+   "max_message_length": 131072,
+   "max_subid_length": 64,
+   "max_subscriptions": 200,
+   "payment_required": false,
+   "restricted_writes": false
+  },
+  "name": "nosfry",
+  "software": "https://github.com/qntx/nosfry",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   45,
+   62,
+   70,
+   77
+  ],
+  "version": "0.3.0"
+ },
+ "footprint": {
+  "rss_mb": 137.4,
+  "disk_mb": 3415.3
+ },
+ "nip11_default": {
+  "limitation": {
+   "auth_required": false,
+   "created_at_lower_limit": 94608000,
+   "created_at_upper_limit": 900,
+   "default_limit": 500,
+   "max_event_tags": 2000,
+   "max_limit": 500,
+   "max_message_length": 131072,
+   "max_subid_length": 64,
+   "max_subscriptions": 200,
+   "payment_required": false,
+   "restricted_writes": false
+  },
+  "name": "nosfry",
+  "software": "https://github.com/qntx/nosfry",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   45,
+   62,
+   70,
+   77
+  ],
+  "version": "0.3.0"
+ },
+ "minutes": 10.9
+}

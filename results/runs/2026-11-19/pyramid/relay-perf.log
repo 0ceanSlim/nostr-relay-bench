@@ -1,0 +1,4 @@
+relay-1  | [90m9:26AM[0m DBG calculated free ranges from index scan [36mcount=[0m0
+relay-1  | [90m9:26AM[0m [32mINF[0m [1mrunning pyramid[0m [36mversion=[0mv1.4.6
+relay-1  | [90m9:26AM[0m [32mINF[0m [1mrunning on http://0.0.0.0:3334[0m
+relay-1  | [90m9:28AM[0m [32mINF[0m [1mcomputed aggregated WoT[0m [36mentries=[0m0

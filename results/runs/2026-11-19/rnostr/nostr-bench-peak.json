@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:8080/",
+  "relay_name": "rnostr",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 79.26,
+      "avg_latency_ms": 100.921,
+      "p50_latency_ms": 100.017,
+      "p90_latency_ms": 156.684,
+      "p95_latency_ms": 160.425,
+      "p99_latency_ms": 165.458,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}
