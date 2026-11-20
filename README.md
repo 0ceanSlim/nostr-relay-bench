@@ -19,9 +19,11 @@ a number is in this repo.
 | `capability/criteria.toml` | The 18 capability criteria and their weights |
 | `capability/relays/<id>.toml` | One relay's capability scores (0–3) with evidence |
 | `catalog.toml` | Every relay implementation we know of, benchmarked or not |
-| `tools/` | Pinned Dockerfiles for relay-bench, relay-tester and nostr-bench |
+| `tools/` | Pinned Dockerfiles for relay-bench, relay-tester and nostr-bench, plus nak for the weekly note |
 | `bench/run.py` | The weekly run |
 | `bench/summarize.py` | Raw results → `results/index.json` |
+| `bench/changes.py` | Run-to-run headlines, for the page and the note |
+| `bench/post.py` | The weekly Nostr note |
 | `bench/build_site.py` | Data files for the page |
 | `results/runs/<date>/<id>/` | Raw output of every run: tool JSON, relay logs, `result.json` |
 | `site/` | The page |
@@ -53,6 +55,22 @@ For each relay, one at a time, on fresh volumes:
    connections → one-event-at-a-time writes.
 3. **Default profile** (the relay as shipped): relay-tester.
 
+After the last relay: catalog activity, `summarize.py`, and with `--publish` a commit and push of
+`results/`, then `post.py`.
+
+## The weekly note
+
+`bench/changes.py` compares each run with the one before it: new versions, relays added or
+missing, performance index moves over 10%, single tests moving over 50%, tests that flipped
+between right and wrong, required checks gained or lost, capability re-scores, a new leader, and
+first of all any move in strfry itself, since every index is relative to it. The page shows the
+list; `bench/post.py` posts the top of it as a kind-1 note from the bench's own key, tagging the
+maintainers of the relays it names. `python3 bench/post.py --dry-run` prints the note.
+
+Posting is off until `[bot] post = true` in `bench.toml`. The key is read from
+`NOSTR_SECRET_KEY` or `~/.config/nostr-relay-bench/bot.env` on the machine that runs the bench,
+never from the repo.
+
 ## Adding a relay
 
 Create `relays/<id>/`, where `<id>` matches `capability/relays/<id>.toml` and the catalog entry.
@@ -70,6 +88,8 @@ private_giftwraps = false                     # true if kind 1059 is only ever s
 heavy = false                                 # true skips it unless --heavy (big memory needs)
 disabled = false
 notes = ""                                    # anything a reader should know about this setup
+maintainers = ["npub1..."]                    # tagged in the weekly note when this relay is in it
+no_tag = false                                # true to never be tagged
 ```
 
 **compose.yaml** rules:

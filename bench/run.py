@@ -14,6 +14,9 @@ and RELAY_CPUS / LOAD_CPUS in the environment override it.
 import argparse, datetime, json, os, platform, re, shutil, subprocess, sys, time, tomllib
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import changes  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 RELAYS = ROOT / "relays"
 DATA = ROOT / "data"
@@ -333,7 +336,9 @@ def main():
     meta = json.loads(run_meta.read_text(encoding="utf-8")) if run_meta.exists() else {"date": date, "relays": []}
     meta.update({"host": host_info(s), "settings": {k: v for k, v in s.items() if k not in ("label",)},
                  "tools": {t: sh(["docker", "image", "inspect", "-f", "{{.Id}}", f"rb-{t}"], capture=True).stdout.strip()[7:19]
-                           for t in TOOLS}})
+                           for t in TOOLS},
+                 # capability scores as they stood for this run, so the next run can report re-scores
+                 "capability": changes.cap_scores()})
     for rid in todo:
         out = base / rid
         if out.exists():
@@ -353,8 +358,11 @@ def main():
     if a.publish and not a.quick:
         sh(["git", "-C", str(ROOT), "add", "results"])
         sh(["git", "-C", str(ROOT), "commit", "-q", "-m", f"results: {date}"], check=False)
+        # Config and page changes may have landed during a run that takes most of a day.
+        sh(["git", "-C", str(ROOT), "pull", "-q", "--rebase"])
         sh(["git", "-C", str(ROOT), "push", "-q"])
         log("pushed")
+        sh([sys.executable, str(ROOT / "bench" / "post.py")], check=False)
 
 
 if __name__ == "__main__":

@@ -128,7 +128,7 @@ def main():
                            "tester": tester(rd / rid / "relay-tester.jsonl"),
                            "error": first_line(res.get("error")), "error_default": first_line(res.get("error_default"))}
         runs.append({"date": meta["date"], "host": meta.get("host"), "tools": meta.get("tools"),
-                     "settings": meta.get("settings"), "relays": relays})
+                     "settings": meta.get("settings"), "capability": meta.get("capability"), "relays": relays})
     out = (base if quick else ROOT / "results") / "index.json"
     out.write_text(json.dumps({"runs": runs}, separators=(",", ":")), encoding="utf-8")
     print(f"index.json: {len(runs)} runs", file=sys.stderr)

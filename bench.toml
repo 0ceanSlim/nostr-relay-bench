@@ -31,3 +31,9 @@ neg_sessions = 40
 fanout_seconds = 5
 idle_conns = 1000
 roundtrip_events = 2000
+
+[bot]
+# bench/post.py: after a published run, a note with the headlines. Off until the first notes
+# have been read over; the key lives on the machine, see bench/post.py.
+post = false
+relays = ["wss://relay.damus.io", "wss://nos.lol", "wss://relay.primal.net"]
