@@ -6,7 +6,8 @@
   --fg: #e7e5e0; --fg-2: #a19f98; --fg-3: #6d6b66; --sel: #ffffff; --dot: #5d5b57;
   --good: #3fb950; --warn: #d29922; --bad: #f85149; --base: #8d8a83;
   --a-write: #d55181; --a-read: #3987e5; --a-live: #d95926; --a-connections: #199e70;
-  --l-go: #3987e5; --l-rust: #d95926; --l-sys: #199e70; --l-other: #7a7872;
+  --l-go: #3987e5; --l-rust: #d95926; --l-cpp: #199e70; --l-zig: #c98500; --l-ts: #d55181;
+  --l-py: #008300; --l-jvm: #9085e9; --l-php: #e66767; --l-other: #7a7872;
   --h0: #1b1c20; --h1: #2c2a4a; --h2: #554c9e; --h3: #9085e9;
   --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 }

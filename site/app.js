@@ -75,7 +75,10 @@ const WHY = { unsupported: "not supported", refused: "refused by policy", wrong:
               failed: "failed", missing: "not run", private: "private by design" };
 const GROUPS = [["protocol", "Protocol"], ["policy", "Policy & moderation"], ["operations", "Operations"], ["ecosystem", "Ecosystem"]];
 const TIERS = [["all", "All"], ["active", "Active"], ["slowing", "Slowing"], ["dormant", "Dormant"], ["missed", "Missed by the survey"], ["gap", "Committing, not benchmarked"]];
-const LANGS = [["go", "Go", ["Go"]], ["rust", "Rust", ["Rust"]], ["sys", "C, C++, Zig", ["C", "C++", "Zig"]], ["other", "Other", []]];
+// Language families on the field chart and scoreboard, in the validated palette order.
+const LANGS = [["go", "Go", ["Go"]], ["rust", "Rust", ["Rust"]], ["cpp", "C / C++", ["C", "C++"]], ["zig", "Zig", ["Zig"]],
+  ["ts", "TypeScript / JS", ["TypeScript", "JavaScript", "Deno", "Node"]], ["py", "Python", ["Python"]],
+  ["jvm", "Kotlin / Java", ["Kotlin", "Java", "Scala"]], ["php", "PHP", ["PHP"]], ["other", "Other", []]];
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -312,10 +315,15 @@ const METRICS = [
 const metric = k => METRICS.find(m => m[0] === k) || METRICS[0];
 function perfAt(id, run) { const r = run.relays[id]; return r ? perf({ ...r, id }, run) : null; }
 let AX = { x: store.get("fx", "cap"), y: store.get("fy", "perf") };
+// Before the first run there's no performance, so the default plots commits instead.
+const axDefault = () => ({ x: "cap", y: Object.keys(LATEST).length ? "perf" : "commits" });
 
 function drawAxes() {
   const opts = sel => METRICS.map(([k, l]) => `<option value="${k}" ${k === sel ? "selected" : ""}>${esc(l)}</option>`).join("");
-  $("#axes").innerHTML = `<label>y <select id="ax-y">${opts(AX.y)}</select></label><label>x <select id="ax-x">${opts(AX.x)}</select></label>`;
+  $("#axes").innerHTML = `<label>y <select id="ax-y">${opts(AX.y)}</select></label><label>x <select id="ax-x">${opts(AX.x)}</select></label>` +
+    (AX.x !== axDefault().x || AX.y !== axDefault().y ? `<button type="button" class="btn" id="ax-reset">reset</button>` : "");
+  const rs = $("#ax-reset");
+  if (rs) rs.onclick = () => { AX = axDefault(); store.set("fx", AX.x); store.set("fy", AX.y); drawField(); };
   $("#ax-x").onchange = e => { AX.x = e.target.value; store.set("fx", AX.x); drawField(); };
   $("#ax-y").onchange = e => { AX.y = e.target.value; store.set("fy", AX.y); drawField(); };
 }
@@ -475,9 +483,34 @@ function drawYou() {
   h += `<div class="two">
     <div class="card"><h3>Performance against the field</h3><div class="sub">each dot a relay · strfry = 100 · log scale</div><div class="strips">${perfCard}</div></div>
     <div class="card"><h3>Capability against the field</h3><div class="sub">each dot a scored relay · out of 100</div><div class="strips">${capCard}</div></div></div>`;
+  const W = CRIT.reduce((a, c) => a + c.weight, 0);
+  h += `<div class="two">${rivals("Closest on performance", Object.keys(LATEST), id => perfOf(id)?.overall, logBar, v => fmt(v), (above, mine) => {
+      const r = above[1] / mine, n = p?.parts || 4;
+      return `To pass ${esc(nm(above[0]))}: ×${fmt(r, 2)} on the overall index, which is every area ${Math.max(1, Math.round(100 * (r - 1)))}% faster, or one area alone ×${fmt(r ** n, 2)}.`;
+    })}${rivals("Closest on capability", Object.keys(CAP.relays), id => capScore(id), linBar, v => v, (above, mine) => {
+      const s = CAP.relays[ME].scores, need = above[1] - mine;
+      if (need <= 0) return `Level with ${esc(nm(above[0]))}.`;
+      const steps = CRIT.filter(c => (s[c.id] ?? 0) < 3).sort((a, b) => b.weight - a.weight), pick = [];
+      let got = 0;
+      for (const c of steps) { if (got >= need) break; pick.push(c); got += 100 * c.weight / (3 * W); }
+      return `To pass ${esc(nm(above[0]))}: +${need} points, for example ${pick.map(c => `${esc(c.name)} ${s[c.id] ?? 0}→${(s[c.id] ?? 0) + 1} (+${fmt(100 * c.weight / (3 * W), 1)})`).join(", ")}.`;
+    })}</div>`;
   h += `<h2>What would help most</h2><div class="three">${fixPerf(L)}${fixCap()}${fixCorrect(L, t)}</div>`;
   body.innerHTML = h;
   body.querySelectorAll(".d[data-tip]").forEach(d => bindTip(d, d.dataset.tip));
+  body.querySelectorAll(".hrow[data-id]").forEach(r => r.onclick = () => r.dataset.id !== ME && setMe(r.dataset.id));
+}
+
+// The chosen relay with the two ranked just above and below it, and what it takes to pass the next.
+function rivals(title, ids, v, bar, show, toPass) {
+  const list = ids.map(id => [id, v(id)]).filter(([, x]) => x != null).sort((a, b) => b[1] - a[1]);
+  const k = list.findIndex(([id]) => id === ME);
+  if (k < 0) return "";
+  const win = list.slice(Math.max(0, k - 2), k + 3);
+  const foot = k > 0 ? toPass(list[k - 1], list[k][1]) : list[1] ? `Top of the field. ${esc(nm(list[1][0]))} is next at ${show(list[1][1])}.` : "";
+  return `<div class="card"><h3>${title}</h3><div class="sub">${ord(k + 1)} of ${list.length} · the nearest either side</div><div class="bars">` +
+    win.map(([id, x]) => `<div class="hrow${id === ME ? " me" : ""}" data-id="${esc(id)}" style="--c:var(--l-${langOf(id)})"><span class="l">${esc(nm(id))}</span>${bar(x)}<span class="v">${show(x)}</span></div>`).join("") +
+    `</div><p class="sub" style="color:var(--fg-2)">${foot}</p></div>`;
 }
 
 function fixList(title, key, items, none) {
@@ -551,7 +584,7 @@ function drawBoard() {
   });
   const t = $("#board");
   t.innerHTML = `<thead><tr>${cols.map(([k, l]) => `<th data-k="${k}" ${k === sortK ? `aria-sort="${sortK === "name" ? "ascending" : sortDir < 0 ? "descending" : "ascending"}"` : ""} ${["correct", "act", "date"].includes(k) ? 'class="num"' : ""}>${l}</th>`).join("")}</tr></thead>` +
-    `<tbody>${list.map(r => `<tr data-id="${esc(r.id)}" tabindex="0" class="${r.id === ME ? "me" : ""}">
+    `<tbody>${list.map(r => `<tr data-id="${esc(r.id)}" tabindex="0" class="${r.id === ME ? "me" : ""}" style="--c:var(--l-${langOf(r.id)})">
       <td><span class="rname"><span class="lang" style="background:var(--l-${langOf(r.id)})"></span>${esc(r.name)}</span><span class="rver">${esc(r.version || (r.L ? "" : inRun(r.id) ? "waiting for its first run" : "scored only, not benchmarked"))}</span></td>
       <td>${r.perf != null ? `<span class="cell-bar"><span class="v">${fmt(r.perf)}</span>${logBar(r.perf)}</span>` : `<span class="na">${r.L ? (r.L.r.perf_skipped ? "correctness only" : r.L.r.error ? "did not run" : "no data") : "–"}</span>`}</td>
       <td class="num">${r.correct != null ? `${Math.round(r.correct)}% <span class="muted">${r.t.required_pass}/${r.t.required_total}</span>` : `<span class="na">–</span>`}</td>
