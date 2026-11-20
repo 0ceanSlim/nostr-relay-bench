@@ -1,5 +1,6 @@
-# Weekly benchmark run. Install with deploy/install.sh, or copy both units to
-# /etc/systemd/system/, set User= and WorkingDirectory=, then:
+# Weekly benchmark run. Copy both units to
+# /etc/systemd/system/, set User= and WorkingDirectory= (and RELAY_CPUS / LOAD_CPUS with
+# Environment= if bench.toml's split doesn't fit the machine), then:
 #   systemctl daemon-reload && systemctl enable --now nostr-relay-bench.timer
 [Unit]
 Description=nostr-relay-bench weekly run
@@ -13,5 +14,5 @@ WorkingDirectory=/opt/nostr-relay-bench
 # Pull first so config PRs merged during the week are in this run.
 ExecStartPre=/usr/bin/git pull --ff-only
 ExecStart=/usr/bin/python3 bench/run.py --publish
-TimeoutStartSec=12h
+TimeoutStartSec=36h
 Nice=-5

@@ -5,54 +5,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Nostr Relay Bench</title>
 <meta name="description" content="A weekly benchmark of Nostr relay implementations: performance, correctness and capability, side by side.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <header class="top">
-    <h1>Nostr Relay Bench</h1>
-    <p class="lede">Every week, each actively developed Nostr relay is built from its latest release, loaded with the same million events on the same machine, and checked against the protocol. Capability is scored from each relay's code and docs.</p>
-    <p class="runline" id="runline">Loading…</p>
-  </header>
+<div class="topbar"><div class="in">
+  <a class="brand" href="#">Nostr Relay Bench</a>
+  <label class="picker"><span>Compare as</span>
+    <select id="pick" aria-label="Relay to compare"></select>
+    <button type="button" id="unpick" hidden>Clear</button>
+  </label>
+</div></div>
 
-  <section id="board-sec">
-    <div class="sec-head">
-      <h2>Scoreboard</h2>
-      <div class="seg" role="group" aria-label="Which relays" id="scope"></div>
-    </div>
-    <p class="note">Performance is each relay against strfry on the same run (strfry = 100), across writing, reading, live delivery and connections. Correctness is the share of relay-tester's required checks passed with the relay as shipped. Click a column to sort and a relay for its details.</p>
+<main>
+  <section class="hero">
+    <div class="eyebrow">Weekly · Nostr relay software</div>
+    <h1>Nostr Relay Bench</h1>
+    <p class="lede">Every week, each actively developed Nostr relay is built from its latest release, loaded with the same million events on the same machine, and checked against the protocol. Capability is scored from each relay's code and docs. Pick your relay above to see where it stands and what would move it most.</p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="plate" id="you">
+    <header>
+      <div class="eyebrow">Your relay</div>
+      <h2 id="you-title">Pick a relay to compare</h2>
+      <p id="you-lede">Choosing one highlights it on every chart below and lists the changes that would gain it the most. The choice is kept in the link, so you can share it.</p>
+    </header>
+    <div id="you-body"></div>
+  </section>
+
+  <section class="plate" id="board-sec">
+    <header>
+      <div class="eyebrow">Scoreboard</div>
+      <h2 id="board-title">Performance, correctness and capability</h2>
+      <p>Performance is each relay against strfry in the same run (strfry = 100) across writing, reading, live delivery and connections. Correctness is the share of relay-tester's required checks passed by the relay as shipped. Capability is the weighted score out of 100. Click a column to sort and a row for the details.</p>
+    </header>
+    <div><div class="seg" role="group" aria-label="Which relays" id="scope"></div></div>
     <div class="scroll"><table class="board" id="board"></table></div>
   </section>
 
-  <section>
-    <div class="sec-head"><h2>Performance by area</h2></div>
-    <p class="note">Each panel is the geometric mean of that area's tests, strfry = 100, on a log scale. A missing bar says why: not supported, refused by the relay's policy, or wrong answers (a fast wrong answer isn't counted).</p>
+  <section class="plate">
+    <header>
+      <div class="eyebrow">Performance by area</div>
+      <h2>Where each relay is fast, and where it isn't</h2>
+      <p>Each panel is the geometric mean of that area's tests, strfry = 100, on a log scale. The four coloured areas make up the performance index; the grey ones are reported but left out of it. A missing bar says why: not supported, refused by the relay's policy, or wrong answers (a fast wrong answer isn't counted).</p>
+    </header>
+    <div class="legend" id="perf-legend"></div>
     <div class="multiples" id="perf"></div>
   </section>
 
-  <section>
-    <div class="sec-head"><h2>Capability by group</h2></div>
-    <p class="note">Eighteen criteria, each scored 0–3 and weighted 1–5, rolled up into four groups. The full matrix with the reasoning behind each score is below.</p>
-    <div class="multiples" id="cap"></div>
-    <details class="more">
-      <summary>All 18 criteria</summary>
-      <div class="scroll"><table class="heat" id="heat"></table></div>
-    </details>
+  <section class="plate">
+    <header>
+      <div class="eyebrow">Capability</div>
+      <h2 id="cap-title">Eighteen criteria, weighted by what operators and clients need</h2>
+      <p>Each relay scores 0 to 3 on each criterion (none, partial, good, best in class), times its weight. Hover a cell for the evidence behind it; click a relay's name to compare as it.</p>
+    </header>
+    <div class="scroll" tabindex="0" aria-label="Capability matrix, scrollable"><table class="heat" id="heat"></table></div>
+    <div class="legend">
+      <span><span class="sw" style="background:var(--h0)"></span>0 none or undocumented</span>
+      <span><span class="sw" style="background:var(--h1)"></span>1 partial</span>
+      <span><span class="sw" style="background:var(--h2)"></span>2 good</span>
+      <span><span class="sw" style="background:var(--h3)"></span>3 best in class</span>
+    </div>
   </section>
 
-  <section>
-    <div class="sec-head"><h2>Over time</h2></div>
-    <p class="note" id="trend-note"></p>
+  <section class="plate" id="trend-sec" hidden>
+    <header>
+      <div class="eyebrow">Over time</div>
+      <h2>Week by week</h2>
+      <p id="trend-note"></p>
+    </header>
     <div class="trends" id="trend"></div>
   </section>
 
-  <section>
-    <details class="more">
-      <summary>Catalog: every relay implementation we know of <span class="muted" id="cat-count"></span></summary>
-      <p class="note">Active, slowing and dormant come from Vitor's commit survey of 19 Nov 2026. "Missed" were not in it. Benchmarked relays are refreshed weekly. To add one, send a PR to <code>catalog.toml</code>.</p>
-      <div class="seg" role="group" aria-label="Filter by tier" id="cat-f"></div>
-      <div class="scroll"><table class="cat" id="cat"></table></div>
-    </details>
+  <section class="plate">
+    <header>
+      <div class="eyebrow">Catalog</div>
+      <h2 id="cat-title">Every relay implementation we know of</h2>
+      <p>Active, slowing and dormant come from Vitor's commit survey of 19 Nov 2026; "Missed" were not in it. Commit counts are refreshed weekly. To add one, send a PR to <code>catalog.toml</code>.</p>
+    </header>
+    <div class="seg" role="group" aria-label="Filter by tier" id="cat-f"></div>
+    <div class="scroll"><table class="cat" id="cat"></table></div>
   </section>
 
   <section>
@@ -63,7 +98,7 @@
   </section>
 
   <footer class="foot">
-    <p>Harness, configs and raw results: <a id="repo-link" href="https://github.com/0ceanSlim/nostr-relay-bench">nostr-relay-bench</a>. If your relay's config is unfair to it, send a PR.</p>
+    <p>Harness, configs and raw results: <a href="https://github.com/0ceanSlim/nostr-relay-bench">nostr-relay-bench</a>. If your relay's config is unfair to it, send a PR.</p>
   </footer>
 </main>
 
