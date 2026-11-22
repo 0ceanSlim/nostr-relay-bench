@@ -1,0 +1,129 @@
+{
+ "relay": "hubstr",
+ "name": "Hubstr",
+ "version": "v0.5.0",
+ "commit": "257d3e0233dc9d5ba7da4db00de165c3d42a8f84",
+ "started": "2026-11-22T08:07:51+00:00",
+ "activity": {
+  "commits_90d": 13,
+  "last_commit": "2026-11-09"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "ingest_wraps": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 2,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "Hubstr Relay",
+  "description": "A personal Nostr relay",
+  "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+  "contact": "mailto:admin@example.com",
+  "icon": "https://relay.example.com/img/logo.svg",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   17,
+   40,
+   42,
+   45,
+   50,
+   59,
+   67,
+   70,
+   86,
+   98
+  ],
+  "software": "https://www.hubstr.xyz/relay/",
+  "version": "v0.5.0",
+  "limitation": {
+   "max_subscriptions": 1000,
+   "max_limit": 5000,
+   "max_content_length": 65536,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": true
+  }
+ },
+ "footprint": {
+  "rss_mb": 271.4,
+  "disk_mb": 4231.6
+ },
+ "nip11_default": {
+  "name": "Hubstr Relay",
+  "description": "A personal Nostr relay",
+  "pubkey": "79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798",
+  "contact": "mailto:admin@example.com",
+  "icon": "https://relay.example.com/img/logo.svg",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   17,
+   40,
+   42,
+   45,
+   50,
+   59,
+   67,
+   70,
+   86,
+   98
+  ],
+  "software": "https://www.hubstr.xyz/relay/",
+  "version": "v0.5.0",
+  "limitation": {
+   "max_subscriptions": 20,
+   "max_limit": 1000,
+   "max_content_length": 65536,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": true
+  }
+ },
+ "minutes": 83.0
+}

@@ -1,0 +1,81 @@
+{"info":null,"pass":true,"required":false,"test":"NIP-11 document is provided"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-04 (old DMs)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-09 (Deletion)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-11 (Relay Information Document)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-26 (Delegated Event Signing)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-29 (Relay-based Groups)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-40 (Expiration Timestamp)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-42 (AUTH)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-45 (COUNT)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-50 (SEARCH)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-59 (Giftwrap)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-65 (Relay Lists)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-94 (File Metadata)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-96 (HTTP file storage)"}
+{"info":"Did not prompt us for AUTH","pass":false,"required":false,"test":"Prompts for AUTH when client connects"}
+{"info":null,"pass":true,"required":true,"test":"Auth event kind is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event relay is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event challenge is verified"}
+{"info":null,"pass":true,"required":true,"test":"Auth event time is verified"}
+{"info":"Timed out after EOSE","pass":true,"required":true,"test":"Supports EOSE"}
+{"info":"Did not close after EOSE","pass":false,"required":false,"test":"Closes complete subscriptions after EOSE"}
+{"info":"Did not close after EOSE","pass":true,"required":true,"test":"Keeps open incomplete subscriptions after EOSE"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Public can write"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts relay lists from the public"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts DM relay lists from the public"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts ephemeral events from the public"}
+{"info":null,"pass":true,"required":true,"test":"Sends OK after EVENT"}
+{"info":"invalid: signature is invalid","pass":true,"required":true,"test":"Verifies event signatures"}
+{"info":"invalid: id is computed incorrectly","pass":true,"required":true,"test":"Verifies event ID hashes"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":true,"test":"Accepts NIP-01 JSON escape sequences"}
+{"info":"invalid: id is computed incorrectly","pass":false,"required":false,"test":"Accepts unlisted JSON escape sequences"}
+{"info":"Timed out","pass":false,"required":false,"test":"Accepts literals for JSON escape sequences"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":true,"test":"Accepts UTF-8 non-characters"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":true,"test":"Accepts event.created_at one week old"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at one month old"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at one year old"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at from before nostr"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at from before 2000"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at from 1970"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at from before 1970"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at one year into the future"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at in the distant future"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at greater than signed 32-bit"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts event.created_at greater than unsigned 32-bit"}
+{"info":"Timed out","pass":false,"required":false,"test":"Accepts event.created_at in scientific notation"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Accepts events with empty tags"}
+{"info":"Could not fetch enough events to test","pass":false,"required":true,"test":"Events are ordered from newest to oldest"}
+{"info":"Got 0 events, expected 2","pass":false,"required":true,"test":"Newest events are returned when filter is limited"}
+{"info":"Expected event is missing: 8f4a8e5c7805af4970948cf8c7189cdd5a5b97209d083ad80af51e08228d5a8e","pass":false,"required":true,"test":"Finds by id"}
+{"info":"Expected event is missing: 8f4a8e5c7805af4970948cf8c7189cdd5a5b97209d083ad80af51e08228d5a8e","pass":false,"required":true,"test":"Finds by pubkey and kind"}
+{"info":null,"pass":true,"required":true,"test":"Finds by pubkey and tags"}
+{"info":"Expected event is missing: e32c6911e0678538b562e7e571234068ed7f215ba3a750760ed0fc523c62faca","pass":false,"required":true,"test":"Finds by kind and tags"}
+{"info":"Expected event is missing: e32c6911e0678538b562e7e571234068ed7f215ba3a750760ed0fc523c62faca","pass":false,"required":true,"test":"Finds by tags"}
+{"info":"Expected event is missing: e32c6911e0678538b562e7e571234068ed7f215ba3a750760ed0fc523c62faca","pass":false,"required":true,"test":"Finds by multiple tags"}
+{"info":"Expected event is missing: 8f4a8e5c7805af4970948cf8c7189cdd5a5b97209d083ad80af51e08228d5a8e","pass":false,"required":true,"test":"Finds by pubkey"}
+{"info":"Expected event is missing: blocked: can't handle empty filters","pass":false,"required":true,"test":"Finds by scrape"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Since and until filters are inclusive"}
+{"info":null,"pass":true,"required":true,"test":"Limit zero works"}
+{"info":"Relay rejected our ephemeral event: auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Ephemeral subscriptions work"}
+{"info":"Relay rejected our ephemeral event: auth-required: you must be authenticated to post to this relay","pass":false,"required":false,"test":"Persists ephemeral events"}
+{"info":null,"pass":false,"required":true,"test":"Accepts metadata"}
+{"info":"Not accepting metadata","pass":false,"required":true,"test":"Replaces metadata"}
+{"info":null,"pass":false,"required":true,"test":"Accepts Contactlists"}
+{"info":"Not accepting contact lists","pass":false,"required":true,"test":"Replaces Contactlists"}
+{"info":null,"pass":false,"required":false,"test":"Replaced events are still available by ID"}
+{"info":null,"pass":true,"required":true,"test":"Replaceable events replace older ones"}
+{"info":"Refused submission of older replaceable event","pass":true,"required":true,"test":"Replaceable events rejected if a newer one exists"}
+{"info":null,"pass":true,"required":true,"test":"Addressable events replace older ones"}
+{"info":"Refused submission of older addressable event","pass":true,"required":true,"test":"Addressable events rejected if a newer one exists"}
+{"info":null,"pass":false,"required":true,"test":"Finds replaceable events"}
+{"info":null,"pass":false,"required":true,"test":"Finds addressable events"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Deletes by id"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Deletes by a-tag address"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Delete by a-tag deletes older but not newer"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Delete by a-tag is bound by a-tag"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Cannot delete by id of other people's events"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Cannot delete by a-tag of other people's events"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Resubmission of deleted-by-id event is rejected"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Rejects submission of event before address is deleted"}
+{"info":"auth-required: you must be authenticated to post to this relay","pass":null,"required":true,"test":"Accepts submission of event after address is deleted"}
+{"info":"error: failed to authenticate","pass":false,"required":false,"test":"Can AUTH as unknown"}

@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:7777/",
+  "relay_name": "newlay",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 408.31,
+      "avg_latency_ms": 19.562,
+      "p50_latency_ms": 19.210,
+      "p90_latency_ms": 22.385,
+      "p95_latency_ms": 23.719,
+      "p99_latency_ms": 29.137,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

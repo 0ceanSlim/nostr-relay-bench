@@ -1,0 +1,19 @@
+relay-1  | [2m2026-11-22T10:28:07.102735Z[0m [32m INFO[0m [2mnosfry[0m[2m:[0m open-file limit [3mlimit[0m[2m=[0m1048576 [3mrequested[0m[2m=[0m1000000
+relay-1  | [2m2026-11-22T10:28:07.102793Z[0m [32m INFO[0m [2mnosfry[0m[2m:[0m listening [3maddr[0m[2m=[0m(0.0.0.0, 7777)
+relay-1  | [2m2026-11-22T10:30:19.939719Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1111 [3mevents[0m[2m=[0m312
+relay-1  | [2m2026-11-22T10:30:38.198876Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1321 [3mevents[0m[2m=[0m289
+relay-1  | [2m2026-11-22T10:30:41.194103Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1165 [3mevents[0m[2m=[0m223
+relay-1  | [2m2026-11-22T10:30:59.755977Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1139 [3mevents[0m[2m=[0m325
+relay-1  | [2m2026-11-22T10:31:11.802305Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1219 [3mevents[0m[2m=[0m190
+relay-1  | [2m2026-11-22T10:31:14.938892Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1284 [3mevents[0m[2m=[0m312
+relay-1  | [2m2026-11-22T10:31:29.366886Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1214 [3mevents[0m[2m=[0m356
+relay-1  | [2m2026-11-22T10:31:41.128225Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1433 [3mevents[0m[2m=[0m356
+relay-1  | [2m2026-11-22T10:31:55.812201Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1168 [3mevents[0m[2m=[0m329
+relay-1  | [2m2026-11-22T10:32:25.063188Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1019 [3mevents[0m[2m=[0m343
+relay-1  | [2m2026-11-22T10:32:39.691488Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1065 [3mevents[0m[2m=[0m173
+relay-1  | [2m2026-11-22T10:32:42.936927Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1369 [3mevents[0m[2m=[0m339
+relay-1  | [2m2026-11-22T10:32:57.340072Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1024 [3mevents[0m[2m=[0m179
+relay-1  | [2m2026-11-22T10:33:12.139182Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1170 [3mevents[0m[2m=[0m333
+relay-1  | [2m2026-11-22T10:33:23.458897Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1015 [3mevents[0m[2m=[0m217
+relay-1  | [2m2026-11-22T10:33:26.319572Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1006 [3mevents[0m[2m=[0m295
+relay-1  | [2m2026-11-22T10:33:40.937654Z[0m [33m WARN[0m [2mnosfry::writer[0m[2m:[0m slow store commit [3melapsed_ms[0m[2m=[0m1008 [3mevents[0m[2m=[0m286

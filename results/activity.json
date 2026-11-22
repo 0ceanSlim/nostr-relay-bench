@@ -1,10 +1,10 @@
 {
- "date": "2026-11-20",
+ "date": "2026-11-22",
  "relays": {
   "vespa-relay": {
    "name": "vespa-relay",
-   "commits_90d": 913,
-   "last_commit": "2026-11-19"
+   "commits_90d": 922,
+   "last_commit": "2026-11-20"
   },
   "morp": {
    "name": "MORP",
@@ -13,13 +13,13 @@
   },
   "nostrfy": {
    "name": "nostrfy",
-   "commits_90d": 437,
+   "commits_90d": 425,
    "last_commit": "2026-11-10"
   },
   "nostream": {
    "name": "nostream",
-   "commits_90d": 401,
-   "last_commit": "2026-11-19"
+   "commits_90d": 429,
+   "last_commit": "2026-11-22"
   },
   "ditto-relay": {
    "name": "ditto-relay",
@@ -28,8 +28,8 @@
   },
   "newlay": {
    "name": "newlay",
-   "commits_90d": 129,
-   "last_commit": "2026-11-19"
+   "commits_90d": 122,
+   "last_commit": "2026-11-21"
   },
   "zapstore-relay": {
    "name": "zapstore relay",
@@ -48,8 +48,8 @@
   },
   "citrine": {
    "name": "Citrine",
-   "commits_90d": 57,
-   "last_commit": "2026-11-18"
+   "commits_90d": 60,
+   "last_commit": "2026-11-21"
   },
   "swarm": {
    "name": "swarm",
@@ -63,8 +63,8 @@
   },
   "rnostr": {
    "name": "rnostr",
-   "commits_90d": 45,
-   "last_commit": "2026-11-18"
+   "commits_90d": 47,
+   "last_commit": "2026-11-21"
   },
   "wisp": {
    "name": "wisp",
@@ -113,7 +113,7 @@
   },
   "superconductor": {
    "name": "SuperConductor",
-   "commits_90d": 60,
+   "commits_90d": 56,
    "last_commit": "2026-11-18"
   },
   "bcr-relay": {
@@ -193,8 +193,8 @@
   },
   "nostr-rs-relay": {
    "name": "nostr-rs-relay",
-   "commits_90d": 0,
-   "last_commit": "2026-05-22"
+   "commits_90d": 3,
+   "last_commit": "2026-11-20"
   },
   "rely": {
    "name": "rely",
@@ -240,7 +240,7 @@
    "name": "super_ball",
    "commits_90d": null,
    "last_commit": null,
-   "error": "exit 128: git clone -q --bare --filter=blob:none --depth=1 https://git.laantungir.net/laantungir/super_ball /home/oceanslim/nostr-relay-bench/.cache/git/act-super-ball\nfatal: unable to access 'https:/"
+   "error": "exit 128: git clone -q --bare --filter=blob:none --depth=1 https://git.laantungir.net/laantungir/super_ball /home/oceanslim/nostr-relay-bench/.cache/git/act-super-ball\nerror: RPC failed; curl 35 gnutl"
   },
   "Shugur": {
    "name": "Shugur",
@@ -374,12 +374,12 @@
   },
   "nosfry": {
    "name": "nosfry",
-   "commits_90d": 179,
-   "last_commit": "2026-11-16"
+   "commits_90d": 193,
+   "last_commit": "2026-11-22"
   },
   "Ditto (server)": {
    "name": "Ditto (server)",
-   "commits_90d": 537,
+   "commits_90d": 516,
    "last_commit": "2026-11-19"
   },
   "lisp-nostr-relay": {
@@ -394,18 +394,18 @@
   },
   "nostr-relay-builder": {
    "name": "nostr-relay-builder",
-   "commits_90d": 72,
-   "last_commit": "2026-11-17"
+   "commits_90d": 82,
+   "last_commit": "2026-11-22"
   },
   "nak serve": {
    "name": "nak serve",
-   "commits_90d": 100,
+   "commits_90d": 99,
    "last_commit": "2026-11-08"
   },
   "smartflowsocial-blastr": {
    "name": "smartflowsocial-blastr",
-   "commits_90d": 29,
-   "last_commit": "2026-11-20"
+   "commits_90d": 34,
+   "last_commit": "2026-11-22"
   },
   "relaycreator": {
    "name": "relaycreator",
@@ -530,7 +530,7 @@
   },
   "gc_index_relay": {
    "name": "gc_index_relay (Mercury)",
-   "commits_90d": 6,
+   "commits_90d": 3,
    "last_commit": "2026-09-08"
   }
  }

@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:8008/",
+  "relay_name": "nostream",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 241.39,
+      "avg_latency_ms": 32.922,
+      "p50_latency_ms": 30.854,
+      "p90_latency_ms": 45.648,
+      "p95_latency_ms": 54.029,
+      "p99_latency_ms": 76.808,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

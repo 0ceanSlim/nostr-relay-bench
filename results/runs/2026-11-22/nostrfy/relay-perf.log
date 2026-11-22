@@ -1,0 +1,32 @@
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] NIP-42 is disabled: gift wraps (kind 1059) are served to anyone; enable NIP-42 to restrict them to their recipients
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] NIP-42 is disabled: NIP-43 leave requests (28936) are rejected because protected events need the author's AUTH; the relay's own membership metadata (13534/33534) stays publicly readable
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] relay.private_key is empty while NIP-29 is enabled: the relay cannot sign group metadata (39000-39005), so 39001 (admins) / 39002 (members) snapshots are not generated at group creation; run 'nostrfy genkey' to set a key
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] NIP-42 is disabled: gift wraps (kind 1059) are served to anyone; enable NIP-42 to restrict them to their recipients
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] NIP-42 is disabled: NIP-43 leave requests (28936) are rejected because protected events need the author's AUTH; the relay's own membership metadata (13534/33534) stays publicly readable
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::config] relay.private_key is empty while NIP-29 is enabled: the relay cannot sign group metadata (39000-39005), so 39001 (admins) / 39002 (members) snapshots are not generated at group creation; run 'nostrfy genkey' to set a key
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::store] database ready at /data (23 tables, map 1048576 MiB)
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db] access control migration check complete
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::threads] gift-wrap recipient index rebuilt (0 recipients)
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::threads] NIP-26 delegation index rechecked (0 tagged events)
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::threads] blossom uploaded-order index rebuilt (0 owners)
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::threads] word index rebuilt (0 events)
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::db::threads] automatic database migration completed: schema 0 -> 1
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z WARN  nostrfy::server] could not republish the NIP-43 membership list after the rebuild
+relay-1  | 
+relay-1  | [2026-11-22T12:55:59Z INFO  nostrfy::server] relay listening on ws://0.0.0.0:8080
+relay-1  | 
+relay-1  | [2026-11-22T13:42:13Z WARN  nostrfy::server] connections refused at limits.max_connections (global connection cap)
+relay-1  | 

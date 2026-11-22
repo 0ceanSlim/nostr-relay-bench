@@ -1,0 +1,81 @@
+{"info":null,"pass":true,"required":false,"test":"NIP-11 document is provided"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-04 (old DMs)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-09 (Deletion)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-11 (Relay Information Document)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-26 (Delegated Event Signing)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-29 (Relay-based Groups)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-40 (Expiration Timestamp)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-42 (AUTH)"}
+{"info":null,"pass":true,"required":false,"test":"Claims support for NIP-45 (COUNT)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-50 (SEARCH)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-59 (Giftwrap)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-65 (Relay Lists)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-94 (File Metadata)"}
+{"info":null,"pass":false,"required":false,"test":"Claims support for NIP-96 (HTTP file storage)"}
+{"info":"Did not prompt us for AUTH","pass":false,"required":false,"test":"Prompts for AUTH when client connects"}
+{"info":"Cannot test AUTH, was not challenged","pass":null,"required":true,"test":"Auth event kind is verified"}
+{"info":"Cannot test AUTH, was not challenged","pass":null,"required":true,"test":"Auth event relay is verified"}
+{"info":"Cannot test AUTH, was not challenged","pass":null,"required":true,"test":"Auth event challenge is verified"}
+{"info":"Cannot test AUTH, was not challenged","pass":null,"required":true,"test":"Auth event time is verified"}
+{"info":"Timed out after EOSE","pass":true,"required":true,"test":"Supports EOSE"}
+{"info":"Did not close after EOSE","pass":false,"required":false,"test":"Closes complete subscriptions after EOSE"}
+{"info":"Did not close after EOSE","pass":true,"required":true,"test":"Keeps open incomplete subscriptions after EOSE"}
+{"info":null,"pass":true,"required":false,"test":"Public can write"}
+{"info":null,"pass":true,"required":false,"test":"Accepts relay lists from the public"}
+{"info":null,"pass":true,"required":false,"test":"Accepts DM relay lists from the public"}
+{"info":null,"pass":true,"required":false,"test":"Accepts ephemeral events from the public"}
+{"info":null,"pass":true,"required":true,"test":"Sends OK after EVENT"}
+{"info":"invalid: signature verification failed","pass":true,"required":true,"test":"Verifies event signatures"}
+{"info":"invalid: event id does not match computed hash","pass":true,"required":true,"test":"Verifies event ID hashes"}
+{"info":null,"pass":true,"required":true,"test":"Accepts NIP-01 JSON escape sequences"}
+{"info":"invalid: event id does not match computed hash","pass":false,"required":false,"test":"Accepts unlisted JSON escape sequences"}
+{"info":"Timed out","pass":false,"required":false,"test":"Accepts literals for JSON escape sequences"}
+{"info":null,"pass":true,"required":true,"test":"Accepts UTF-8 non-characters"}
+{"info":null,"pass":true,"required":true,"test":"Accepts event.created_at one week old"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at one month old"}
+{"info":null,"pass":true,"required":false,"test":"Accepts event.created_at one year old"}
+{"info":"invalid: created_at is too far in the past","pass":false,"required":false,"test":"Accepts event.created_at from before nostr"}
+{"info":"invalid: created_at is too far in the past","pass":false,"required":false,"test":"Accepts event.created_at from before 2000"}
+{"info":"invalid: created_at is too far in the past","pass":false,"required":false,"test":"Accepts event.created_at from 1970"}
+{"info":"invalid: malformed JSON: invalid value: integer `-200`, expected u64 at line 1 column 166","pass":false,"required":false,"test":"Accepts event.created_at from before 1970"}
+{"info":"invalid: created_at is too far in the future","pass":false,"required":false,"test":"Accepts event.created_at one year into the future"}
+{"info":"invalid: field `created_at` must be integer <= 2^53 - 1","pass":false,"required":false,"test":"Accepts event.created_at in the distant future"}
+{"info":"invalid: created_at is too far in the future","pass":false,"required":false,"test":"Accepts event.created_at greater than signed 32-bit"}
+{"info":"invalid: created_at is too far in the future","pass":false,"required":false,"test":"Accepts event.created_at greater than unsigned 32-bit"}
+{"info":"invalid: malformed JSON: invalid type: floating point `10000000000.0`, expected u64 at line 1 column 167","pass":false,"required":false,"test":"Accepts event.created_at in scientific notation"}
+{"info":"invalid: field `tags` must be arrays of non-empty string arrays","pass":false,"required":false,"test":"Accepts events with empty tags"}
+{"info":null,"pass":true,"required":true,"test":"Events are ordered from newest to oldest"}
+{"info":null,"pass":true,"required":true,"test":"Newest events are returned when filter is limited"}
+{"info":"matched 9 events, as expected","pass":true,"required":true,"test":"Finds by id"}
+{"info":null,"pass":true,"required":true,"test":"Finds by pubkey and kind"}
+{"info":null,"pass":true,"required":true,"test":"Finds by pubkey and tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by kind and tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by multiple tags"}
+{"info":null,"pass":true,"required":true,"test":"Finds by pubkey"}
+{"info":null,"pass":true,"required":true,"test":"Finds by scrape"}
+{"info":null,"pass":true,"required":true,"test":"Since and until filters are inclusive"}
+{"info":null,"pass":true,"required":true,"test":"Limit zero works"}
+{"info":null,"pass":true,"required":false,"test":"Ephemeral subscriptions work"}
+{"info":null,"pass":false,"required":false,"test":"Persists ephemeral events"}
+{"info":null,"pass":true,"required":true,"test":"Accepts metadata"}
+{"info":null,"pass":true,"required":true,"test":"Replaces metadata"}
+{"info":null,"pass":true,"required":true,"test":"Accepts Contactlists"}
+{"info":null,"pass":true,"required":true,"test":"Replaces Contactlists"}
+{"info":null,"pass":false,"required":false,"test":"Replaced events are still available by ID"}
+{"info":null,"pass":true,"required":true,"test":"Replaceable events replace older ones"}
+{"info":"Refused submission of older replaceable event","pass":true,"required":true,"test":"Replaceable events rejected if a newer one exists"}
+{"info":null,"pass":true,"required":true,"test":"Addressable events replace older ones"}
+{"info":"Refused submission of older addressable event","pass":true,"required":true,"test":"Addressable events rejected if a newer one exists"}
+{"info":null,"pass":true,"required":true,"test":"Finds replaceable events"}
+{"info":null,"pass":true,"required":true,"test":"Finds addressable events"}
+{"info":null,"pass":true,"required":true,"test":"Deletes by id"}
+{"info":null,"pass":true,"required":true,"test":"Deletes by a-tag address"}
+{"info":null,"pass":true,"required":true,"test":"Delete by a-tag deletes older but not newer"}
+{"info":null,"pass":true,"required":true,"test":"Delete by a-tag is bound by a-tag"}
+{"info":null,"pass":true,"required":true,"test":"Cannot delete by id of other people's events"}
+{"info":null,"pass":true,"required":true,"test":"Cannot delete by a-tag of other people's events"}
+{"info":"blocked: deleted by its author","pass":true,"required":true,"test":"Resubmission of deleted-by-id event is rejected"}
+{"info":"blocked: deleted by its author","pass":true,"required":true,"test":"Rejects submission of event before address is deleted"}
+{"info":null,"pass":true,"required":true,"test":"Accepts submission of event after address is deleted"}
+{"info":"Unexpected auth state","pass":null,"required":false,"test":"Can AUTH as unknown"}

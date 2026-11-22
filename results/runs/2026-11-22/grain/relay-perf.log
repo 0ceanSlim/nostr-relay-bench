@@ -1,0 +1,7 @@
+relay-1  | Config validation — defaults applied:
+relay-1  |   - client.client_tag unset, defaulting to enabled ("grain")
+relay-1  | 
+relay-1  | Config validation — defaults applied:
+relay-1  |   - client.client_tag unset, defaulting to enabled ("grain")
+relay-1  | 
+relay-1  | Server is running on http://localhost:8181

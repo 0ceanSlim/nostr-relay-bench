@@ -1,0 +1,151 @@
+{
+ "relay": "grain",
+ "name": "grain",
+ "version": "v0.8.2",
+ "commit": "848678c384f642af575ece2626257f77edc131ab",
+ "started": "2026-11-22T07:11:47+00:00",
+ "activity": {
+  "commits_90d": 72,
+  "last_commit": "2026-11-13"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "\ud83c\udf3e GRAIN Relay",
+  "description": "Go Relay Architecture for Implementing Nostr",
+  "banner": "",
+  "icon": "",
+  "pubkey": "",
+  "contact": "",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   42,
+   45,
+   50,
+   70,
+   86
+  ],
+  "software": "https://github.com/0ceanslim/grain",
+  "version": "v0.8.2",
+  "privacy_policy": "",
+  "terms_of_service": "",
+  "limitation": {
+   "max_message_length": 524288,
+   "max_subscriptions": 200,
+   "max_limit": 500,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": false,
+   "created_at_lower_limit": 1577836800,
+   "created_at_upper_limit": 1795331813
+  },
+  "relay_countries": null,
+  "language_tags": [
+   "en",
+   "en-US"
+  ],
+  "tags": [
+   "open-access",
+   "community"
+  ],
+  "posting_policy": ""
+ },
+ "footprint": {
+  "rss_mb": 164.7,
+  "disk_mb": 3192.1
+ },
+ "nip11_default": {
+  "name": "\ud83c\udf3e GRAIN Relay",
+  "description": "Go Relay Architecture for Implementing Nostr",
+  "banner": "",
+  "icon": "",
+  "pubkey": "",
+  "contact": "",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   42,
+   45,
+   50,
+   70,
+   86
+  ],
+  "software": "https://github.com/0ceanslim/grain",
+  "version": "v0.8.2",
+  "privacy_policy": "",
+  "terms_of_service": "",
+  "limitation": {
+   "max_message_length": 524288,
+   "max_subscriptions": 10,
+   "max_limit": 500,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": false,
+   "created_at_lower_limit": 1577836800,
+   "created_at_upper_limit": 1795332504
+  },
+  "relay_countries": null,
+  "language_tags": [
+   "en",
+   "en-US"
+  ],
+  "tags": [
+   "open-access",
+   "community"
+  ],
+  "posting_policy": ""
+ },
+ "minutes": 13.5
+}

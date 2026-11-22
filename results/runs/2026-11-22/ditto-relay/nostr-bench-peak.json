@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:13131/",
+  "relay_name": "ditto-relay",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 3246.25,
+      "avg_latency_ms": 2.454,
+      "p50_latency_ms": 2.110,
+      "p90_latency_ms": 3.251,
+      "p95_latency_ms": 3.923,
+      "p99_latency_ms": 9.724,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

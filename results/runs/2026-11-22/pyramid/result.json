@@ -1,0 +1,129 @@
+{
+ "relay": "pyramid",
+ "name": "pyramid",
+ "version": "v1.4.6",
+ "commit": "f54dc498ddf89cdb026e00d610dfec84c75ba317",
+ "started": "2026-11-22T13:49:19+00:00",
+ "activity": {
+  "commits_90d": 51,
+  "last_commit": "2026-11-09"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "query_vector": {
+   "rc": 2,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 2,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "pyramid",
+  "description": "nostr-relay-bench instance",
+  "pubkey": "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4",
+  "self": "fb03f242b42f98613c260e3208405e5b4d43a979d11faa229666ed28d0b307f3",
+  "supported_nips": [
+   1,
+   11,
+   42,
+   70,
+   86,
+   40,
+   9,
+   45,
+   77,
+   43,
+   16
+  ],
+  "software": "https://github.com/fiatjaf/pyramid",
+  "version": "v1.4.6",
+  "limitation": {
+   "max_message_length": 10000,
+   "max_subscriptions": 1000000000,
+   "max_limit": 5000,
+   "max_event_tags": 14,
+   "created_at_lower_limit": 0,
+   "created_at_upper_limit": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": true
+  }
+ },
+ "footprint": {
+  "rss_mb": 907.1,
+  "disk_mb": 976.3
+ },
+ "nip11_default": {
+  "name": "pyramid",
+  "description": "nostr-relay-bench instance",
+  "pubkey": "da268fc17a347f5d4f68121105bb6bb1b2269f3baf1ed773c6504e62cb94b0d4",
+  "self": "fb03f242b42f98613c260e3208405e5b4d43a979d11faa229666ed28d0b307f3",
+  "supported_nips": [
+   1,
+   11,
+   42,
+   70,
+   86,
+   40,
+   9,
+   45,
+   77,
+   43,
+   16
+  ],
+  "software": "https://github.com/fiatjaf/pyramid",
+  "version": "v1.4.6",
+  "limitation": {
+   "max_message_length": 10000,
+   "max_subscriptions": 2000,
+   "max_limit": 500,
+   "max_event_tags": 14,
+   "created_at_lower_limit": 0,
+   "created_at_upper_limit": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": true
+  }
+ },
+ "minutes": 60.7
+}

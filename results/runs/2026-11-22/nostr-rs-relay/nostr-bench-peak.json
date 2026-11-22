@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:8080/",
+  "relay_name": "nostr-rs-relay",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 933.80,
+      "avg_latency_ms": 8.565,
+      "p50_latency_ms": 3.303,
+      "p90_latency_ms": 29.132,
+      "p95_latency_ms": 31.005,
+      "p99_latency_ms": 34.116,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

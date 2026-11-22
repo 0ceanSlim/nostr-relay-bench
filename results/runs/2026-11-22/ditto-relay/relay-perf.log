@@ -1,0 +1,16 @@
+relay-1  | [2m2026-11-22T07:01:06.772285Z[0m [32m INFO[0m [2mditto_relay::rank[0m[2m:[0m rebuilding scores for ranked sorts
+relay-1  | [2m2026-11-22T07:01:06.774326Z[0m [32m INFO[0m [2mditto_relay[0m[2m:[0m opened LMDB at /data/db
+relay-1  | [2m2026-11-22T07:01:06.801710Z[0m [32m INFO[0m [2mditto_relay[0m[2m:[0m opened the search index at /data/search
+relay-1  | [2m2026-11-22T07:01:06.802068Z[0m [32m INFO[0m [2mditto_relay[0m[2m:[0m listening on ws://0.0.0.0:13131
+relay-1  | [2m2026-11-22T07:01:06.802147Z[0m [32m INFO[0m [2mditto_relay[0m[2m:[0m serving metrics on http://127.0.0.1:13133/metrics
+relay-1  | [2m2026-11-22T07:01:06.810765Z[0m [32m INFO[0m [2mditto_relay::key[0m[2m:[0m made a new secret key in /data/secret.key
+relay-1  | [2m2026-11-22T07:01:06.810840Z[0m [32m INFO[0m [2mditto_relay[0m[2m:[0m the relay's pubkey is d45e775904429245d764c3679a12d8ba917d5425d4cf028545d9d4727b997c64
+relay-1  | [2m2026-11-22T07:01:06.812402Z[0m [32m INFO[0m [2mditto_relay::search[0m[2m:[0m search index caught up to 1
+relay-1  | [2m2026-11-22T07:02:12.204809Z[0m [33m WARN[0m [2mditto_relay::metrics[0m[2m:[0m a commit took 1.6s
+relay-1  | [2m2026-11-22T07:02:20.623136Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 13.7s, longer than the time between them
+relay-1  | [2m2026-11-22T07:02:48.363257Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 27.7s, longer than the time between them
+relay-1  | [2m2026-11-22T07:03:14.379346Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 26.0s, longer than the time between them
+relay-1  | [2m2026-11-22T07:03:56.747039Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 42.3s, longer than the time between them
+relay-1  | [2m2026-11-22T07:06:40.464998Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 163.7s, longer than the time between them
+relay-1  | [2m2026-11-22T07:07:33.745153Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 53.3s, longer than the time between them
+relay-1  | [2m2026-11-22T07:08:05.621192Z[0m [33m WARN[0m [2mditto_relay::store[0m[2m:[0m a checkpoint took 23.6s, longer than the time between them

@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:7777/",
+  "relay_name": "wisp",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 1860.20,
+      "avg_latency_ms": 4.293,
+      "p50_latency_ms": 3.919,
+      "p90_latency_ms": 5.384,
+      "p95_latency_ms": 6.170,
+      "p99_latency_ms": 8.437,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

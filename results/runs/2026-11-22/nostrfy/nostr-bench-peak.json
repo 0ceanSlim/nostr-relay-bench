@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:8080/",
+  "relay_name": "nostrfy",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 662.57,
+      "avg_latency_ms": 12.069,
+      "p50_latency_ms": 12.075,
+      "p90_latency_ms": 13.389,
+      "p95_latency_ms": 13.860,
+      "p99_latency_ms": 15.446,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

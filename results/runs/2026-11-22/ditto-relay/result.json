@@ -1,0 +1,133 @@
+{
+ "relay": "ditto-relay",
+ "name": "ditto-relay",
+ "version": "v2.5.1",
+ "commit": "4f330c0850a9c9d3084ebc2c3baeabec7dd24639",
+ "started": "2026-11-22T07:00:55+00:00",
+ "activity": {
+  "commits_90d": 151,
+  "last_commit": "2026-11-19"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 0,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "Ditto Relay",
+  "description": "",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   42,
+   45,
+   50,
+   62,
+   70,
+   77
+  ],
+  "version": "2.5.1",
+  "limitation": {
+   "max_message_length": 4000000,
+   "max_subscriptions": 200,
+   "max_filters": 100,
+   "max_subid_length": 100,
+   "max_limit": 5000,
+   "default_limit": 100,
+   "created_at_upper_limit": 900,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "max_filter_values": 20000
+  },
+  "software": "https://gitworkshop.dev/soapbox.pub/ditto-relay",
+  "icon": "http://relay:13131/icon.png",
+  "banner": "http://relay:13131/banner.jpg",
+  "self": "d45e775904429245d764c3679a12d8ba917d5425d4cf028545d9d4727b997c64"
+ },
+ "footprint": {
+  "rss_mb": 628.7,
+  "disk_mb": 19070.2
+ },
+ "nip11_default": {
+  "name": "Ditto Relay",
+  "description": "",
+  "supported_nips": [
+   1,
+   9,
+   11,
+   40,
+   42,
+   45,
+   50,
+   62,
+   70,
+   77
+  ],
+  "version": "2.5.1",
+  "limitation": {
+   "max_message_length": 4000000,
+   "max_subscriptions": 20,
+   "max_filters": 100,
+   "max_subid_length": 100,
+   "max_limit": 1000,
+   "default_limit": 100,
+   "created_at_upper_limit": 900,
+   "min_pow_difficulty": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "max_filter_values": 20000
+  },
+  "software": "https://gitworkshop.dev/soapbox.pub/ditto-relay",
+  "icon": "http://relay:13131/icon.png",
+  "banner": "http://relay:13131/banner.jpg",
+  "self": "47c1aa211e0bce47e880f3ac9c97ea55b0848c1ca420f994067ef0f8e7907c18"
+ },
+ "minutes": 10.8
+}

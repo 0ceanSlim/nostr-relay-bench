@@ -1,0 +1,10 @@
+relay-1  | 09:41:02.616 INFO  i.k.s.Application - Autoreload is disabled because the development mode is off.
+relay-1  | 09:41:02.703 INFO  i.k.s.Application - Application started in 0.097 seconds.
+relay-1  | 09:41:02.728 INFO  i.k.s.Application - Responding at http://0.0.0.0:7777
+relay-1  | newlay 0.3.55 — nostr relay
+relay-1  |   listening:     ws://0.0.0.0:7777/
+relay-1  |   canonical url: ws://relay:7777
+relay-1  |   store:         /var/lib/newlay/data/db
+relay-1  |   spider:        disabled
+relay-1  |   cordn:         disabled
+relay-1  |   NIP-11:        GET / with Accept: application/nostr+json

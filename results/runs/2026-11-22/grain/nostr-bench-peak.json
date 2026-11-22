@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:8181/",
+  "relay_name": "grain",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 709.47,
+      "avg_latency_ms": 11.269,
+      "p50_latency_ms": 10.985,
+      "p90_latency_ms": 13.482,
+      "p95_latency_ms": 14.325,
+      "p99_latency_ms": 16.379,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

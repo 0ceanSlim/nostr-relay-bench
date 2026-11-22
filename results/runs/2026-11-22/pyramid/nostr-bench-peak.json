@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:3334/",
+  "relay_name": "pyramid",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 106.12,
+      "avg_latency_ms": 40.923,
+      "p50_latency_ms": 35.176,
+      "p90_latency_ms": 55.272,
+      "p95_latency_ms": 62.533,
+      "p99_latency_ms": 169.407,
+      "success_rate": 99.4,
+      "total_events": 19880,
+      "errors": 120
+    }
+  ]
+}

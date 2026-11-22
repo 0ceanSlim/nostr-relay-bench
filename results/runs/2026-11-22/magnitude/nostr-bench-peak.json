@@ -1,0 +1,21 @@
+{
+  "relay_url": "ws://relay:7777/",
+  "relay_name": "magnitude",
+  "workers": 8,
+  "num_events": 20000,
+  "async_mode": false,
+  "results": [
+    {
+      "test": "Peak Throughput",
+      "events_per_second": 9027.59,
+      "avg_latency_ms": 0.881,
+      "p50_latency_ms": 0.812,
+      "p90_latency_ms": 1.066,
+      "p95_latency_ms": 1.204,
+      "p99_latency_ms": 2.001,
+      "success_rate": 100.0,
+      "total_events": 20000,
+      "errors": 0
+    }
+  ]
+}

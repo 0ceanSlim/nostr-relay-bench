@@ -1,0 +1,109 @@
+{
+ "relay": "nostr-rs-relay",
+ "name": "nostr-rs-relay",
+ "version": "0.10.0",
+ "commit": "b5c1f642e4f4c3b9c54f5d18d66f4c53642076b4",
+ "started": "2026-11-22T10:37:27+00:00",
+ "activity": {
+  "commits_90d": 3,
+  "last_commit": "2026-11-20"
+ },
+ "steps": {
+  "ingest_public": {
+   "rc": 0,
+   "tail": ""
+  },
+  "ingest_dup": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_classic": {
+   "rc": 2,
+   "tail": ""
+  },
+  "ingest_wraps": {
+   "rc": 0,
+   "tail": ""
+  },
+  "query_vector": {
+   "rc": null,
+   "tail": "timeout"
+  },
+  "query_count": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_light": {
+   "rc": 0,
+   "tail": ""
+  },
+  "neg_heavy": {
+   "rc": 0,
+   "tail": ""
+  },
+  "fanout": {
+   "rc": 2,
+   "tail": ""
+  },
+  "idle": {
+   "rc": 0,
+   "tail": ""
+  },
+  "write_roundtrip": {
+   "rc": 0,
+   "tail": ""
+  },
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "nip11": {
+  "name": "Unnamed nostr-rs-relay",
+  "supported_nips": [
+   1,
+   2,
+   9,
+   11,
+   12,
+   15,
+   16,
+   20,
+   22,
+   33,
+   40
+  ],
+  "software": "https://git.sr.ht/~gheartsfield/nostr-rs-relay",
+  "version": "0.10.0",
+  "limitation": {
+   "payment_required": false,
+   "restricted_writes": false
+  }
+ },
+ "footprint": {
+  "rss_mb": 1021.0,
+  "disk_mb": 2959.5
+ },
+ "nip11_default": {
+  "name": "Unnamed nostr-rs-relay",
+  "supported_nips": [
+   1,
+   2,
+   9,
+   11,
+   12,
+   15,
+   16,
+   20,
+   22,
+   33,
+   40
+  ],
+  "software": "https://git.sr.ht/~gheartsfield/nostr-rs-relay",
+  "version": "0.10.0",
+  "limitation": {
+   "payment_required": false,
+   "restricted_writes": false
+  }
+ },
+ "minutes": 71.1
+}

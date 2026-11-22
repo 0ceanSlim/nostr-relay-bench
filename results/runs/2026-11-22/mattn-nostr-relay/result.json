@@ -1,0 +1,62 @@
+{
+ "relay": "mattn-nostr-relay",
+ "name": "mattn/nostr-relay",
+ "version": "v0.0.270",
+ "commit": "7e172308afd757cb49896fab16245d722ce61452",
+ "started": "2026-11-22T09:34:55+00:00",
+ "activity": {
+  "commits_90d": 60,
+  "last_commit": "2026-11-11"
+ },
+ "steps": {
+  "relay_tester": {
+   "rc": 0
+  }
+ },
+ "perf_skipped": true,
+ "nip11_default": {
+  "name": "nostr-relay",
+  "description": "relay powered by the relayer framework",
+  "pubkey": "2c7cc62a697ea3a7826521f3fd34f0cb273693cbe5e9310f35449f43622a5cdc",
+  "contact": "mattn.jp@gmail.com",
+  "supported_nips": [
+   1,
+   4,
+   9,
+   11,
+   13,
+   17,
+   26,
+   40,
+   42,
+   45,
+   50,
+   59,
+   66,
+   70,
+   78
+  ],
+  "software": "https://github.com/mattn/nostr-relay",
+  "version": "0.0.270",
+  "limitation": {
+   "max_message_length": 524288,
+   "max_subscriptions": 20,
+   "max_limit": 500,
+   "max_subid_length": 100,
+   "max_event_tags": 1000,
+   "max_content_length": 16384,
+   "created_at_lower_limit": 0,
+   "created_at_upper_limit": 0,
+   "auth_required": false,
+   "payment_required": false,
+   "restricted_writes": false
+  },
+  "relay_countries": [
+   "JP"
+  ],
+  "fees": {},
+  "icon": "https://nostr.compile-error.net/logo.png",
+  "banner": ""
+ },
+ "minutes": 2.2
+}
