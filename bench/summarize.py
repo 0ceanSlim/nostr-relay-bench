@@ -2,7 +2,7 @@
 """Rebuild results/index.json from the raw files under results/runs/. Safe to rerun at any time;
 the page reads only index.json. Scoring (indexes, ranks) happens in the page, not here, so a
 change of method never needs the raw data rewritten."""
-import json, sys
+import json, sys, tomllib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -37,7 +37,13 @@ def status(r):
     return "ok" if r.get("ok", True) else "wrong"
 
 
-def relay_bench(path):
+def private_giftwraps(rid):
+    """relays/<id>/relay.toml says the relay serves kind 1059 only to its AUTHed recipient."""
+    f = ROOT / "relays" / rid / "relay.toml"
+    return f.exists() and bool(tomllib.loads(f.read_text(encoding="utf-8")).get("private_giftwraps"))
+
+
+def relay_bench(path, private=False):
     out = {}
     if not path.exists():
         return out
@@ -70,6 +76,10 @@ def relay_bench(path):
                                     "refused": r.get("detail", {}).get("ok_false_refused", 0)} for r in loads]}
     for w, m in out.items():
         m["family"] = FAMILY.get(w, "other")
+        # relay-bench never AUTHs, so a relay that keeps gift wraps to their recipient refuses
+        # every gift-wrap read: that's NIP-17 working, not a wrong answer or a missing feature.
+        if private and m["family"] == "private" and m["status"] != "ok":
+            m["raw_status"], m["status"] = m["status"], "private"
     return out
 
 
@@ -118,7 +128,7 @@ def main():
             if not f.exists():
                 continue
             res = json.loads(f.read_text(encoding="utf-8"))
-            metrics = relay_bench(rd / rid / "relay-bench.jsonl")
+            metrics = relay_bench(rd / rid / "relay-bench.jsonl", private_giftwraps(rid))
             rt = roundtrip(rd / rid / "nostr-bench-peak.json")
             if rt:
                 metrics["write_roundtrip"] = rt

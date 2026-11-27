@@ -102,17 +102,10 @@ function testValue(r, t) {
     return { v, status: v == null ? "missing" : (id === "fanout" ? m?.status : "ok") ?? "missing" };
   }
   if (!m) return { v: null, status: "missing" };
-  if (m.status !== "ok" && privateByDesign(r, id)) return { v: null, status: "private" };
+  // "private": the relay keeps gift wraps to their recipient and the bench never AUTHs.
+  // bench/summarize.py decides that from relays/<id>/relay.toml.
+  if (m.status === "private") return { v: null, status: "private" };
   return { v: m.v, status: m.status };
-}
-
-// A relay that keeps kind 1059 to its recipient fails every gift-wrap read the bench (which
-// never AUTHs) makes; that's the relay doing what NIP-17 asks, not a wrong answer.
-// relays/<id>/relay.toml says so with private_giftwraps = true.
-// Negentropy isn't in the list: a relay without NIP-77 is "not supported" whatever its policy.
-const PRIVATE_TESTS = new Set(["dm_inbox", "dm_catchup", "dm_ids", "concord_page", "concord_paging", "count"]);
-function privateByDesign(r, id) {
-  return PRIVATE_TESTS.has(id) && !!META.benched[r.id]?.private_giftwraps;
 }
 
 function baseline(run) {
