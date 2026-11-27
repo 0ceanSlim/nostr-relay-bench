@@ -3,5 +3,5 @@ repo = "https://github.com/johninnis/hubstr-relay"
 track = "tag"
 tag_pattern = '^v\d+\.\d+\.\d+$'
 port = 8080
-private_giftwraps = true   # innis/nostr-relay serves kind 1059 only to a connection AUTHed as its p-tagged key
+private_giftwraps = true   # innis/nostr-relay serves kind 1059 only to a connection AUTHed as its p-tagged key, and Hubstr lets only tenants AUTH (HubstrPolicy::allowsAuthentication), so the bench's guest recipients are refused
 notes = "No upstream Dockerfile: ours installs PHP 8.4 + ffi/libsecp256k1 and runs composer install at the tag, per the README, plus ext-ev (without it revolt falls back to stream_select and the relay dies at 1024 sockets) and the CLI memory_limit = -1 distro packages ship. admin_pubkey (the one tenant) is a fixed throwaway key nobody uses, so every client is a guest. Default profile is the shipped guest policy: guests read only tenant-authored events of the public kinds and write only kinds 1/7/1111/9321/9735/1059/21059/24133 that p-tag a tenant. Perf seeds a guest policy (settings table) that opens the bench's kinds to any author; the policy is a kind list, not a wildcard."
