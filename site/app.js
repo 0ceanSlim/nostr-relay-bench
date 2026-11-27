@@ -56,7 +56,7 @@ const TEST_INFO = {
   idle: ["Clients that connect and sit there: how fast the relay accepts 10,000 connections and holds them for 20 seconds.", "WebSocket open × 10,000"],
   rss: ["Memory of all the relay's containers after the load. Lower is better.", "docker stats"],
   disk: ["Size of the relay's volumes after the load. Lower is better.", "du on its Docker volumes"],
-  dm_inbox: ["Opening a NIP-17 inbox: the gift wraps addressed to one key. A relay that only serves these to their recipient after AUTH shows “private by design”.", '{"kinds":[1059],"#p":[pk],"limit":500}'],
+  dm_inbox: ["Opening a NIP-17 inbox: the gift wraps addressed to one key. The bench AUTHs as the recipient first (NIP-42), so a relay that keeps these to their recipient is measured too.", '{"kinds":[1059],"#p":[pk],"limit":500}'],
   dm_catchup: ["The same inbox, only the last two days.", '{"kinds":[1059],"#p":[pk],"since":now-2d,"limit":500}'],
   dm_ids: ["Re-fetching known gift wraps by id.", '{"ids":[≤500],"kinds":[1059],"#p":[pk]}'],
   concord_page: ["The newest page of a Vector community, whose messages are gift wraps from one plane key.", '{"kinds":[1059],"authors":[plane],"limit":500}'],
@@ -68,7 +68,7 @@ const TEST_INFO = {
 const AREA_NOTE = {
   live: "Relays that deliver before the event is fsynced show far lower latency than ones that wait for the commit.",
   footprint: "Memory and disk trade against speed.",
-  private: "Relays that keep gift wraps to their recipient (NIP-17) show “private by design”.",
+  private: "Inbox reads and COUNT AUTH as the recipient (NIP-42). Community reads can't: those gift wraps p-tag random keys, so a relay that keeps gift wraps to their recipient shows “private by design” there.",
   sync: "NIP-77 is a feature; it's scored under capability.",
 };
 const WHY = { unsupported: "not supported", refused: "refused by policy", wrong: "wrong answers",
@@ -102,7 +102,7 @@ function testValue(r, t) {
     return { v, status: v == null ? "missing" : (id === "fanout" ? m?.status : "ok") ?? "missing" };
   }
   if (!m) return { v: null, status: "missing" };
-  // "private": the relay keeps gift wraps to their recipient and the bench never AUTHs.
+  // "private": the relay keeps gift wraps to their recipient and the bench couldn't AUTH for this read.
   // bench/summarize.py decides that from relays/<id>/relay.toml.
   if (m.status === "private") return { v: null, status: "private" };
   return { v: m.v, status: m.status };
@@ -802,7 +802,7 @@ function drawMethod() {
     <h3>What would help most</h3>
     <p>Speed lists the tests where a relay is furthest below the median of every load-tested relay (each measured against strfry in its own run), after any test it answered wrongly or refused. Capability lists the criteria not yet at 3, heaviest first, with the points one step up is worth out of 100. Correctness lists the required relay-tester checks that fail.</p>
     <h3>Known limits</h3>
-    <p>The dataset follows relay-bench's mix, which leans on gift wraps; that's why private messaging and negentropy sit outside the overall index. A relay that sends live events before they are fsynced will show lower fan-out latency than one that waits for the commit. relay-bench never AUTHs, so AUTH-gated reads show as private or refused. Capability scores are judgement calls made from code and docs, with the evidence beside each one.</p>`;
+    <p>The dataset follows relay-bench's mix, which leans on gift wraps; that's why private messaging and negentropy sit outside the overall index. A relay that sends live events before they are fsynced will show lower fan-out latency than one that waits for the commit. For inbox reads and COUNT the bench AUTHs as the mailbox's recipient (NIP-42), with one connection per mailbox opened before the clock starts; other reads go out without AUTH, so AUTH-gated ones show as private or refused. Capability scores are judgement calls made from code and docs, with the evidence beside each one.</p>`;
 }
 
 // --- boot ------------------------------------------------------------------------------------

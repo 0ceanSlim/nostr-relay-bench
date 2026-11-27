@@ -1,0 +1,657 @@
+diff --git a/crates/relay-bench/src/main.rs b/crates/relay-bench/src/main.rs
+index 391eb24..3383ad5 100644
+--- a/crates/relay-bench/src/main.rs
++++ b/crates/relay-bench/src/main.rs
+@@ -14,7 +14,7 @@ relay-bench: load generator and validating tester for Nostr relays
+ 
+   relay-bench gen    --events N --out FILE [--seed S] [--rate R] [--end TS] [--recipients N] [--planes N] [--authors N] [--threads T] [--nip44]
+   relay-bench load   --url ws://HOST:PORT --file FILE [--conns C] [--window W] [--batch-ack] [--duplicates] [--count N] [--skip N]
+-  relay-bench query  --url ws://HOST:PORT --file FILE [--workload W] [--conns C] [--queries Q] [--limit L] [--distinct D] [--strict-ties] [--warmup N]
++  relay-bench query  --url ws://HOST:PORT --file FILE [--workload W] [--conns C] [--queries Q] [--limit L] [--distinct D] [--strict-ties] [--warmup N] [--auth-seed S [--auth-recipients N]]
+   relay-bench neg    --url ws://HOST:PORT --file FILE [--recipient-mode heavy|light] [--have PCT] [--sessions S] [--conns C]
+   relay-bench fanout --url ws://HOST:PORT [--subscribers N] [--publishers P] [--rate R] [--duration D] [--community K] [--dm-share PCT] [--drain SECS] [--pad BYTES]
+   relay-bench idle   --url ws://HOST:PORT [--conns N] [--hold SECS] [--pid PID] [--src-ips K]
+@@ -98,6 +98,11 @@ fn run() -> Result<bool, String> {
+                 queries: a.count("queries", 10_000)?,
+                 limit: a.opt_count("limit")?.map(|l| l as usize),
+                 distinct: a.count("distinct", 256)? as usize,
++                // The dataset's gen --seed and --recipients: mailbox reads go out AUTHed as the recipient.
++                auth: match a.opt_count("auth-seed")? {
++                    Some(s) => Some((s, a.count("auth-recipients", 10_000)? as usize)),
++                    None => None,
++                },
+                 seed,
+                 strict_ties: a.flag("strict-ties"),
+                 timeout,
+diff --git a/crates/relay-bench/src/mock.rs b/crates/relay-bench/src/mock.rs
+index c3e660b..fb754f7 100644
+--- a/crates/relay-bench/src/mock.rs
++++ b/crates/relay-bench/src/mock.rs
+@@ -52,6 +52,46 @@ pub enum Fault {
+     NegSilent,
+     /// Reconciles against a set missing one id it holds.
+     NegForget,
++    /// NIP-17: gift wraps read by `#p` only on a connection AUTHed as that key; the
++    /// challenge goes out on connect.
++    Nip17,
++    /// The same, with the challenge sent only alongside the first refusal.
++    Nip17Lazy,
++}
++
++const CHALLENGE: &str = "mock-challenge";
++
++/// Per-connection NIP-42 state.
++#[derive(Default)]
++struct Peer {
++    authed: Option<String>,
++    challenged: bool,
++}
++
++/// The mailbox a gift-wrap filter reads (`kinds:[1059]` with a `#p`), as hex.
++fn private_mailbox(filters: &str) -> Option<&str> {
++    if !filters.contains("\"kinds\":[1059]") {
++        return None;
++    }
++    let at = filters.find("\"#p\":[\"")? + 7;
++    filters.get(at..at + 64)
++}
++
++/// Under the NIP-17 faults, refuses a mailbox read from anyone but its recipient.
++fn gate(filters: &str, sub: &str, fault: Fault, peer: &mut Peer, out: &mut Vec<u8>) -> bool {
++    if !matches!(fault, Fault::Nip17 | Fault::Nip17Lazy) {
++        return false;
++    }
++    let Some(p) = private_mailbox(filters) else { return false };
++    if peer.authed.as_deref() == Some(p) {
++        return false;
++    }
++    if !peer.challenged {
++        send(out, &format!("[\"AUTH\",\"{CHALLENGE}\"]"));
++        peer.challenged = true;
++    }
++    send(out, &format!("[\"CLOSED\",\"{sub}\",\"auth-required: gift wraps go to their recipient\"]"));
++    true
+ }
+ 
+ #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+@@ -147,7 +187,12 @@ async fn serve(mut s: TcpStream, answers: Arc<Answers>, fault: Fault, accept: Ac
+     }
+     let mut dec = Decoder::new(Role::Server, 1 << 22, 1 << 22);
+     let mut neg_sessions: HashMap<String, VecStorage> = HashMap::new();
++    let mut peer = Peer::default();
+     let mut out = Vec::new();
++    if fault == Fault::Nip17 {
++        send(&mut out, &format!("[\"AUTH\",\"{CHALLENGE}\"]"));
++        peer.challenged = true;
++    }
+     loop {
+         let mut off = 0;
+         let mut hang_up = false;
+@@ -160,7 +205,7 @@ async fn serve(mut s: TcpStream, answers: Arc<Answers>, fault: Fault, accept: Ac
+             match d.event {
+                 Some(Event::Text(t)) => {
+                     let text = t.to_owned();
+-                    hang_up |= respond(&text, &answers, fault, accept, &mut neg_sessions, &mut out);
++                    hang_up |= respond(&text, &answers, fault, accept, &mut neg_sessions, &mut peer, &mut out);
+                 }
+                 Some(Event::Ping(p)) => write_pong(&mut out, p),
+                 Some(Event::Close(_)) => {
+@@ -198,7 +243,7 @@ fn send(out: &mut Vec<u8>, msg: &str) {
+ }
+ 
+ /// Handles one client message; true means hang up after flushing.
+-fn respond(text: &str, answers: &Answers, fault: Fault, accept: Accept, neg: &mut HashMap<String, VecStorage>, out: &mut Vec<u8>) -> bool {
++fn respond(text: &str, answers: &Answers, fault: Fault, accept: Accept, neg: &mut HashMap<String, VecStorage>, peer: &mut Peer, out: &mut Vec<u8>) -> bool {
+     let mut c = Cur::new(text);
+     if c.expect(b'[').is_none() {
+         return false;
+@@ -219,6 +264,9 @@ fn respond(text: &str, answers: &Answers, fault: Fault, accept: Accept, neg: &mu
+                 return false;
+             }
+             let filters = text.strip_prefix(&format!("[\"REQ\",\"{sub}\",")).and_then(|r| r.strip_suffix(']')).unwrap_or("");
++            if gate(filters, &sub, fault, peer, out) {
++                return false;
++            }
+             let mut evs: Vec<([u8; 32], u64)> = answers.reqs.get(filters).map(|v| v.iter().map(|(i, t)| (*i, u64::from(*t))).collect()).unwrap_or_default();
+             match fault {
+                 Fault::DropOne => {
+@@ -250,6 +298,9 @@ fn respond(text: &str, answers: &Answers, fault: Fault, accept: Accept, neg: &mu
+                 Fault::CountSilent => {}
+                 _ => {
+                     let filters = text.strip_prefix(&format!("[\"COUNT\",\"{sub}\",")).and_then(|r| r.strip_suffix(']')).unwrap_or("");
++                    if gate(filters, &sub, fault, peer, out) {
++                        return false;
++                    }
+                     let n = answers.counts.get(filters).copied().unwrap_or(0) + u64::from(fault == Fault::WrongCount);
+                     send(out, &format!("[\"COUNT\",\"{sub}\",{{\"count\":{n}}}]"));
+                 }
+@@ -265,6 +316,21 @@ fn respond(text: &str, answers: &Answers, fault: Fault, accept: Accept, neg: &mu
+                 Accept::Silent => {}
+             }
+         }
++        "AUTH" => {
++            let Some(ev) = text.strip_prefix("[\"AUTH\",").and_then(|r| r.strip_suffix(']')) else { return false };
++            let Ok(e) = crate::wire::parse_event_line(ev) else { return false };
++            let id = hex::encode_string(&e.id);
++            let good = e.kind == 22242
++                && ev.contains(&format!("[\"challenge\",\"{CHALLENGE}\"]"))
++                && ev.contains("[\"relay\",\"ws://")
++                && crate::sign::verify_event_line(ev).is_ok();
++            if good {
++                peer.authed = Some(hex::encode_string(&e.pubkey));
++                send(out, &format!("[\"OK\",\"{id}\",true,\"\"]"));
++            } else {
++                send(out, &format!("[\"OK\",\"{id}\",false,\"invalid: bad AUTH event\"]"));
++            }
++        }
+         "NEG-OPEN" => {
+             let Some(sub) = sub(&mut c) else { return false };
+             match fault {
+@@ -333,6 +399,7 @@ mod tests {
+             label: "mock".into(),
+             src_ips: 1,
+             json: None,
++            auth: None,
+         }
+     }
+ 
+@@ -381,6 +448,33 @@ mod tests {
+         assert!(run_one(&ds, "exact_id", Fault::DropOne).await.failed());
+     }
+ 
++    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
++    async fn nip17_mailboxes_are_read_after_auth_as_the_recipient() {
++        let ds = tests_synthetic(2500);
++        // tests_synthetic(): generator seed 11, 20 recipients.
++        let authed = |url: String, w: &str| QueryOpts { auth: Some((11, 20)), ..qopts(url, &[w]) };
++        for fault in [Fault::Nip17, Fault::Nip17Lazy] {
++            for w in ["dm_inbox", "dm_catchup", "dm_ids", "count"] {
++                let pool = build(w, &ds, &popts()).unwrap();
++                let mock = Mock::start(Answers::from_pool(&pool), fault, Accept::All).await;
++                let r = query::run(&qopts(mock.url(), &[w]), &ds).await.unwrap().remove(0);
++                assert!(r.failed() || !r.supported, "{fault:?} {w}: read without AUTH and passed");
++                let r = query::run(&authed(mock.url(), w), &ds).await.unwrap().remove(0);
++                assert!(!r.failed() && r.supported && r.ops >= 60, "{fault:?} {w}: {:?} errors {} wrong {}", r.notes, r.errors, r.mismatches);
++                assert!(r.notes.is_empty(), "{fault:?} {w}: {:?}", r.notes);
++            }
++        }
++        // A relay that never challenges is read as before, keys or not.
++        let pool = build("dm_inbox", &ds, &popts()).unwrap();
++        let mock = Mock::start(Answers::from_pool(&pool), Fault::None, Accept::All).await;
++        let r = query::run(&authed(mock.url(), "dm_inbox"), &ds).await.unwrap().remove(0);
++        assert!(!r.failed() && r.ops >= 60, "{:?}", r.notes);
++        // Keys from another seed: no mailbox has one, so every read goes out without AUTH and is refused.
++        let mock = Mock::start(Answers::from_pool(&pool), Fault::Nip17, Accept::All).await;
++        let r = query::run(&QueryOpts { auth: Some((12, 20)), ..qopts(mock.url(), &["dm_inbox"]) }, &ds).await.unwrap().remove(0);
++        assert!(r.failed() && r.notes.iter().any(|n| n.contains("no key for mailbox")), "{:?}", r.notes);
++    }
++
+     #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+     async fn wrong_counts_fail_and_missing_features_are_reported_not_failed() {
+         let ds = tests_synthetic(2500);
+diff --git a/crates/relay-bench/src/query.rs b/crates/relay-bench/src/query.rs
+index 86670e7..d26694d 100644
+--- a/crates/relay-bench/src/query.rs
++++ b/crates/relay-bench/src/query.rs
+@@ -7,6 +7,15 @@
+ //! only lowers throughput slightly, which the closed loop makes visible honestly).
+ //! `CLOSE` goes out between requests, outside the timed window.
+ //!
++//! With `--auth-seed`, an op that reads one recipient's mailbox goes out on a
++//! connection AUTHed (NIP-42) as that recipient, so a relay that keeps gift wraps to
++//! their recipient, as NIP-17 asks, is measured rather than refused. The generator
++//! derives every recipient key from its seed, so the bench can sign for them. Each
++//! worker owns an equal share of the mailboxes, and their connections are opened and
++//! AUTHed before the clock starts: one connection per mailbox, since a relay may
++//! accept only one key per connection. A relay that never sends a challenge just gets
++//! plain connections, so the method is the same for every relay.
++//!
+ //! What counts as wrong is defined in [`crate::check`]. A run with any wrong
+ //! answer or error exits non-zero: a fast relay that returns the wrong events must
+ //! not look like a winner.
+@@ -17,12 +26,15 @@ use crate::hist::Histogram;
+ use crate::net::{connect, recv_text, resolve, source_ip, RecvError, Target};
+ use crate::report::{clip, RunResult};
+ use crate::rng::Rng;
++use crate::sign::{push_tag, Signer};
+ use crate::workload::{build, Pool, PoolOpts, Step};
+ use crate::wire::{parse_relay_msg, RelayMsg};
++use relay_proto::hex;
++use std::collections::{HashMap, HashSet};
+ use std::path::PathBuf;
+ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering::Relaxed};
+ use std::sync::{Arc, Mutex};
+-use std::time::{Duration, Instant};
++use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
+ 
+ pub struct QueryOpts {
+     pub url: String,
+@@ -39,6 +51,9 @@ pub struct QueryOpts {
+     pub label: String,
+     pub src_ips: usize,
+     pub json: Option<String>,
++    /// The dataset's generator seed and recipient count: read each mailbox as its
++    /// recipient, AUTHed (NIP-42).
++    pub auth: Option<(u64, usize)>,
+ }
+ 
+ /// Failures of one step. `Net` means the connection is no longer usable.
+@@ -81,8 +96,22 @@ impl Stats {
+     }
+ }
+ 
++/// One workload's mailbox connections, each AUTHed as its recipient, kept across the
++/// warm-up and the measured phase.
++struct Mailboxes {
++    keys: Arc<HashMap<[u8; 32], Signer>>,
++    conns: Mutex<HashMap<[u8; 32], crate::net::Conn>>,
++    accepted: AtomicU64,
++    unasked: AtomicU64,
++    refused: AtomicU64,
++}
++
+ struct Shared {
+     target: Target,
++    url: String,
++    /// Workers in this phase; with `mailboxes`, worker `i` reads the ops `i, i + workers, ...`.
++    workers: usize,
++    mailboxes: Option<Arc<Mailboxes>>,
+     pool: Pool,
+     name: String,
+     seed: u64,
+@@ -187,20 +216,158 @@ async fn do_step(c: &mut crate::net::Conn, sub: &str, step: &Step, sh: &Shared)
+     Ok(StepDone { dt, events, verdict })
+ }
+ 
++enum Auth {
++    Accepted,
++    /// The relay never sent a challenge.
++    Unasked,
++}
++
++/// NIP-42 on a fresh connection, as `signer`. A probe REQ for the signer's own mailbox
++/// draws the challenge from a relay that sends it only when a read needs it; one sent on
++/// connect is already queued ahead of the probe's answer.
++async fn authenticate(c: &mut crate::net::Conn, signer: &Signer, url: &str, wait: Duration) -> Result<Auth, String> {
++    let probe = format!("[\"REQ\",\"auth-probe\",{{\"kinds\":[{}],\"#p\":[\"{}\"],\"limit\":1}}]", crate::data::GIFT_WRAP, signer.pk_hex());
++    c.send_text(&probe).await.map_err(|e| e.to_string())?;
++    let mut challenge = None;
++    let mut closed = false;
++    loop {
++        // A challenge may trail the refusal that prompted it: wait a moment for it.
++        let left = if closed { Duration::from_millis(500) } else { wait };
++        let text = match recv_text(c, left).await {
++            Ok(t) => t,
++            Err(RecvError::Timeout) if closed => break,
++            Err(e) => return Err(format!("AUTH probe: {e}")),
++        };
++        match parse_relay_msg(&text) {
++            RelayMsg::Auth(ch) => {
++                challenge = Some(ch);
++                if closed {
++                    break;
++                }
++            }
++            RelayMsg::Eose { sub: "auth-probe" } => {
++                c.send_text("[\"CLOSE\",\"auth-probe\"]").await.map_err(|e| e.to_string())?;
++                break;
++            }
++            RelayMsg::Closed { sub: "auth-probe", .. } if challenge.is_some() => break,
++            RelayMsg::Closed { sub: "auth-probe", .. } => closed = true,
++            _ => {}
++        }
++    }
++    let Some(challenge) = challenge else { return Ok(Auth::Unasked) };
++    let mut tags = String::from("[");
++    push_tag(&mut tags, &["relay", url]);
++    push_tag(&mut tags, &["challenge", &challenge]);
++    tags.push(']');
++    let now = SystemTime::now().duration_since(UNIX_EPOCH).map_or(0, |d| d.as_secs());
++    let ev = signer.sign(now, 22242, &tags, "");
++    c.send_text(&format!("[\"AUTH\",{}]", ev.json)).await.map_err(|e| e.to_string())?;
++    loop {
++        let text = recv_text(c, wait).await.map_err(|e| format!("AUTH: {e}"))?;
++        if let RelayMsg::Ok { id, accepted, msg } = parse_relay_msg(&text) {
++            if id == ev.id {
++                return if accepted { Ok(Auth::Accepted) } else { Err(format!("AUTH refused: {msg}")) };
++            }
++        }
++    }
++}
++
++/// A connection for one mailbox, AUTHed as its recipient when the relay asks.
++async fn open_mailbox(sh: &Shared, mb: &Mailboxes, id: usize, pk: &[u8; 32]) -> Result<crate::net::Conn, String> {
++    let mut c = connect(&sh.target, source_ip(id, sh.src_ips)).await.map_err(|e| format!("connect failed: {e}"))?;
++    match mb.keys.get(pk) {
++        None => sh.note(format!("{}: no key for mailbox {}, read without AUTH", sh.name, hex::encode_string(pk))),
++        Some(signer) => match authenticate(&mut c, signer, &sh.url, sh.timeout).await {
++            Ok(Auth::Accepted) => {
++                mb.accepted.fetch_add(1, Relaxed);
++            }
++            Ok(Auth::Unasked) => {
++                mb.unasked.fetch_add(1, Relaxed);
++            }
++            Err(e) => {
++                mb.refused.fetch_add(1, Relaxed);
++                sh.note(format!("{}: {e}", sh.name));
++            }
++        },
++    }
++    Ok(c)
++}
++
++/// Opens a connection for every mailbox the pool reads, before the clock starts, one
++/// task per worker over that worker's share. Mailboxes already open are kept.
++async fn open_mailboxes(sh: &Arc<Shared>) {
++    let Some(mb) = &sh.mailboxes else { return };
++    let mut seen = HashSet::new();
++    let open: HashSet<[u8; 32]> = mb.conns.lock().unwrap().keys().copied().collect();
++    let want: Vec<[u8; 32]> = sh.pool.ops.iter().filter_map(|op| op.mailbox).filter(|pk| !open.contains(pk) && seen.insert(*pk)).collect();
++    let tasks: Vec<_> = (0..sh.workers)
++        .map(|w| {
++            let (sh, mb) = (sh.clone(), mb.clone());
++            let mine: Vec<[u8; 32]> = want.iter().skip(w).step_by(sh.workers).copied().collect();
++            tokio::spawn(async move {
++                for pk in mine {
++                    match open_mailbox(&sh, &mb, w, &pk).await {
++                        Ok(c) => {
++                            mb.conns.lock().unwrap().insert(pk, c);
++                        }
++                        Err(e) => sh.note(format!("{}: {e}", sh.name)),
++                    }
++                }
++            })
++        })
++        .collect();
++    for t in tasks {
++        t.await.expect("mailbox opener panicked");
++    }
++}
++
+ async fn worker(id: usize, sh: Arc<Shared>) -> (Histogram, Stats) {
+     let mut hist = Histogram::new();
+     let mut st = Stats::default();
+     let mut conn: Option<crate::net::Conn> = None;
+     let mut fails = 0u32;
+     let mut seq = 0u64;
++    // With mailbox connections, this worker's share of the ops, and the connection it holds.
++    let own: Vec<usize> = if sh.mailboxes.is_some() { (id..sh.pool.ops.len()).step_by(sh.workers).collect() } else { Vec::new() };
++    if sh.mailboxes.is_some() && own.is_empty() {
++        return (hist, st);
++    }
++    let mut held: Option<([u8; 32], crate::net::Conn)> = None;
+     'ops: while !sh.stop.load(Relaxed) {
++        if let (Some((pk, c)), Some(mb)) = (held.take(), &sh.mailboxes) {
++            mb.conns.lock().unwrap().insert(pk, c);
++        }
+         let n = sh.next_op.fetch_add(1, Relaxed);
+-        let op = &sh.pool.ops[Rng::for_item(sh.seed, n, sh.salt).below(sh.pool.ops.len() as u64) as usize];
++        let op = if own.is_empty() {
++            &sh.pool.ops[Rng::for_item(sh.seed, n, sh.salt).below(sh.pool.ops.len() as u64) as usize]
++        } else {
++            &sh.pool.ops[own[Rng::for_item(sh.seed, n, sh.salt).below(own.len() as u64) as usize]]
++        };
+         if sh.steps_claimed.fetch_add(op.steps.len() as u64, Relaxed) >= sh.step_budget {
+             break;
+         }
++        if let (Some(pk), Some(mb)) = (op.mailbox, &sh.mailboxes) {
++            let open = mb.conns.lock().unwrap().remove(&pk);
++            let c = match open {
++                Some(c) => c,
++                // Dropped after a network error: reopen it, inside the clock this time.
++                None => match open_mailbox(&sh, mb, id, &pk).await {
++                    Ok(c) => c,
++                    Err(e) => {
++                        st.errors += 1;
++                        sh.note(format!("{}: {e}", sh.name));
++                        fails += 1;
++                        if fails >= 3 {
++                            break 'ops;
++                        }
++                        continue 'ops;
++                    }
++                },
++            };
++            held = Some((pk, c));
++        }
+         for step in &op.steps {
+-            if conn.is_none() {
++            if held.is_none() && conn.is_none() {
+                 match connect(&sh.target, source_ip(id, sh.src_ips)).await {
+                     Ok(c) => conn = Some(c),
+                     Err(e) => {
+@@ -216,7 +383,11 @@ async fn worker(id: usize, sh: Arc<Shared>) -> (Histogram, Stats) {
+             }
+             seq += 1;
+             let sub = format!("b{id}-{seq}");
+-            match do_step(conn.as_mut().unwrap(), &sub, step, &sh).await {
++            let c = match held.as_mut() {
++                Some((_, c)) => c,
++                None => conn.as_mut().unwrap(),
++            };
++            match do_step(c, &sub, step, &sh).await {
+                 Ok(done) => {
+                     fails = 0;
+                     sh.completed.fetch_add(1, Relaxed);
+@@ -246,7 +417,9 @@ async fn worker(id: usize, sh: Arc<Shared>) -> (Histogram, Stats) {
+                     };
+                     st.errors += 1;
+                     sh.note(format!("{}: {m}; request {}", sh.name, clip(step.json(), 160)));
+-                    conn = None;
++                    if held.take().is_none() {
++                        conn = None;
++                    }
+                     fails += 1;
+                     if fails >= 3 {
+                         break 'ops;
+@@ -266,6 +439,9 @@ async fn worker(id: usize, sh: Arc<Shared>) -> (Histogram, Stats) {
+             }
+         }
+     }
++    if let (Some((pk, c)), Some(mb)) = (held.take(), &sh.mailboxes) {
++        mb.conns.lock().unwrap().insert(pk, c);
++    }
+     (hist, st)
+ }
+ 
+@@ -282,9 +458,12 @@ async fn run_phase(sh: &Arc<Shared>, conns: usize) -> (Histogram, Stats, Duratio
+     (hist, st, started.elapsed())
+ }
+ 
+-fn shared(o: &QueryOpts, target: &Target, name: &str, pool: Pool, budget: u64) -> Arc<Shared> {
++fn shared(o: &QueryOpts, target: &Target, name: &str, pool: Pool, budget: u64, workers: usize, mailboxes: Option<Arc<Mailboxes>>) -> Arc<Shared> {
+     Arc::new(Shared {
+         target: target.clone(),
++        url: o.url.clone(),
++        workers,
++        mailboxes,
+         pool,
+         name: name.to_owned(),
+         seed: o.seed,
+@@ -307,6 +486,10 @@ fn shared(o: &QueryOpts, target: &Target, name: &str, pool: Pool, budget: u64) -
+ pub async fn run(o: &QueryOpts, ds: &Dataset) -> Result<Vec<RunResult>, String> {
+     let target = resolve(&o.url).await?;
+     let pool_opts = PoolOpts { limit: o.limit, distinct: o.distinct, seed: o.seed };
++    // Every recipient key the generator made, by public key.
++    let keys = o.auth.map(|(seed, n)| {
++        Arc::new((0..n as u64).map(|k| Signer::derive(seed, "recipient", k)).map(|s| (s.pk, s)).collect::<HashMap<_, _>>())
++    });
+     let mut results = Vec::new();
+     for name in &o.workloads {
+         let mut r = RunResult::new(&o.label, "query", name);
+@@ -334,17 +517,39 @@ pub async fn run(o: &QueryOpts, ds: &Dataset) -> Result<Vec<RunResult>, String>
+         };
+         let queries_in_pool = pool.ops.len();
+         r.param("pool_ops", queries_in_pool);
++        let mailboxes = match &keys {
++            Some(keys) if pool.ops.iter().any(|op| op.mailbox.is_some()) => {
++                r.param("auth_seed", o.auth.unwrap().0);
++                Some(Arc::new(Mailboxes {
++                    keys: keys.clone(),
++                    conns: Mutex::new(HashMap::new()),
++                    accepted: AtomicU64::new(0),
++                    unasked: AtomicU64::new(0),
++                    refused: AtomicU64::new(0),
++                }))
++            }
++            _ => None,
++        };
+ 
+         if o.warmup > 0 {
+-            let sh = shared(o, &target, name, build(name, ds, &pool_opts)?, o.warmup);
+-            let (_, st, _) = run_phase(&sh, o.conns.min(o.warmup as usize).max(1)).await;
++            let workers = o.conns.min(o.warmup as usize).max(1);
++            let sh = shared(o, &target, name, build(name, ds, &pool_opts)?, o.warmup, workers, mailboxes.clone());
++            open_mailboxes(&sh).await;
++            let (_, st, _) = run_phase(&sh, workers).await;
+             // Warm-up answers are discarded, but a wrong one is still wrong.
+             r.mismatches += st.set_mismatch + st.order_mismatch;
+             r.errors += st.errors;
+         }
+ 
+-        let sh = shared(o, &target, name, pool, o.queries);
+-        let (hist, st, elapsed) = run_phase(&sh, o.conns.min(o.queries as usize).max(1)).await;
++        let workers = o.conns.min(o.queries as usize).max(1);
++        let sh = shared(o, &target, name, pool, o.queries, workers, mailboxes.clone());
++        open_mailboxes(&sh).await;
++        let (hist, st, elapsed) = run_phase(&sh, workers).await;
++        if let Some(mb) = &mailboxes {
++            r.detail("auth_accepted", mb.accepted.load(Relaxed));
++            r.detail("auth_unasked", mb.unasked.load(Relaxed));
++            r.detail("auth_refused", mb.refused.load(Relaxed));
++        }
+         if let Some(why) = sh.unsupported.lock().unwrap().clone() {
+             r.supported = false;
+             r.unsupported_reason = format!("unsupported by the relay: {}", clip(&why, 160));
+diff --git a/crates/relay-bench/src/wire.rs b/crates/relay-bench/src/wire.rs
+index f3de013..2301775 100644
+--- a/crates/relay-bench/src/wire.rs
++++ b/crates/relay-bench/src/wire.rs
+@@ -252,9 +252,11 @@ pub enum RelayMsg<'a> {
+     Count { sub: &'a str, count: u64 },
+     Closed { sub: &'a str, msg: String },
+     Notice(String),
++    /// NIP-42: the relay's AUTH challenge.
++    Auth(String),
+     NegMsg { sub: &'a str, hex: &'a str },
+     NegErr { sub: &'a str, msg: String },
+-    /// Valid JSON array with a label we do not act on (AUTH challenge, ...).
++    /// Valid JSON array with a label we do not act on.
+     Other(&'a str),
+     /// Not a Nostr relay message.
+     Malformed,
+@@ -340,6 +342,10 @@ fn parse_relay_msg_opt(s: &str) -> Option<RelayMsg<'_>> {
+             let msg = if c.eat(b',') { c.text()? } else { String::new() };
+             RelayMsg::NegErr { sub, msg }
+         }
++        "AUTH" => {
++            c.expect(b',')?;
++            RelayMsg::Auth(c.text()?)
++        }
+         other => RelayMsg::Other(other),
+     })
+ }
+@@ -510,7 +516,8 @@ mod tests {
+         assert_eq!(parse_relay_msg(r#"["NOTICE","hi"]"#), RelayMsg::Notice("hi".into()));
+         assert_eq!(parse_relay_msg(r#"["NEG-MSG","n","6100"]"#), RelayMsg::NegMsg { sub: "n", hex: "6100" });
+         assert_eq!(parse_relay_msg(r#"["NEG-ERR","n","blocked: big"]"#), RelayMsg::NegErr { sub: "n", msg: "blocked: big".into() });
+-        assert_eq!(parse_relay_msg(r#"["AUTH","challenge"]"#), RelayMsg::Other("AUTH"));
++        assert_eq!(parse_relay_msg(r#"["AUTH","challenge"]"#), RelayMsg::Auth("challenge".into()));
++        assert_eq!(parse_relay_msg(r#"["HELLO","x"]"#), RelayMsg::Other("HELLO"));
+         for bad in ["", "{}", "[", r#"["EVENT","s"]"#, r#"["OK","zz",true,""]"#, r#"["EOSE"]"#, "[\"EVENT\",\"s\",{\"id\":1}]"] {
+             assert_eq!(parse_relay_msg(bad), RelayMsg::Malformed, "{bad}");
+         }
+diff --git a/crates/relay-bench/src/workload.rs b/crates/relay-bench/src/workload.rs
+index ca7b6af..84c44d1 100644
+--- a/crates/relay-bench/src/workload.rs
++++ b/crates/relay-bench/src/workload.rs
+@@ -76,6 +76,9 @@ impl Step {
+ /// a whole walk, whose requests must go out in order.
+ pub struct Op {
+     pub steps: Vec<Step>,
++    /// The recipient whose mailbox the op reads. A NIP-17 relay serves those gift wraps
++    /// only to a connection AUTHed as that key (see `query --auth-seed`).
++    pub mailbox: Option<[u8; 32]>,
+ }
+ 
+ pub struct Pool {
+@@ -92,7 +95,7 @@ pub struct PoolOpts {
+ fn req_op(ds: &Dataset, filters: Vec<FilterSpec>) -> Op {
+     let exp = ds.expected(&filters);
+     let json = filters.iter().map(FilterSpec::to_json).collect::<Vec<_>>().join(",");
+-    Op { steps: vec![Step::Req { json, exp }] }
++    Op { steps: vec![Step::Req { json, exp }], mailbox: None }
+ }
+ 
+ /// Random live events satisfying `pred`, by rejection sampling.
+@@ -253,7 +256,7 @@ pub fn build(name: &str, ds: &Dataset, o: &PoolOpts) -> Result<Pool, String> {
+             let boxes = pick_mixed(&ds.wrap_mailboxes(), &mut rng, o.distinct, 2);
+             let since = (name == "dm_catchup").then(|| ds.max_ts.saturating_sub(TWO_DAYS));
+             for r in boxes {
+-                ops.push(req_op(ds, vec![FilterSpec { kinds: vec![GIFT_WRAP], p: vec![r], since, limit: Some(limit_or(o, 500)), ..Default::default() }]));
++                ops.push(Op { mailbox: Some(r), ..req_op(ds, vec![FilterSpec { kinds: vec![GIFT_WRAP], p: vec![r], since, limit: Some(limit_or(o, 500)), ..Default::default() }]) });
+             }
+         }
+         "concord_page" => {
+@@ -282,7 +285,7 @@ pub fn build(name: &str, ds: &Dataset, o: &PoolOpts) -> Result<Pool, String> {
+                     until = Some(if Some(cursor) == until { cursor.saturating_sub(1) } else { cursor });
+                 }
+                 if !steps.is_empty() {
+-                    ops.push(Op { steps });
++                    ops.push(Op { steps, mailbox: None });
+                 }
+             }
+         }
+@@ -292,13 +295,15 @@ pub fn build(name: &str, ds: &Dataset, o: &PoolOpts) -> Result<Pool, String> {
+                 rng.shuffle(&mut members);
+                 members.truncate(500);
+                 let ids: Vec<[u8; 32]> = members.iter().map(|&i| ds.events[i as usize].id).collect();
+-                ops.push(req_op(ds, vec![FilterSpec { limit: Some(ids.len()), ids, kinds: vec![GIFT_WRAP], p: vec![r], ..Default::default() }]));
++                ops.push(Op { mailbox: Some(r), ..req_op(ds, vec![FilterSpec { limit: Some(ids.len()), ids, kinds: vec![GIFT_WRAP], p: vec![r], ..Default::default() }]) });
+             }
+         }
+         "count" => {
+-            for r in pick_mixed(&ds.wrap_mailboxes(), &mut rng, o.distinct, 1) {
++            // At least two wraps, as for the inbox reads: a key with one wrap is a Concord
++            // plane event's random `p`, not anyone's inbox, and no recipient can AUTH for it.
++            for r in pick_mixed(&ds.wrap_mailboxes(), &mut rng, o.distinct, 2) {
+                 let f = FilterSpec { kinds: vec![GIFT_WRAP], p: vec![r], ..Default::default() };
+-                ops.push(Op { steps: vec![Step::Count { json: f.to_json(), expect: ds.count(&f) }] });
++                ops.push(Op { steps: vec![Step::Count { json: f.to_json(), expect: ds.count(&f) }], mailbox: Some(r) });
+             }
+         }
+         other => return Err(format!("unknown workload '{other}'")),
+@@ -337,6 +342,21 @@ mod tests {
+         Dataset::from_reader(Cursor::new(buf), false).unwrap()
+     }
+ 
++    #[test]
++    fn mailbox_ops_name_a_recipient_the_generator_can_sign_for() {
++        let ds = synthetic(2000);
++        // synthetic(): seed 11, 20 recipients.
++        let keys: HashSet<[u8; 32]> = (0..20).map(|k| crate::sign::Signer::derive(11, "recipient", k).pk).collect();
++        let o = PoolOpts { limit: None, distinct: 16, seed: 3 };
++        for w in ["dm_inbox", "dm_catchup", "dm_ids", "count"] {
++            let pool = build(w, &ds, &o).unwrap();
++            assert!(pool.ops.iter().all(|op| op.mailbox.is_some_and(|m| keys.contains(&m))), "{w}");
++        }
++        for w in ["author", "exact_id", "concord_page", "concord_paging"] {
++            assert!(build(w, &ds, &o).unwrap().ops.iter().all(|op| op.mailbox.is_none()), "{w}");
++        }
++    }
++
+     #[test]
+     fn expand_names_and_groups() {
+         assert_eq!(expand("classic").unwrap().len(), 12);
+diff --git a/crates/relay-bench/tests/integration.rs b/crates/relay-bench/tests/integration.rs
+index ec5da86..79f3d74 100644
+--- a/crates/relay-bench/tests/integration.rs
++++ b/crates/relay-bench/tests/integration.rs
+@@ -121,6 +121,7 @@ fn query_opts(relay: &Relay, file: &Path, limit: Option<usize>) -> QueryOpts {
+         label: "ours".into(),
+         src_ips: 1,
+         json: None,
++        auth: None,
+     }
+ }
+ 

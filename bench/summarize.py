@@ -64,6 +64,8 @@ def relay_bench(path, private=False):
             m.update(missed=d.get("missed"), deliveries=d.get("deliveries"))
         if w == "ingest_dup":
             m.update(refused=d.get("ok_false_refused"))
+        if "auth_accepted" in d:
+            m["auth"] = {k: d.get(f"auth_{k}", 0) for k in ("accepted", "unasked", "refused")}
         out[w] = m
     if loads:
         # Public events then gift wraps, two loads on one database: report both and the total.
@@ -76,9 +78,10 @@ def relay_bench(path, private=False):
                                     "refused": r.get("detail", {}).get("ok_false_refused", 0)} for r in loads]}
     for w, m in out.items():
         m["family"] = FAMILY.get(w, "other")
-        # relay-bench never AUTHs, so a relay that keeps gift wraps to their recipient refuses
-        # every gift-wrap read: that's NIP-17 working, not a wrong answer or a missing feature.
-        if private and m["family"] == "private" and m["status"] != "ok":
+        # Inbox reads and COUNT AUTH as the recipient; Concord reads can't (their p tags are random
+        # keys). A relay that keeps gift wraps to their recipient refuses a read that wasn't AUTHed:
+        # that's NIP-17 working, not a wrong answer. One that fails after AUTH really failed.
+        if private and m["family"] == "private" and m["status"] != "ok" and not (m.get("auth") or {}).get("accepted"):
             m["raw_status"], m["status"] = m["status"], "private"
     return out
 

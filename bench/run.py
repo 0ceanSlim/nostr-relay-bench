@@ -250,8 +250,10 @@ class Relay:
                     timeout=s["load_timeout"])
             self.rb("query_classic", "query", "--file", f"/data/{pub}", "--workload", "classic", *q, timeout=s["query_timeout"])
             self.rb("ingest_wraps", "load", "--file", f"/data/{wraps}", "--conns", "8", timeout=s["load_timeout"])
-            self.rb("query_vector", "query", "--file", f"/data/{full}", "--workload", "vector", *q, timeout=s["query_timeout"])
-            self.rb("query_count", "query", "--file", f"/data/{full}", "--workload", "count", *q, timeout=s["query_timeout"])
+            # Inbox reads and COUNT AUTH as the mailbox's recipient (tools/relay-bench/auth.patch).
+            auth = ["--auth-seed", str(s["seed"])]
+            self.rb("query_vector", "query", "--file", f"/data/{full}", "--workload", "vector", *q, *auth, timeout=s["query_timeout"])
+            self.rb("query_count", "query", "--file", f"/data/{full}", "--workload", "count", *q, *auth, timeout=s["query_timeout"])
             self.rb("neg_light", "neg", "--file", f"/data/{full}", "--recipient-mode", "light", "--have", "90",
                     "--sessions", str(s["neg_sessions"]), "--conns", "8", timeout=s["query_timeout"])
             self.rb("neg_heavy", "neg", "--file", f"/data/{full}", "--recipient-mode", "heavy", "--have", "90",
